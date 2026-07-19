@@ -112,43 +112,48 @@ function monthsFor(c) {
 // before GD-3 shipped, or null for a specific day that has no diff_summary.csv (best-effort,
 // PRD §3.5). Everything below reads only numbers already present in the fetched manifest.json —
 // no network requests, no CSV parsing happens in the browser (PRD §8.1's core constraint).
-// "Worst day" and the sparkline both use mean_abs_delay_sec, not the signed mean or a single
-// max_delay_sec spike — chosen once, for consistency, per PRD §8.2's note that either is
-// defensible but the two uses must agree.
+// "Worst day" and the sparkline both use max_delay_sec (the worst single observation that day),
+// not mean_abs_delay_sec — chosen once, for consistency, per PRD §8.2's note that either is
+// defensible but the two uses must agree. max_delay_sec is a true max, so it's taken directly
+// across days, never weighted by n_rows the way the averages below are.
 function monthDelaySummary(days) {
   const withStats = days.filter((d) => d.delay_stats != null);
   if (!withStats.length) return null;
-  let sumRows = 0, sumMeanWeighted = 0, sumAbsWeighted = 0, worst = withStats[0];
+  let sumRows = 0, sumMeanWeighted = 0, maxDelaySec = -Infinity, worst = withStats[0];
   withStats.forEach((d) => {
     const s = d.delay_stats;
     sumRows += s.n_rows;
     sumMeanWeighted += s.mean_delay_sec * s.n_rows;
-    sumAbsWeighted += s.mean_abs_delay_sec * s.n_rows;
-    if (s.mean_abs_delay_sec > worst.delay_stats.mean_abs_delay_sec) worst = d;
+    if (s.max_delay_sec > maxDelaySec) { maxDelaySec = s.max_delay_sec; worst = d; }
   });
   return {
     meanDelaySec: sumRows ? sumMeanWeighted / sumRows : null,
-    meanAbsDelaySec: sumRows ? sumAbsWeighted / sumRows : null,
+    maxDelaySec,
     worstDay: worst,
     daysWithData: withStats.length,
   };
 }
-function fmtSignedSec(sec) {
+// delay_stats stores seconds (matches diff_summary.csv's own column names 1:1, PRD §8.1) -
+// converted to minutes only here, at display time, since minutes read more naturally for
+// transit delays than raw seconds once you're past a few tens of them.
+function fmtSignedMin(sec) {
   if (sec === null) return '<span class="dash">–</span>';
-  return `${sec > 0 ? "+" : ""}${sec.toFixed(1)} s`;
+  const min = sec / 60;
+  return `${min > 0 ? "+" : ""}${min.toFixed(1)} min`;
 }
-function fmtAbsSec(sec) {
-  return sec === null ? '<span class="dash">–</span>' : `${sec.toFixed(1)} s`;
+function fmtMin(sec) {
+  return sec === null ? '<span class="dash">–</span>' : `${(sec / 60).toFixed(1)} min`;
 }
-// Day-by-day sparkline of mean_abs_delay_sec, chronological. Days with delay_stats: null break
-// the line into a gap rather than plotting as 0 — a real 0 s day and "no data" are not the same
-// thing (PRD §8.2 / the same delay_sec == 0 ambiguity called out in PRD §3.5). Purely decorative
-// alongside the numeric summary above, so it's aria-hidden rather than made the sole carrier of
-// the information.
-function sparklineSvg(days) {
-  const w = 120, h = 26, pad = 2;
+// Day-by-day sparkline of max_delay_sec, chronological. Days with delay_stats: null break the
+// line into a gap rather than plotting as 0 — a real 0 s day and "no data" are not the same thing
+// (PRD §8.2 / the same delay_sec == 0 ambiguity called out in PRD §3.5). Purely decorative
+// alongside the numeric summary/caption around it, so it's aria-hidden rather than made the sole
+// carrier of the information. width/height are parametrized: a small inline size for the month
+// card, a larger one for the dedicated panel on the days view (GD-3 follow-up).
+function sparklineSvg(days, { width = 120, height = 26, className = "" } = {}) {
+  const w = width, h = height, pad = 2;
   if (days.length < 2) return "";
-  const vals = days.map((d) => (d.delay_stats != null ? d.delay_stats.mean_abs_delay_sec : null));
+  const vals = days.map((d) => (d.delay_stats != null ? d.delay_stats.max_delay_sec : null));
   const nums = vals.filter((v) => v !== null);
   if (!nums.length) return "";
   const max = Math.max(...nums) || 1;
@@ -164,20 +169,39 @@ function sparklineSvg(days) {
   const polylines = segments
     .map((seg) => `<polyline points="${seg.join(" ")}" fill="none" stroke="var(--blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`)
     .join("");
-  return `<svg class="sparkline" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" preserveAspectRatio="none" aria-hidden="true">${polylines}</svg>`;
+  return `<svg class="sparkline${className ? ` ${className}` : ""}" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" preserveAspectRatio="none" aria-hidden="true">${polylines}</svg>`;
 }
+// Compact text-only summary shown on each month card (cities → months level). The sparkline
+// itself lives on the days level instead (dayTrendPanelHtml below) - there's more room for it
+// there, right next to the actual per-day table it's summarizing.
 function delaySummaryHtml(days) {
   const summary = monthDelaySummary(days);
   if (!summary) {
     return `<div class="delay-summary delay-summary-empty">brak danych o opóźnieniach za ten miesiąc</div>`;
   }
   return `<div class="delay-summary">
-    ${sparklineSvg(days)}
-    <div class="delay-summary-text">
-      <span>śr. opóźnienie: ${fmtSignedSec(summary.meanDelaySec)}</span>
-      <span>śr. |opóźnienie|: ${fmtAbsSec(summary.meanAbsDelaySec)}</span>
-      <span class="worst">najgorszy dzień: ${summary.worstDay.date} (${fmtAbsSec(summary.worstDay.delay_stats.mean_abs_delay_sec)})</span>
-    </div>
+    <span>śr. opóźnienie: ${fmtSignedMin(summary.meanDelaySec)}</span>
+    <span>maks. opóźnienie: ${fmtMin(summary.maxDelaySec)}</span>
+    <span class="worst">najgorszy dzień: ${summary.worstDay.date} (${fmtMin(summary.worstDay.delay_stats.max_delay_sec)})</span>
+  </div>`;
+}
+// Day-by-day delay trend panel for the days level (one specific month) - always built from every
+// day in the month regardless of the search box filter, since it summarizes "the month", not
+// whatever subset of days is currently matching a date search.
+function dayTrendPanelHtml(monthDays) {
+  const withStats = monthDays.filter((d) => d.delay_stats != null);
+  if (!withStats.length) {
+    return `<div class="delay-panel">
+      <div class="delay-panel-title">Trend opóźnień w tym miesiącu</div>
+      <div class="empty">brak danych o opóźnieniach za ten miesiąc</div>
+    </div>`;
+  }
+  const vals = withStats.map((d) => d.delay_stats.max_delay_sec);
+  const lo = Math.min(...vals), hi = Math.max(...vals);
+  return `<div class="delay-panel">
+    <div class="delay-panel-title">Trend opóźnień w tym miesiącu</div>
+    ${sparklineSvg(monthDays, { width: 600, height: 60, className: "sparkline-wide" })}
+    <p class="delay-panel-caption">Maksymalne opóźnienie obserwacji na dzień, w minutach (przerwy w linii = brak danych za ten dzień). Zakres w tym miesiącu: ${fmtMin(lo)} – ${fmtMin(hi)}.</p>
   </div>`;
 }
 
@@ -451,13 +475,14 @@ function render() {
     const [titleY, titleM] = state.month.split("-");
     pageTitle.textContent = `${c.display} — ${MONTHS_PL[+titleM - 1]} ${titleY}`;
     q.placeholder = "Szukaj dnia (np. 07-16)…";
-    let days = c.days.filter((d) => d.date.slice(0, 7) === state.month);
+    const monthDays = c.days.filter((d) => d.date.slice(0, 7) === state.month);
+    let days = monthDays;
     const query = state.q.trim().toLowerCase();
     if (query) days = days.filter((d) => d.date.includes(query));
     days = days.slice().sort(dayComparator);
 
     const sortInd = (key) => (state.sort === key ? (state.dir === "asc" ? "ascending" : "descending") : "none");
-    content.innerHTML = !days.length
+    content.innerHTML = (!days.length
       ? `<div class="empty">Brak dni pasujących do „${escapeHtml(state.q)}”.</div>`
       : `<div class="table-wrap"><table>
           <thead><tr>
@@ -483,7 +508,7 @@ function render() {
                 ${d.release_url ? `<a class="ext" href="${d.release_url}" target="_blank" rel="noopener">release ↗</a>` : ""}
               </div></td>
             </tr>`).join("")}</tbody>
-        </table></div>`;
+        </table></div>`) + dayTrendPanelHtml(monthDays);
     content.querySelectorAll("thead button[data-sort]").forEach((btn) => {
       btn.onclick = () => {
         const key = btn.dataset.sort;
