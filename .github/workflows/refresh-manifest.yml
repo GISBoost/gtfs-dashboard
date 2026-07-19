@@ -171,10 +171,15 @@ jobs:
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet -- manifest.json; then
+          # -f is required: manifest.json is .gitignore'd so that a locally-copied dev
+          # fixture never gets swept into a stray "git add -A" - CI generating and
+          # committing the real one is the one intentional exception to that rule.
+          # Diffing --cached (not a plain working-tree diff) is what correctly detects
+          # "brand new file" on the very first run, not just "changed file" on later runs.
+          git add -f manifest.json
+          if git diff --cached --quiet -- manifest.json; then
             echo "No changes to manifest.json - skipping commit."
             exit 0
           fi
-          git add manifest.json
           git commit -m "chore: refresh manifest.json"
           git push
