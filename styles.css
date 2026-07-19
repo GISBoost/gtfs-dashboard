@@ -93,6 +93,16 @@ main { max-width: 900px; margin: 0 auto; padding: 1.5rem 1.5rem 3.5rem; }
 .card .meta { font-family: var(--mono); font-size: 0.78rem; color: var(--ink-muted); }
 .card .row-stats { display: flex; gap: 0.4rem; flex-wrap: wrap; }
 
+/* --- monthly delay summary (PRD.md §8.2, GD-3) ---------------------------------------- */
+.delay-summary { display: flex; align-items: center; gap: 0.6rem; margin-top: 0.15rem; }
+.delay-summary .sparkline { flex: none; display: block; }
+.delay-summary-text {
+  display: flex; flex-direction: column; gap: 0.05rem; font-size: 0.72rem;
+  color: var(--ink-muted); font-family: var(--mono); text-align: left;
+}
+.delay-summary-text .worst { color: var(--ink); }
+.delay-summary-empty { font-size: 0.72rem; color: var(--ink-muted); font-style: italic; }
+
 .pill {
   display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.72rem; font-family: var(--mono);
   padding: 0.15rem 0.5rem; border-radius: 999px; background: var(--green-soft); color: var(--green-ink); white-space: nowrap;

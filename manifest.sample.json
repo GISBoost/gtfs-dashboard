@@ -31,7 +31,8 @@
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-13-phone/lodz_static_gtfs_2026-07-13.zip",
             "diff_chart": null,
             "diff_summary": null
-          }
+          },
+          "delay_stats": null
         },
         {
           "date": "2026-07-14",
@@ -51,7 +52,8 @@
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-14-phone/lodz_static_gtfs_2026-07-14.zip",
             "diff_chart": null,
             "diff_summary": null
-          }
+          },
+          "delay_stats": null
         },
         {
           "date": "2026-07-15",
@@ -71,6 +73,11 @@
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-15-phone/lodz_static_gtfs_2026-07-15.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-15-phone/lodz_diff_2026-07-15_p50_chart.png",
             "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-15-phone/lodz_diff_2026-07-15_p50_summary.csv"
+          },
+          "delay_stats": {
+            "n_rows": 291158, "n_changed": 34521, "pct_changed": 11.86,
+            "mean_delay_sec": 3.1, "mean_abs_delay_sec": 22.4, "stdev_delay_sec": 41.2,
+            "min_delay_sec": -210, "max_delay_sec": 305
           }
         },
         {
@@ -91,6 +98,11 @@
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-16-phone/lodz_static_gtfs_2026-07-16.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-16-phone/lodz_diff_2026-07-16_p50_chart.png",
             "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-16-phone/lodz_diff_2026-07-16_p50_summary.csv"
+          },
+          "delay_stats": {
+            "n_rows": 372984, "n_changed": 55201, "pct_changed": 14.80,
+            "mean_delay_sec": 5.8, "mean_abs_delay_sec": 28.9, "stdev_delay_sec": 52.7,
+            "min_delay_sec": -250, "max_delay_sec": 410
           }
         },
         {
@@ -111,6 +123,11 @@
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-17-phone/lodz_static_gtfs_2026-07-17.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-17-phone/lodz_diff_2026-07-17_p50_chart.png",
             "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-17-phone/lodz_diff_2026-07-17_p50_summary.csv"
+          },
+          "delay_stats": {
+            "n_rows": 270305, "n_changed": 61802, "pct_changed": 22.87,
+            "mean_delay_sec": 9.4, "mean_abs_delay_sec": 47.6, "stdev_delay_sec": 68.3,
+            "min_delay_sec": -190, "max_delay_sec": 520
           }
         },
         {
@@ -131,6 +148,11 @@
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-18-phone/lodz_static_gtfs_2026-07-18.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-18-phone/lodz_diff_2026-07-18_p50_chart.png",
             "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-18-phone/lodz_diff_2026-07-18_p50_summary.csv"
+          },
+          "delay_stats": {
+            "n_rows": 230665, "n_changed": 28190, "pct_changed": 12.22,
+            "mean_delay_sec": 2.0, "mean_abs_delay_sec": 19.1, "stdev_delay_sec": 35.5,
+            "min_delay_sec": -140, "max_delay_sec": 260
           }
         }
       ]

@@ -26,7 +26,11 @@ env:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    # 15, not 10: the first run after GD-3 shipped fetches diff_summary.csv for every
+    # existing day (no delay_stats cache yet in the previous manifest.json) - see the
+    # "Fetch delay_stats" step below. Every run after that only fetches new days and
+    # stays well under this, but the one-time backfill needs the extra headroom.
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
 
@@ -142,6 +146,98 @@ jobs:
           done < parsed.jsonl
           exit 0
 
+      - name: Fetch delay_stats from diff_summary.csv (cached by city/date)
+        run: |
+          set -uo pipefail
+          # PRD.md section 8.1: delay_stats is sourced from each day's diff_summary.csv (the
+          # single "ALL" row, not the per-route breakdown), but that CSV is a separate
+          # per-day-per-city download - re-fetching every historical day's CSV on every run
+          # would make this step's cost grow without bound as days accumulate. Instead, cache
+          # by (city, date) against the *previous* manifest.json - still present in this
+          # checkout, not yet overwritten by the Build step below - and only fetch a fresh CSV
+          # for a day that doesn't already have a non-null cached value. Days that previously
+          # had delay_stats: null (e.g. the CSV wasn't uploaded yet) are always retried, so a
+          # late-uploaded asset self-heals on the next run without any special-case logic.
+          if [ -f manifest.json ]; then
+            jq -c '
+              [ (.cities // {}) | to_entries[] | .key as $city | (.value.days // [])[]
+                | select(.delay_stats != null)
+                | { key: ($city + "|" + .date), value: .delay_stats } ]
+              | from_entries
+            ' manifest.json > delay_stats_cache.json 2>/dev/null
+            if [ ! -s delay_stats_cache.json ] || ! jq -e . delay_stats_cache.json >/dev/null 2>&1; then
+              echo '{}' > delay_stats_cache.json
+            fi
+          else
+            echo '{}' > delay_stats_cache.json
+          fi
+          echo "Cached delay_stats for $(jq 'length' delay_stats_cache.json) (city,date) pair(s) from the previous manifest."
+
+          is_number() { [[ "$1" =~ ^-?[0-9]+(\.[0-9]+)?$ ]]; }
+          is_uint()   { [[ "$1" =~ ^[0-9]+$ ]]; }
+
+          # Downloads one day's diff_summary.csv and extracts its "ALL" row (the aggregate
+          # across all routes - see tools/analysis/gtfs_static_vs_realized_diff.py in easy-OTP,
+          # read-only reference, not modified here). Any failure - download error, missing ALL
+          # row, unexpected column shape - degrades only this one day's delay_stats to null and
+          # logs a ::warning::, same best-effort philosophy as the body-field parsing above;
+          # never fails the step or the run.
+          fetch_and_parse_delay_stats() {
+            local url="$1" city="$2" date="$3" csv_file all_row
+            csv_file="$(mktemp)"
+            if ! curl -fsSL "$url" -o "$csv_file"; then
+              echo "::warning title=delay_stats fetch failed::${city} ${date}: could not download diff_summary.csv - delay_stats is null for this day only, will retry next run." >&2
+              rm -f "$csv_file"
+              echo "null"
+              return
+            fi
+            # Match on the route_id field's value, not "last line" - robust to a trailing blank
+            # line in the CSV.
+            all_row="$(awk -F',' '$1=="ALL"{print; exit}' "$csv_file")"
+            rm -f "$csv_file"
+            if [ -z "$all_row" ]; then
+              echo "::warning title=delay_stats parse failed::${city} ${date}: diff_summary.csv had no ALL row - delay_stats is null for this day only." >&2
+              echo "null"
+              return
+            fi
+            IFS=',' read -r route_id n_rows n_changed pct_changed mean_delay_sec mean_abs_delay_sec stdev_delay_sec min_delay_sec max_delay_sec <<< "$all_row"
+            if ! is_uint "$n_rows" || ! is_uint "$n_changed" || ! is_number "$pct_changed" \
+              || ! is_number "$mean_delay_sec" || ! is_number "$mean_abs_delay_sec" \
+              || ! is_number "$stdev_delay_sec" || ! is_number "$min_delay_sec" || ! is_number "$max_delay_sec"; then
+              echo "::warning title=delay_stats parse failed::${city} ${date}: diff_summary.csv's ALL row did not have the expected 9 numeric columns - delay_stats is null for this day only." >&2
+              echo "null"
+              return
+            fi
+            jq -n -c \
+              --argjson n_rows "$n_rows" --argjson n_changed "$n_changed" --argjson pct_changed "$pct_changed" \
+              --argjson mean_delay_sec "$mean_delay_sec" --argjson mean_abs_delay_sec "$mean_abs_delay_sec" \
+              --argjson stdev_delay_sec "$stdev_delay_sec" --argjson min_delay_sec "$min_delay_sec" --argjson max_delay_sec "$max_delay_sec" \
+              '{n_rows:$n_rows,n_changed:$n_changed,pct_changed:$pct_changed,mean_delay_sec:$mean_delay_sec,mean_abs_delay_sec:$mean_abs_delay_sec,stdev_delay_sec:$stdev_delay_sec,min_delay_sec:$min_delay_sec,max_delay_sec:$max_delay_sec}'
+          }
+
+          fetched=0
+          reused=0
+          : > parsed_with_stats.jsonl
+          while IFS= read -r line; do
+            [ -n "$line" ] || continue
+            city="$(jq -r '.city' <<< "$line")"
+            date="$(jq -r '.date' <<< "$line")"
+            diff_summary_url="$(jq -r '.assets.diff_summary // empty' <<< "$line")"
+            cached="$(jq -c --arg k "${city}|${date}" '.[$k] // empty' delay_stats_cache.json)"
+            if [ -n "$cached" ] && [ "$cached" != "null" ]; then
+              stats="$cached"
+              reused=$((reused + 1))
+            elif [ -z "$diff_summary_url" ]; then
+              stats="null"
+            else
+              stats="$(fetch_and_parse_delay_stats "$diff_summary_url" "$city" "$date")"
+              fetched=$((fetched + 1))
+            fi
+            jq -c --argjson stats "$stats" '. + {delay_stats: $stats}' <<< "$line" >> parsed_with_stats.jsonl
+          done < parsed.jsonl
+          echo "delay_stats: ${reused} reused from cache, ${fetched} fetched fresh this run."
+          exit 0
+
       - name: Build manifest.json (group by city, sort days, merge display_name)
         run: |
           set -euo pipefail
@@ -163,7 +259,7 @@ jobs:
             --argjson cities "$(cat cities.json)" \
             --arg generated_at "$GENERATED_AT" \
             --arg source_repo "$SOURCE_REPO" \
-            -f build.jq parsed.jsonl > manifest.json
+            -f build.jq parsed_with_stats.jsonl > manifest.json
           jq -e . manifest.json > /dev/null
 
       - name: Commit and push manifest.json if changed

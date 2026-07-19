@@ -107,6 +107,80 @@ function monthsFor(c) {
   return [...map.entries()].sort((a, b) => b[0].localeCompare(a[0]));
 }
 
+// --- monthly delay summary (PRD.md §8.2) -------------------------------------------------------
+// delay_stats (added in GD-3) is nullable per day — absent entirely on manifests generated
+// before GD-3 shipped, or null for a specific day that has no diff_summary.csv (best-effort,
+// PRD §3.5). Everything below reads only numbers already present in the fetched manifest.json —
+// no network requests, no CSV parsing happens in the browser (PRD §8.1's core constraint).
+// "Worst day" and the sparkline both use mean_abs_delay_sec, not the signed mean or a single
+// max_delay_sec spike — chosen once, for consistency, per PRD §8.2's note that either is
+// defensible but the two uses must agree.
+function monthDelaySummary(days) {
+  const withStats = days.filter((d) => d.delay_stats != null);
+  if (!withStats.length) return null;
+  let sumRows = 0, sumMeanWeighted = 0, sumAbsWeighted = 0, worst = withStats[0];
+  withStats.forEach((d) => {
+    const s = d.delay_stats;
+    sumRows += s.n_rows;
+    sumMeanWeighted += s.mean_delay_sec * s.n_rows;
+    sumAbsWeighted += s.mean_abs_delay_sec * s.n_rows;
+    if (s.mean_abs_delay_sec > worst.delay_stats.mean_abs_delay_sec) worst = d;
+  });
+  return {
+    meanDelaySec: sumRows ? sumMeanWeighted / sumRows : null,
+    meanAbsDelaySec: sumRows ? sumAbsWeighted / sumRows : null,
+    worstDay: worst,
+    daysWithData: withStats.length,
+  };
+}
+function fmtSignedSec(sec) {
+  if (sec === null) return '<span class="dash">–</span>';
+  return `${sec > 0 ? "+" : ""}${sec.toFixed(1)} s`;
+}
+function fmtAbsSec(sec) {
+  return sec === null ? '<span class="dash">–</span>' : `${sec.toFixed(1)} s`;
+}
+// Day-by-day sparkline of mean_abs_delay_sec, chronological. Days with delay_stats: null break
+// the line into a gap rather than plotting as 0 — a real 0 s day and "no data" are not the same
+// thing (PRD §8.2 / the same delay_sec == 0 ambiguity called out in PRD §3.5). Purely decorative
+// alongside the numeric summary above, so it's aria-hidden rather than made the sole carrier of
+// the information.
+function sparklineSvg(days) {
+  const w = 120, h = 26, pad = 2;
+  if (days.length < 2) return "";
+  const vals = days.map((d) => (d.delay_stats != null ? d.delay_stats.mean_abs_delay_sec : null));
+  const nums = vals.filter((v) => v !== null);
+  if (!nums.length) return "";
+  const max = Math.max(...nums) || 1;
+  const stepX = (w - pad * 2) / (days.length - 1);
+  const y = (v) => h - pad - (v / max) * (h - pad * 2);
+  const segments = [];
+  let cur = [];
+  vals.forEach((v, i) => {
+    if (v === null) { if (cur.length) segments.push(cur); cur = []; }
+    else cur.push(`${(pad + i * stepX).toFixed(1)},${y(v).toFixed(1)}`);
+  });
+  if (cur.length) segments.push(cur);
+  const polylines = segments
+    .map((seg) => `<polyline points="${seg.join(" ")}" fill="none" stroke="var(--blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`)
+    .join("");
+  return `<svg class="sparkline" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" preserveAspectRatio="none" aria-hidden="true">${polylines}</svg>`;
+}
+function delaySummaryHtml(days) {
+  const summary = monthDelaySummary(days);
+  if (!summary) {
+    return `<div class="delay-summary delay-summary-empty">brak danych o opóźnieniach za ten miesiąc</div>`;
+  }
+  return `<div class="delay-summary">
+    ${sparklineSvg(days)}
+    <div class="delay-summary-text">
+      <span>śr. opóźnienie: ${fmtSignedSec(summary.meanDelaySec)}</span>
+      <span>śr. |opóźnienie|: ${fmtAbsSec(summary.meanAbsDelaySec)}</span>
+      <span class="worst">najgorszy dzień: ${summary.worstDay.date} (${fmtAbsSec(summary.worstDay.delay_stats.mean_abs_delay_sec)})</span>
+    </div>
+  </div>`;
+}
+
 // Null values always sort to the bottom of the day table, regardless of ascending/descending
 // direction — otherwise an unknown-status day (all stats null) can look like the "highest"
 // value on a descending sort.
@@ -364,6 +438,7 @@ function render() {
                 ${hasPartial ? '<span class="pill warn">częściowe pokrycie</span>' : ""}
                 ${hasUnknown ? '<span class="pill unknown">dni bez danych</span>' : ""}
               </div>
+              ${delaySummaryHtml(days)}
             </button>`;
         }).join("")}</div>`;
     content.querySelectorAll("[data-ym]").forEach((btn) => {
