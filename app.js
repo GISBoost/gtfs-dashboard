@@ -22,6 +22,9 @@ function weekdayPl(dateStr) {
 let state = {
   level: "cities", cityId: null, month: null, date: null, q: "", sort: "date", dir: "asc",
   loadStatus: "loading", loadError: null, manifest: null, generatedAt: null,
+  // Cross-city comparison view (PRD.md §8.3, GD-4) - lives outside the city→month→day
+  // hierarchy, so it gets its own sort/range state instead of reusing sort/dir above.
+  compareRange: "month", compareSort: "meanAbsDelaySec", compareDir: "desc",
 };
 
 // --- URL hash routing --------------------------------------------------------------------------
@@ -30,6 +33,7 @@ let state = {
 // "back" button exits the whole single-page app on the first press instead of stepping back one
 // drill-down level, since nothing else here ever touches session history.
 function hashFromState(level, cityId, month, date) {
+  if (level === "compare") return "#/compare";
   if (level === "months" && cityId) return `#/${encodeURIComponent(cityId)}`;
   if (level === "days" && cityId && month) return `#/${encodeURIComponent(cityId)}/${month}`;
   if (level === "detail" && cityId && month && date) return `#/${encodeURIComponent(cityId)}/${month}/${date}`;
@@ -37,6 +41,7 @@ function hashFromState(level, cityId, month, date) {
 }
 function parseHash() {
   const raw = location.hash.replace(/^#\/?/, "");
+  if (raw === "compare") return { compare: true };
   const [cityId, month, date] = raw.split("/").filter(Boolean).map((s) => decodeURIComponent(s));
   return { cityId: cityId || null, month: month || null, date: date || null };
 }
@@ -44,7 +49,13 @@ function parseHash() {
 // Falls back one level at a time when a segment doesn't resolve (stale/hand-edited/bookmarked
 // URL) rather than crashing.
 function applyHash() {
-  const { cityId, month, date } = parseHash();
+  const parsed = parseHash();
+  if (parsed.compare) {
+    state.level = "compare"; state.cityId = null; state.month = null; state.date = null;
+    state.compareRange = "month"; state.compareSort = "meanAbsDelaySec"; state.compareDir = "desc";
+    render(); return;
+  }
+  const { cityId, month, date } = parsed;
   const city = cityId ? state.manifest.find((c) => c.id === cityId) : null;
   if (!city) {
     state.level = "cities"; state.cityId = null; state.month = null; state.date = null;
@@ -240,6 +251,76 @@ function dayTrendPanelHtml(monthDays) {
   </div>`;
 }
 
+// --- cross-city delay comparison (PRD.md §8.3, GD-4) -------------------------------------------
+// Same n_rows-weighted aggregation as monthDelaySummary above, just spanning every city's days
+// within a selected range instead of one city's one month. stdev_delay_sec is deliberately never
+// aggregated here - PRD §8.3 explains why: averaging an already-averaged stdev without the raw
+// per-row data would be statistically misleading.
+function cityDaysInRange(city, range) {
+  if (range === "all") return city.days;
+  const ym = todayIso().slice(0, 7);
+  return city.days.filter((d) => d.date.slice(0, 7) === ym);
+}
+function cityDelayAggregate(city, range) {
+  const days = cityDaysInRange(city, range).filter((d) => d.delay_stats != null);
+  if (!days.length) return null;
+  let sumRows = 0, sumMeanWeighted = 0, sumAbsWeighted = 0, sumChanged = 0, maxDelaySec = -Infinity;
+  days.forEach((d) => {
+    const s = d.delay_stats;
+    sumRows += s.n_rows;
+    sumMeanWeighted += s.mean_delay_sec * s.n_rows;
+    sumAbsWeighted += s.mean_abs_delay_sec * s.n_rows;
+    sumChanged += s.n_changed;
+    if (s.max_delay_sec > maxDelaySec) maxDelaySec = s.max_delay_sec;
+  });
+  return {
+    meanDelaySec: sumRows ? sumMeanWeighted / sumRows : null,
+    meanAbsDelaySec: sumRows ? sumAbsWeighted / sumRows : null,
+    maxDelaySec,
+    nChanged: sumChanged,
+    pctChanged: sumRows ? (sumChanged / sumRows) * 100 : null,
+  };
+}
+// Null values (a city with zero non-null delay_stats in the selected range - PRD §8.3 point 4)
+// always sort to the bottom regardless of ascending/descending direction, same rule as
+// dayComparator below.
+function compareRowValue(row, key) {
+  return key === "display" ? row.city.display : (row.agg ? row.agg[key] : null);
+}
+function compareRowComparator(a, b) {
+  const key = state.compareSort;
+  const av = compareRowValue(a, key), bv = compareRowValue(b, key);
+  if (av === null && bv === null) return 0;
+  if (av === null) return 1;
+  if (bv === null) return -1;
+  const cmp = typeof av === "string" ? av.localeCompare(bv, "pl") : (av < bv ? -1 : av > bv ? 1 : 0);
+  return state.compareDir === "asc" ? cmp : -cmp;
+}
+function fmtPct(agg) {
+  if (!agg || agg.pctChanged === null) return '<span class="dash">–</span>';
+  return `${fmtNum(agg.nChanged)} (${agg.pctChanged.toFixed(1)}%)`;
+}
+function compareTableHtml(rows) {
+  const sortInd = (key) => (state.compareSort === key ? (state.compareDir === "asc" ? "ascending" : "descending") : "none");
+  return `<div class="table-wrap"><table>
+      <thead><tr>
+        <th><button data-csort="display" aria-sort="${sortInd("display")}">Miasto</button></th>
+        <th><button data-csort="meanDelaySec" aria-sort="${sortInd("meanDelaySec")}">Śr. opóźnienie</button></th>
+        <th><button data-csort="meanAbsDelaySec" aria-sort="${sortInd("meanAbsDelaySec")}">Śr. bezwzględne opóźnienie</button></th>
+        <th><button data-csort="maxDelaySec" aria-sort="${sortInd("maxDelaySec")}">Maks. opóźnienie</button></th>
+        <th><button data-csort="pctChanged" aria-sort="${sortInd("pctChanged")}">Opóźnione obserwacje</button></th>
+      </tr></thead>
+      <tbody>${rows.map((row) => `
+        <tr>
+          <td>${escapeHtml(row.city.display)}</td>
+          <td class="num">${fmtSignedMin(row.agg ? row.agg.meanDelaySec : null)}</td>
+          <td class="num">${fmtMin(row.agg ? row.agg.meanAbsDelaySec : null)}</td>
+          <td class="num">${fmtMin(row.agg ? row.agg.maxDelaySec : null)}</td>
+          <td class="num">${fmtPct(row.agg)}</td>
+        </tr>`).join("")}</tbody>
+    </table></div>`;
+}
+
 // Null values always sort to the bottom of the day table, regardless of ascending/descending
 // direction — otherwise an unknown-status day (all stats null) can look like the "highest"
 // value on a descending sort.
@@ -302,6 +383,10 @@ function setCrumbs() {
   parts.push(crumbBtn("Wszystkie miasta", state.level === "cities", () => {
     navigateTo("cities", null, null, null);
   }));
+  if (state.level === "compare") {
+    parts.push('<span class="sep">/</span>');
+    parts.push(crumbBtn("Porównanie miast", true, () => {}));
+  }
   if (state.cityId) {
     const c = state.manifest.find((m) => m.id === state.cityId);
     parts.push('<span class="sep">/</span>');
@@ -445,12 +530,49 @@ function render() {
 
   setCrumbs();
   updateDataBadge();
+  document.getElementById("compareNavBtn").classList.toggle("active", state.level === "compare");
   note.style.display = "block";
-  q.style.display = state.level === "detail" ? "none" : "";
-  controls.style.display = state.level === "detail" ? "none" : "flex";
+  q.style.display = (state.level === "detail" || state.level === "compare") ? "none" : "";
+  controls.style.display = (state.level === "detail" || state.level === "compare") ? "none" : "flex";
   pageTitle.style.display = state.level === "detail" ? "none" : "block";
 
-  if (state.level === "cities") {
+  if (state.level === "compare") {
+    pageTitle.textContent = "Porównanie miast";
+    const range = state.compareRange;
+    if (!state.manifest.length) {
+      content.innerHTML = `<div class="empty">Brak miast w danych.</div>`;
+      note.innerHTML = `<b>Porównanie miast:</b> brak miast w załadowanym manifeście.`;
+      return;
+    }
+    const rows = state.manifest
+      .slice()
+      .sort((a, b) => a.display.localeCompare(b.display, "pl"))
+      .map((city) => ({ city, agg: cityDelayAggregate(city, range) }))
+      .sort(compareRowComparator);
+    const now = new Date(todayIso());
+    const rangeLabel = range === "month"
+      ? `bieżący miesiąc (${MONTHS_PL[now.getUTCMonth()]} ${now.getUTCFullYear()})`
+      : "cały dostępny okres";
+    content.innerHTML = `
+      <div class="range-toggle" role="group" aria-label="Zakres czasu">
+        <button class="range-btn${range === "month" ? " active" : ""}" data-range="month" aria-pressed="${range === "month"}">Bieżący miesiąc</button>
+        <button class="range-btn${range === "all" ? " active" : ""}" data-range="all" aria-pressed="${range === "all"}">Cały dostępny okres</button>
+      </div>
+      ${compareTableHtml(rows)}`;
+    content.querySelectorAll("[data-range]").forEach((btn) => {
+      btn.onclick = () => { state.compareRange = btn.dataset.range; render(); };
+    });
+    content.querySelectorAll("thead button[data-csort]").forEach((btn) => {
+      btn.onclick = () => {
+        const key = btn.dataset.csort;
+        if (state.compareSort === key) state.compareDir = state.compareDir === "asc" ? "desc" : "asc";
+        else { state.compareSort = key; state.compareDir = key === "display" ? "asc" : "desc"; }
+        render();
+      };
+    });
+    note.innerHTML = `<b>Porównanie miast:</b> ranking wg opóźnień za ${rangeLabel}, liczony wyłącznie z danych już wczytanych w <code>manifest.json</code> (bez dodatkowych zapytań). „Opóźnione obserwacje" to wiersze <code>stop_times.txt</code> (obserwacje na przystanku), nie unikalne kursy — jeden opóźniony kurs generuje wiele zmienionych wierszy.`;
+
+  } else if (state.level === "cities") {
     pageTitle.textContent = "Wszystkie miasta";
     q.placeholder = "Szukaj miasta…";
     let cities = state.manifest.slice().sort((a, b) => a.display.localeCompare(b.display, "pl"));
@@ -570,6 +692,7 @@ function render() {
 }
 
 document.getElementById("q").addEventListener("input", (e) => { state.q = e.target.value; render(); });
+document.getElementById("compareNavBtn").addEventListener("click", () => navigateTo("compare", null, null, null));
 
 // Browser back/forward moves through the hash history built by navigateTo(); re-sync state from
 // whatever hash we land on (only once the manifest is loaded — before that, applyHash has

@@ -61,6 +61,12 @@ a { color: var(--blue); }
   padding: 0.2rem 0.5rem; border-radius: 3px; border: 1px solid var(--line); color: var(--ink-muted);
 }
 .badge:empty { display: none; }
+.topnav-link {
+  font: inherit; font-size: 0.85rem; cursor: pointer; border: 1px solid var(--line); border-radius: 7px;
+  padding: 0.35rem 0.75rem; background: none; color: var(--ink-muted);
+}
+.topnav-link:hover { border-color: var(--blue); color: var(--blue); }
+.topnav-link.active { background: var(--blue-soft); color: var(--blue); border-color: var(--blue); font-weight: 600; }
 
 main { max-width: 900px; margin: 0 auto; padding: 1.5rem 1.5rem 3.5rem; }
 
@@ -116,6 +122,15 @@ main { max-width: 900px; margin: 0 auto; padding: 1.5rem 1.5rem 3.5rem; }
   padding: 0.3rem 0.55rem; font-size: 0.75rem; font-family: var(--mono); color: var(--ink);
   white-space: nowrap; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
+
+/* --- cross-city delay comparison (PRD.md §8.3, GD-4) ---------------------------------- */
+.range-toggle { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+.range-btn {
+  font: inherit; cursor: pointer; border: 1px solid var(--line); border-radius: 7px;
+  padding: 0.45rem 0.9rem; background: var(--paper-raised); color: var(--ink-muted);
+}
+.range-btn:hover { border-color: var(--blue); }
+.range-btn.active { background: var(--blue-soft); color: var(--blue); border-color: var(--blue); font-weight: 600; }
 
 .pill {
   display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.72rem; font-family: var(--mono);
