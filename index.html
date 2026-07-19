@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GTFS-RT — katalog nagrań</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand">
+      <span class="mark">GISBoost</span>
+      <span class="sub">/ katalog nagrań GTFS-RT</span>
+    </div>
+    <span class="badge" id="dataBadge"></span>
+  </div>
+
+  <main>
+    <div class="crumbs" id="crumbs"></div>
+    <h1 class="page-title" id="pageTitle"></h1>
+    <div class="controls">
+      <label class="search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="q" type="text" placeholder="Szukaj…" />
+      </label>
+    </div>
+    <div id="content">
+      <div class="state-message">
+        <div class="spinner" aria-hidden="true"></div>
+        <div class="state-title">Ładowanie danych…</div>
+      </div>
+    </div>
+    <div class="note" id="scopeNote"></div>
+  </main>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
