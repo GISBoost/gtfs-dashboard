@@ -278,4 +278,12 @@ jobs:
             exit 0
           fi
           git commit -m "chore: refresh manifest.json"
+          # This job's earlier steps (especially the diff_summary.csv fetch, GD-3) can take
+          # long enough for someone else to push to main in the meantime - rebasing onto the
+          # latest remote tip right before pushing avoids a non-fast-forward rejection. Our
+          # commit only ever touches manifest.json, so this is conflict-free unless another
+          # process committed a *different* manifest.json in that exact window - which the
+          # concurrency: group above already prevents for this workflow's own runs.
+          git fetch origin main
+          git rebase origin/main
           git push
