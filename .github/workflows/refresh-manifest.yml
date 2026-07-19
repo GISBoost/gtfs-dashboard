@@ -1,0 +1,180 @@
+name: Refresh manifest.json
+
+on:
+  schedule:
+    # 08:00 UTC daily. Boston is the latest-finishing city; real published_at samples
+    # show completions as late as 06:27 UTC, so this leaves a buffer plus slack for
+    # GitHub's own scheduled-workflow delivery jitter. manifest.json is rebuilt from
+    # scratch every run, so an unlucky day where Boston publishes even later than this
+    # just means that city's newest day shows up one run later - self-healing, never a
+    # permanent gap. Do NOT "simplify" this back to a single fixed midnight run - see
+    # PRD.md section 3.7 / CLAUDE.md for why (Boston/Brisbane timezone precedent).
+    - cron: '0 8 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-manifest
+  cancel-in-progress: false
+
+env:
+  GH_TOKEN: ${{ github.token }}
+  SOURCE_REPO: GISBoost/easy-GTFS-RT
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch config/cities.json (display names)
+        run: |
+          set -uo pipefail
+          if ! curl -fsSL "https://raw.githubusercontent.com/${SOURCE_REPO}/main/config/cities.json" -o cities.json; then
+            echo "::warning::Failed to fetch cities.json from ${SOURCE_REPO} - continuing with an empty mapping; every city's display_name will fall back to its raw city_id for this run."
+            echo '{}' > cities.json
+          fi
+          if ! jq -e . cities.json >/dev/null 2>&1; then
+            echo "::warning::cities.json fetched but was not valid JSON - falling back to {}"
+            echo '{}' > cities.json
+          fi
+
+      - name: Fetch all releases (paginated)
+        run: |
+          set -euo pipefail
+          gh api --paginate "repos/${SOURCE_REPO}/releases" > releases.json
+          echo "Fetched $(jq 'length' releases.json) total releases from ${SOURCE_REPO}."
+
+      - name: Parse releases (tag filter + best-effort body/asset extraction)
+        run: |
+          set -euo pipefail
+          cat > parse.jq <<'JQ_EOF'
+          def num_or_null(re):
+            . as $body
+            | (($body | capture(re)) // null) as $m
+            | if $m == null then null else ($m.n | tonumber) end;
+
+          def coverage_or_null:
+            . as $body
+            | (($body | capture("Actual recorded coverage: (?<n>[^.]+)\\.")) // null) as $m
+            | if $m == null then null else ($m.n | split(", ")) end;
+
+          def looks_like_range:
+            test("^[0-2][0-9]:[0-5][0-9]-[0-2][0-9]:[0-5][0-9]$");
+
+          def compute_status($ranges):
+            if $ranges == null then "unknown"
+            elif ($ranges | length) != 1 then "partial"
+            elif ($ranges[0] | looks_like_range | not) then
+              # Defensive: easy-GTFS-RT's own build workflow can legitimately emit the
+              # literal body text "Actual recorded coverage: unknown." when a
+              # recording directory has no parseable timestamps at all. That still
+              # matches the regex above (captures the string "unknown"), producing a
+              # single-element array that isn't an HH:MM-HH:MM range. Can't confidently
+              # call this "ok"; "partial" is the safer conservative label.
+              "partial"
+            else
+              ($ranges[0] | split("-")) as $se
+              | if ($se[0] > "06:05") or ($se[1] < "21:55") then "partial" else "ok" end
+            end;
+
+          def find_asset($assets; $name):
+            ($assets | map(select(.name == $name)) | first) as $a
+            | if $a == null then null else $a.browser_download_url end;
+
+          .[]
+          | (.tag_name | capture("^(?<city>[a-z0-9_]+)-realized-(?<date>\\d{4}-\\d{2}-\\d{2})-phone$")) as $tag
+          # Zero output above silently drops non-matching tags (positions-raw-*,
+          # legacy tags missing the -phone suffix, unrelated tags, etc) - never an
+          # error, per PRD.md section 3.2.
+          | .body as $body
+          | ($body | num_or_null("(\\d+) recording director")) as $recording_dirs
+          | ($body | num_or_null("(\\d+) observations matched")) as $observations_matched
+          | ($body | num_or_null("(\\d+) segments corrected")) as $segments_corrected
+          | ($body | coverage_or_null) as $coverage_ranges
+          | [
+              (if $recording_dirs       == null then "recording_dirs"       else empty end),
+              (if $observations_matched == null then "observations_matched" else empty end),
+              (if $segments_corrected   == null then "segments_corrected"   else empty end),
+              (if $coverage_ranges      == null then "coverage_ranges"      else empty end)
+            ] as $warnings
+          | {
+              city: $tag.city,
+              date: $tag.date,
+              release_tag: .tag_name,
+              release_url: (.html_url // "https://github.com/\(env.SOURCE_REPO)/releases/tag/\(.tag_name)"),
+              # published_at, not created_at: every release built on the same calendar
+              # day shares an identical created_at (reflects the underlying tag/commit
+              # date, a known GitHub API quirk) - published_at tracks each release's
+              # actual, distinct build moment. Do not "fix" this back to created_at.
+              created_at: .published_at,
+              recording_dirs: $recording_dirs,
+              observations_matched: $observations_matched,
+              segments_corrected: $segments_corrected,
+              coverage_ranges: $coverage_ranges,
+              status: (compute_status($coverage_ranges)),
+              assets: {
+                p50:          find_asset(.assets; "\($tag.city)_realized_\($tag.date)_p50.zip"),
+                p85:          find_asset(.assets; "\($tag.city)_realized_\($tag.date)_p85.zip"),
+                static_gtfs:  find_asset(.assets; "\($tag.city)_static_gtfs_\($tag.date).zip"),
+                diff_chart:   find_asset(.assets; "\($tag.city)_diff_\($tag.date)_p50_chart.png"),
+                diff_summary: find_asset(.assets; "\($tag.city)_diff_\($tag.date)_p50_summary.csv")
+              },
+              _warnings: $warnings
+            }
+          JQ_EOF
+          jq -c -f parse.jq releases.json > parsed.jsonl
+          echo "Parsed $(wc -l < parsed.jsonl) matching releases."
+
+      - name: Log parse warnings for releases with unparseable body fields
+        run: |
+          set -uo pipefail
+          while IFS= read -r line; do
+            [ -n "$line" ] || continue
+            warnings="$(jq -r '._warnings | join(", ")' <<< "$line")"
+            if [ -n "$warnings" ]; then
+              tag="$(jq -r '.release_tag' <<< "$line")"
+              echo "::warning title=Unparseable release body::${tag}: could not parse [${warnings}] from the release body (regex mismatch against PRD.md section 3.3's expected format) - these fields are null for this release only, the rest of the run continues normally."
+            fi
+          done < parsed.jsonl
+          exit 0
+
+      - name: Build manifest.json (group by city, sort days, merge display_name)
+        run: |
+          set -euo pipefail
+          cat > build.jq <<'JQ_EOF'
+          map(del(._warnings))
+          | group_by(.city)
+          | map({
+              key: .[0].city,
+              value: {
+                display_name: ($cities[.[0].city].display_name // .[0].city),
+                days: (map(del(.city)) | sort_by(.date))
+              }
+            })
+          | from_entries
+          | { generated_at: $generated_at, source_repo: $source_repo, cities: . }
+          JQ_EOF
+          GENERATED_AT="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          jq -s \
+            --argjson cities "$(cat cities.json)" \
+            --arg generated_at "$GENERATED_AT" \
+            --arg source_repo "$SOURCE_REPO" \
+            -f build.jq parsed.jsonl > manifest.json
+          jq -e . manifest.json > /dev/null
+
+      - name: Commit and push manifest.json if changed
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- manifest.json; then
+            echo "No changes to manifest.json - skipping commit."
+            exit 0
+          fi
+          git add manifest.json
+          git commit -m "chore: refresh manifest.json"
+          git push
