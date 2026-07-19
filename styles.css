@@ -147,6 +147,14 @@ main { max-width: 900px; margin: 0 auto; padding: 1.5rem 1.5rem 3.5rem; }
 }
 .pill-link:hover { border-color: var(--blue); }
 
+/* --- bulk CSV export (PRD.md §8.4 option 1, GD-5) ------------------------------------- */
+.bulk-export-btn {
+  font: inherit; font-size: 0.85rem; cursor: pointer; border: 1px solid var(--line); border-radius: 7px;
+  padding: 0.5rem 0.9rem; background: var(--paper-raised); color: var(--ink); margin-bottom: 0.85rem;
+}
+.bulk-export-btn:hover:not(:disabled) { border-color: var(--blue); color: var(--blue); }
+.bulk-export-btn:disabled { color: var(--ink-muted); cursor: default; }
+
 .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 9px; }
 table { border-collapse: collapse; width: 100%; min-width: 640px; }
 thead th {

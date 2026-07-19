@@ -448,6 +448,66 @@ function dlRow(name, url) {
   </a>`;
 }
 
+// --- bulk CSV export for a month (PRD.md §8.4 option 1, GD-5) --------------------------------
+// The original "merge client-side via fetch()" idea is confirmed broken (PRD §8.4): GitHub's
+// release-asset redirect target has no Access-Control-Allow-Origin header, so cross-origin
+// fetch() of the CSV bodies is blocked by CORS and there is nothing to merge in the browser.
+// This instead just triggers N normal, unmerged single-file downloads in sequence - exactly the
+// same kind of request today's single <a href> CSV links already make successfully, so CORS
+// never enters the picture. A small delay is required between clicks: GitHub's release-asset
+// redirect responds with Content-Disposition: attachment (confirmed via `curl -I`), which is
+// enough for a plain click to download rather than navigate, but Chrome's "automatic multiple
+// downloads" guard still throttles same-tick synthetic clicks - verified in-browser that a
+// ~400ms gap keeps every download flowing without a manual "allow multiple downloads" prompt.
+function plFiles(n) {
+  if (n === 1) return "plik";
+  const mod10 = n % 10, mod100 = n % 100;
+  return mod10 >= 2 && mod10 <= 4 && !(mod100 >= 12 && mod100 <= 14) ? "pliki" : "plików";
+}
+function triggerDownload(url) {
+  const a = document.createElement("a");
+  a.href = url;
+  a.rel = "noopener";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+}
+// Module-level (not just a disabled attribute on one DOM node) so an in-flight export survives
+// any re-render of the days view - typing in the search box or clicking a column-sort header both
+// call render(), which rebuilds #content from scratch and would otherwise orphan the running
+// loop's button reference, leaving a fresh, non-disabled button a user could click again while the
+// original sequence is still silently downloading in the background (two overlapping loops firing
+// well under the 400ms gap this delay exists to enforce - see the guard comment below).
+let bulkExportState = null; // { key: "<cityId>/<month>", done, total } while a sequence is running
+async function bulkExportCsv(days) {
+  if (bulkExportState) return;
+  const withCsv = days.filter((d) => d.assets.diff_summary);
+  const key = `${state.cityId}/${state.month}`;
+  bulkExportState = { key, done: 0, total: withCsv.length };
+  render();
+  for (let i = 0; i < withCsv.length; i++) {
+    triggerDownload(withCsv[i].assets.diff_summary);
+    bulkExportState.done = i + 1;
+    const btn = document.getElementById("bulkExportBtn");
+    if (btn && btn.dataset.key === key) btn.textContent = `Pobieranie… (${bulkExportState.done}/${bulkExportState.total})`;
+    if (i < withCsv.length - 1) await new Promise((resolve) => setTimeout(resolve, 400));
+  }
+  bulkExportState = null;
+  render();
+}
+function bulkExportButtonHtml(monthDays) {
+  const n = monthDays.filter((d) => d.assets.diff_summary).length;
+  if (!n) return "";
+  const key = `${state.cityId}/${state.month}`;
+  if (bulkExportState && bulkExportState.key === key) {
+    return `<button class="bulk-export-btn" id="bulkExportBtn" type="button" disabled data-key="${key}">Pobieranie… (${bulkExportState.done}/${bulkExportState.total})</button>`;
+  }
+  if (bulkExportState) {
+    return `<button class="bulk-export-btn" id="bulkExportBtn" type="button" disabled>Poczekaj, trwa pobieranie dla innego miesiąca…</button>`;
+  }
+  return `<button class="bulk-export-btn" id="bulkExportBtn" type="button" data-key="${key}">Pobierz wszystkie (${n} ${plFiles(n)}) — CSV</button>`;
+}
+
 function renderDetail(c, d) {
   const chartUrl = d.assets.diff_chart;
   const chartBlock = chartUrl
@@ -639,7 +699,7 @@ function render() {
     days = days.slice().sort(dayComparator);
 
     const sortInd = (key) => (state.sort === key ? (state.dir === "asc" ? "ascending" : "descending") : "none");
-    content.innerHTML = (!days.length
+    content.innerHTML = bulkExportButtonHtml(monthDays) + (!days.length
       ? `<div class="empty">Brak dni pasujących do „${escapeHtml(state.q)}”.</div>`
       : `<div class="table-wrap"><table>
           <thead><tr>
@@ -680,6 +740,8 @@ function render() {
       tr.onkeydown = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } };
     });
     wireDayTrendTooltip(monthDays);
+    const bulkBtn = document.getElementById("bulkExportBtn");
+    if (bulkBtn) bulkBtn.onclick = () => bulkExportCsv(monthDays);
     const [y, m] = state.month.split("-");
     note.innerHTML = `<b>Poziom 3 z 4:</b> dni w ${MONTHS_PL[+m - 1]} ${y} dla <b>${escapeHtml(c.display)}</b>, chronologicznie. Kliknij wiersz, żeby zobaczyć wykres tego dnia.`;
 
