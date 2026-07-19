@@ -91,9 +91,9 @@ jobs:
           # legacy tags missing the -phone suffix, unrelated tags, etc) - never an
           # error, per PRD.md section 3.2.
           | .body as $body
-          | ($body | num_or_null("(\\d+) recording director")) as $recording_dirs
-          | ($body | num_or_null("(\\d+) observations matched")) as $observations_matched
-          | ($body | num_or_null("(\\d+) segments corrected")) as $segments_corrected
+          | ($body | num_or_null("(?<n>\\d+) recording director")) as $recording_dirs
+          | ($body | num_or_null("(?<n>\\d+) observations matched")) as $observations_matched
+          | ($body | num_or_null("(?<n>\\d+) segments corrected")) as $segments_corrected
           | ($body | coverage_or_null) as $coverage_ranges
           | [
               (if $recording_dirs       == null then "recording_dirs"       else empty end),
