@@ -103,13 +103,19 @@ main { max-width: 900px; margin: 0 auto; padding: 1.5rem 1.5rem 3.5rem; }
 
 /* --- day-by-day delay trend panel (days level, GD-3 follow-up) ------------------------ */
 .delay-panel {
-  border: 1px solid var(--line); border-radius: 10px; padding: 1rem 1.1rem;
+  position: relative; border: 1px solid var(--line); border-radius: 10px; padding: 1rem 1.1rem;
   background: var(--paper-raised); margin-top: 1rem;
 }
 .delay-panel-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 0.65rem; }
-.delay-panel .sparkline-wide { display: block; width: 100%; height: 60px; }
+.delay-panel .sparkline-wide { display: block; width: 100%; height: 60px; cursor: crosshair; }
 .delay-panel-caption { font-size: 0.78rem; color: var(--ink-muted); margin: 0.7rem 0 0; }
 .delay-panel .empty { padding: 1rem; }
+.spark-tooltip {
+  position: absolute; display: none; pointer-events: none; z-index: 2;
+  background: var(--paper); border: 1px solid var(--line); border-radius: 6px;
+  padding: 0.3rem 0.55rem; font-size: 0.75rem; font-family: var(--mono); color: var(--ink);
+  white-space: nowrap; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
 
 .pill {
   display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.72rem; font-family: var(--mono);

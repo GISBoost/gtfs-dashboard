@@ -136,29 +136,33 @@ function monthDelaySummary(days) {
 // delay_stats stores seconds (matches diff_summary.csv's own column names 1:1, PRD §8.1) -
 // converted to minutes only here, at display time, since minutes read more naturally for
 // transit delays than raw seconds once you're past a few tens of them.
-function fmtSignedMin(sec) {
-  if (sec === null) return '<span class="dash">–</span>';
+function fmtSignedMinPlain(sec) {
   const min = sec / 60;
   return `${min > 0 ? "+" : ""}${min.toFixed(1)} min`;
+}
+function fmtSignedMin(sec) {
+  return sec === null ? '<span class="dash">–</span>' : fmtSignedMinPlain(sec);
 }
 function fmtMin(sec) {
   return sec === null ? '<span class="dash">–</span>' : `${(sec / 60).toFixed(1)} min`;
 }
-// Day-by-day sparkline of max_delay_sec, chronological. Days with delay_stats: null break the
-// line into a gap rather than plotting as 0 — a real 0 s day and "no data" are not the same thing
-// (PRD §8.2 / the same delay_sec == 0 ambiguity called out in PRD §3.5). Purely decorative
-// alongside the numeric summary/caption around it, so it's aria-hidden rather than made the sole
-// carrier of the information. width/height are parametrized: a small inline size for the month
-// card, a larger one for the dedicated panel on the days view (GD-3 follow-up).
-function sparklineSvg(days, { width = 120, height = 26, className = "" } = {}) {
-  const w = width, h = height, pad = 2;
+// Day-by-day sparkline of mean_delay_sec (signed - early vs late both matter, unlike a plain
+// max), chronological. Days with delay_stats: null break the line into a gap rather than
+// plotting as 0 — a real 0 s day and "no data" are not the same thing (PRD §8.2 / the same
+// delay_sec == 0 ambiguity called out in PRD §3.5). The baseline always includes 0 so an
+// early-running day (negative mean) reads as a dip below the line, not just a smaller bump.
+// Interactive mode (days-level panel) skips aria-hidden since hover then genuinely exposes
+// per-day data via wireDayTrendTooltip() - the month-card caller stays non-interactive/decorative.
+function sparklineSvg(days, { width = 120, height = 26, className = "", interactive = false } = {}) {
+  const w = width, h = height, pad = 4;
   if (days.length < 2) return "";
-  const vals = days.map((d) => (d.delay_stats != null ? d.delay_stats.max_delay_sec : null));
+  const vals = days.map((d) => (d.delay_stats != null ? d.delay_stats.mean_delay_sec : null));
   const nums = vals.filter((v) => v !== null);
   if (!nums.length) return "";
-  const max = Math.max(...nums) || 1;
+  const hi = Math.max(0, ...nums), lo = Math.min(0, ...nums);
+  const range = (hi - lo) || 1;
   const stepX = (w - pad * 2) / (days.length - 1);
-  const y = (v) => h - pad - (v / max) * (h - pad * 2);
+  const y = (v) => h - pad - ((v - lo) / range) * (h - pad * 2);
   const segments = [];
   let cur = [];
   vals.forEach((v, i) => {
@@ -169,7 +173,38 @@ function sparklineSvg(days, { width = 120, height = 26, className = "" } = {}) {
   const polylines = segments
     .map((seg) => `<polyline points="${seg.join(" ")}" fill="none" stroke="var(--blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>`)
     .join("");
-  return `<svg class="sparkline${className ? ` ${className}` : ""}" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" preserveAspectRatio="none" aria-hidden="true">${polylines}</svg>`;
+  return `<svg class="sparkline${className ? ` ${className}` : ""}" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" preserveAspectRatio="none"${interactive ? "" : ' aria-hidden="true"'}>${polylines}</svg>`;
+}
+// Wires hover on the days-level trend panel's sparkline: mouse position along the chart's width
+// maps to the nearest day that has non-null delay_stats, whose date + mean delay is then shown in
+// a small floating tooltip. Attached to the whole <svg> (not per-point markers) so hovering
+// anywhere along the line's horizontal span works, not just exact data-point pixels.
+function wireDayTrendTooltip(monthDays) {
+  const panel = document.querySelector(".delay-panel");
+  const svg = panel && panel.querySelector("svg.sparkline");
+  if (!svg) return;
+  const withStats = monthDays.map((d, i) => ({ d, i })).filter(({ d }) => d.delay_stats != null);
+  if (!withStats.length) return;
+  const tooltip = document.createElement("div");
+  tooltip.className = "spark-tooltip";
+  panel.appendChild(tooltip);
+  const n = monthDays.length;
+  svg.addEventListener("mousemove", (e) => {
+    const rect = svg.getBoundingClientRect();
+    const frac = Math.min(1, Math.max(0, (e.clientX - rect.left) / rect.width));
+    const idx = frac * (n - 1);
+    let nearest = withStats[0], bestDist = Infinity;
+    withStats.forEach((item) => {
+      const dist = Math.abs(item.i - idx);
+      if (dist < bestDist) { bestDist = dist; nearest = item; }
+    });
+    const panelRect = panel.getBoundingClientRect();
+    tooltip.textContent = `${nearest.d.date}: ${fmtSignedMinPlain(nearest.d.delay_stats.mean_delay_sec)}`;
+    tooltip.style.display = "block";
+    tooltip.style.left = `${e.clientX - panelRect.left + 12}px`;
+    tooltip.style.top = `${e.clientY - panelRect.top + 12}px`;
+  });
+  svg.addEventListener("mouseleave", () => { tooltip.style.display = "none"; });
 }
 // Compact text-only summary shown on each month card (cities → months level). The sparkline
 // itself lives on the days level instead (dayTrendPanelHtml below) - there's more room for it
@@ -196,12 +231,12 @@ function dayTrendPanelHtml(monthDays) {
       <div class="empty">brak danych o opóźnieniach za ten miesiąc</div>
     </div>`;
   }
-  const vals = withStats.map((d) => d.delay_stats.max_delay_sec);
+  const vals = withStats.map((d) => d.delay_stats.mean_delay_sec);
   const lo = Math.min(...vals), hi = Math.max(...vals);
   return `<div class="delay-panel">
     <div class="delay-panel-title">Trend opóźnień w tym miesiącu</div>
-    ${sparklineSvg(monthDays, { width: 600, height: 60, className: "sparkline-wide" })}
-    <p class="delay-panel-caption">Maksymalne opóźnienie obserwacji na dzień, w minutach (przerwy w linii = brak danych za ten dzień). Zakres w tym miesiącu: ${fmtMin(lo)} – ${fmtMin(hi)}.</p>
+    ${sparklineSvg(monthDays, { width: 600, height: 60, className: "sparkline-wide", interactive: true })}
+    <p class="delay-panel-caption">Średnie opóźnienie obserwacji na dzień, w minutach (przerwy w linii = brak danych za ten dzień; najedź na linię, żeby zobaczyć wartość dla konkretnego dnia). Zakres w tym miesiącu: ${fmtSignedMinPlain(lo)} – ${fmtSignedMinPlain(hi)}.</p>
   </div>`;
 }
 
@@ -522,6 +557,7 @@ function render() {
       tr.onclick = open;
       tr.onkeydown = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } };
     });
+    wireDayTrendTooltip(monthDays);
     const [y, m] = state.month.split("-");
     note.innerHTML = `<b>Poziom 3 z 4:</b> dni w ${MONTHS_PL[+m - 1]} ${y} dla <b>${escapeHtml(c.display)}</b>, chronologicznie. Kliknij wiersz, żeby zobaczyć wykres tego dnia.`;
 
