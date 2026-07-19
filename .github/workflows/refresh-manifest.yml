@@ -192,8 +192,10 @@ jobs:
               return
             fi
             # Match on the route_id field's value, not "last line" - robust to a trailing blank
-            # line in the CSV.
-            all_row="$(awk -F',' '$1=="ALL"{print; exit}' "$csv_file")"
+            # line in the CSV. tr -d '\r' strips CRLF line endings - the real assets from
+            # easy-GTFS-RT use \r\n, and without stripping it, the \r sticks to the last field
+            # (max_delay_sec) and fails the numeric check below for every single row.
+            all_row="$(awk -F',' '$1=="ALL"{print; exit}' "$csv_file" | tr -d '\r')"
             rm -f "$csv_file"
             if [ -z "$all_row" ]; then
               echo "::warning title=delay_stats parse failed::${city} ${date}: diff_summary.csv had no ALL row - delay_stats is null for this day only." >&2
