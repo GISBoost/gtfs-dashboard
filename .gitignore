@@ -3,3 +3,10 @@
 # hand-copied here — any manifest.json present during local development is a throwaway copy
 # of manifest.sample.json and must never be committed.
 manifest.json
+
+# Internal planning/spec docs - not needed by anyone consuming the deployed site.
+CLAUDE.md
+HANDOFF.md
+PRD.md
+PROMPTS.md
+mockup-reference.html
