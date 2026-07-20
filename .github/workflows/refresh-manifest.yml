@@ -11,6 +11,15 @@ on:
     # PRD.md section 3.7 / CLAUDE.md for why (Boston/Brisbane timezone precedent).
     - cron: '0 8 * * *'
   workflow_dispatch: {}
+  # GD-6 / PRD.md section 8.5: repository_dispatch is now the primary near-instant
+  # refresh path, sent by easy-GTFS-RT right after a release is published (a
+  # companion step in that repo, not this one - see PROMPTS.md GD-6). The schedule
+  # above stays as-is as a safety net for a missed/failed dispatch (expired token,
+  # transient API hiccup, event_type typo on either side) - confirmed once-daily
+  # cadence for that net (PRD.md section 7, point 4), not tightened as a side effect
+  # of adding this trigger.
+  repository_dispatch:
+    types: [gtfs-release-published]
 
 permissions:
   contents: write
@@ -33,6 +42,11 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+
+      - name: Log dispatch source (repository_dispatch only)
+        if: github.event_name == 'repository_dispatch'
+        run: |
+          echo "Triggered by release: city=${{ github.event.client_payload.city }} date=${{ github.event.client_payload.date }} tag=${{ github.event.client_payload.tag }}"
 
       - name: Fetch config/cities.json (display names)
         run: |
