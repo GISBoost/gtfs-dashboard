@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-21T19:20:56Z",
+  "generated_at": "2026-07-21T19:25:14Z",
   "source_repo": "GISBoost/easy-GTFS-RT",
   "cities": {
     "boston": {
@@ -1572,6 +1572,36 @@
             "stdev_delay_sec": 108.78,
             "min_delay_sec": -1073,
             "max_delay_sec": 958
+          }
+        },
+        {
+          "date": "2026-07-21",
+          "release_tag": "sofia-realized-2026-07-21-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/sofia-realized-2026-07-21-phone",
+          "created_at": "2026-07-21T19:24:42Z",
+          "recording_dirs": 1,
+          "observations_matched": 332071,
+          "segments_corrected": 419478,
+          "coverage_ranges": [
+            "11:07-22:00"
+          ],
+          "status": "partial",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-07-21-phone/sofia_realized_2026-07-21_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-07-21-phone/sofia_realized_2026-07-21_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-07-21-phone/sofia_static_gtfs_2026-07-21.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-07-21-phone/sofia_diff_2026-07-21_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-07-21-phone/sofia_diff_2026-07-21_p50_summary.csv"
+          },
+          "delay_stats": {
+            "n_rows": 759300,
+            "n_changed": 450689,
+            "pct_changed": 59.36,
+            "mean_delay_sec": 53.69,
+            "mean_abs_delay_sec": 63.83,
+            "stdev_delay_sec": 101.9,
+            "min_delay_sec": -965,
+            "max_delay_sec": 1298
           }
         }
       ]
