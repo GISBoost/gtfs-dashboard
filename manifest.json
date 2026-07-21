@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-21T20:19:22Z",
+  "generated_at": "2026-07-21T20:19:39Z",
   "source_repo": "GISBoost/easy-GTFS-RT",
   "cities": {
     "boston": {
@@ -1865,10 +1865,19 @@
             "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-07-21-phone/szczecin_realized_2026-07-21_p50.zip",
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-07-21-phone/szczecin_realized_2026-07-21_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-07-21-phone/szczecin_static_gtfs_2026-07-21.zip",
-            "diff_chart": null,
-            "diff_summary": null
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-07-21-phone/szczecin_diff_2026-07-21_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-07-21-phone/szczecin_diff_2026-07-21_p50_summary.csv"
           },
-          "delay_stats": null
+          "delay_stats": {
+            "n_rows": 349515,
+            "n_changed": 74926,
+            "pct_changed": 21.44,
+            "mean_delay_sec": 12.16,
+            "mean_abs_delay_sec": 18.92,
+            "stdev_delay_sec": 81.19,
+            "min_delay_sec": -787,
+            "max_delay_sec": 1494
+          }
         }
       ]
     },
