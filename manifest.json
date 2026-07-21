@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-21T20:35:46Z",
+  "generated_at": "2026-07-21T20:48:25Z",
   "source_repo": "GISBoost/easy-GTFS-RT",
   "cities": {
     "boston": {
@@ -1322,6 +1322,36 @@
             "stdev_delay_sec": 414.25,
             "min_delay_sec": -1255,
             "max_delay_sec": 3673
+          }
+        },
+        {
+          "date": "2026-07-21",
+          "release_tag": "prague-realized-2026-07-21-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/prague-realized-2026-07-21-phone",
+          "created_at": "2026-07-21T20:47:42Z",
+          "recording_dirs": 1,
+          "observations_matched": 1236514,
+          "segments_corrected": 439709,
+          "coverage_ranges": [
+            "10:07-22:00"
+          ],
+          "status": "partial",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-07-21-phone/prague_realized_2026-07-21_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-07-21-phone/prague_realized_2026-07-21_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-07-21-phone/prague_static_gtfs_2026-07-21.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-07-21-phone/prague_diff_2026-07-21_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-07-21-phone/prague_diff_2026-07-21_p50_summary.csv"
+          },
+          "delay_stats": {
+            "n_rows": 1452276,
+            "n_changed": 499107,
+            "pct_changed": 34.37,
+            "mean_delay_sec": 151.97,
+            "mean_abs_delay_sec": 155.39,
+            "stdev_delay_sec": 376.29,
+            "min_delay_sec": -2234,
+            "max_delay_sec": 3921
           }
         }
       ]
