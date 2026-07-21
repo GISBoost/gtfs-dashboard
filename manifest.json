@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-21T10:23:05Z",
+  "generated_at": "2026-07-21T12:27:13Z",
   "source_repo": "GISBoost/easy-GTFS-RT",
   "cities": {
     "boston": {
@@ -250,6 +250,37 @@
             "stdev_delay_sec": 360.73,
             "min_delay_sec": -3571,
             "max_delay_sec": 8945
+          }
+        },
+        {
+          "date": "2026-07-21",
+          "release_tag": "brisbane-realized-2026-07-21-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/brisbane-realized-2026-07-21-phone",
+          "created_at": "2026-07-21T12:26:15Z",
+          "recording_dirs": 2,
+          "observations_matched": 366854,
+          "segments_corrected": 327405,
+          "coverage_ranges": [
+            "06:00-09:41",
+            "18:07-22:00"
+          ],
+          "status": "partial",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-07-21-phone/brisbane_realized_2026-07-21_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-07-21-phone/brisbane_realized_2026-07-21_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-07-21-phone/brisbane_static_gtfs_2026-07-21.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-07-21-phone/brisbane_diff_2026-07-21_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-07-21-phone/brisbane_diff_2026-07-21_p50_summary.csv"
+          },
+          "delay_stats": {
+            "n_rows": 2194680,
+            "n_changed": 380930,
+            "pct_changed": 17.36,
+            "mean_delay_sec": 36.07,
+            "mean_abs_delay_sec": 47.12,
+            "stdev_delay_sec": 177.26,
+            "min_delay_sec": -2850,
+            "max_delay_sec": 8695
           }
         }
       ]
