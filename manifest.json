@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-22T21:00:42Z",
+  "generated_at": "2026-07-22T21:27:35Z",
   "source_repo": "GISBoost/easy-GTFS-RT",
   "cities": {
     "boston": {
@@ -836,6 +836,36 @@
             "stdev_delay_sec": 164.0,
             "min_delay_sec": -2736,
             "max_delay_sec": 2030
+          }
+        },
+        {
+          "date": "2026-07-22",
+          "release_tag": "lisbon-realized-2026-07-22-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/lisbon-realized-2026-07-22-phone",
+          "created_at": "2026-07-22T21:26:28Z",
+          "recording_dirs": 1,
+          "observations_matched": 351050,
+          "segments_corrected": 1165028,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-07-22-phone/lisbon_realized_2026-07-22_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-07-22-phone/lisbon_realized_2026-07-22_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-07-22-phone/lisbon_static_gtfs_2026-07-22.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-07-22-phone/lisbon_diff_2026-07-22_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-07-22-phone/lisbon_diff_2026-07-22_p50_summary.csv"
+          },
+          "delay_stats": {
+            "n_rows": 2474686,
+            "n_changed": 1250205,
+            "pct_changed": 50.52,
+            "mean_delay_sec": 10.58,
+            "mean_abs_delay_sec": 85.82,
+            "stdev_delay_sec": 182.3,
+            "min_delay_sec": -2646,
+            "max_delay_sec": 2458
           }
         }
       ]
