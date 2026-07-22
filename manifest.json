@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-22T10:22:53Z",
+  "generated_at": "2026-07-22T12:39:44Z",
   "source_repo": "GISBoost/easy-GTFS-RT",
   "cities": {
     "boston": {
@@ -311,6 +311,36 @@
             "stdev_delay_sec": 177.26,
             "min_delay_sec": -2850,
             "max_delay_sec": 8695
+          }
+        },
+        {
+          "date": "2026-07-22",
+          "release_tag": "brisbane-realized-2026-07-22-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/brisbane-realized-2026-07-22-phone",
+          "created_at": "2026-07-22T12:38:52Z",
+          "recording_dirs": 1,
+          "observations_matched": 875463,
+          "segments_corrected": 780705,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-07-22-phone/brisbane_realized_2026-07-22_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-07-22-phone/brisbane_realized_2026-07-22_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-07-22-phone/brisbane_static_gtfs_2026-07-22.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-07-22-phone/brisbane_diff_2026-07-22_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-07-22-phone/brisbane_diff_2026-07-22_p50_summary.csv"
+          },
+          "delay_stats": {
+            "n_rows": 2194680,
+            "n_changed": 858739,
+            "pct_changed": 39.13,
+            "mean_delay_sec": 112.8,
+            "mean_abs_delay_sec": 132.99,
+            "stdev_delay_sec": 330.39,
+            "min_delay_sec": -3133,
+            "max_delay_sec": 8172
           }
         }
       ]
