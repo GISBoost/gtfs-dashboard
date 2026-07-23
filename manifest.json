@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-22T21:27:35Z",
+  "generated_at": "2026-07-23T02:26:54Z",
   "source_repo": "GISBoost/easy-GTFS-RT",
   "cities": {
     "boston": {
@@ -153,6 +153,36 @@
             "stdev_delay_sec": 182.67,
             "min_delay_sec": -1052,
             "max_delay_sec": 3446
+          }
+        },
+        {
+          "date": "2026-07-22",
+          "release_tag": "boston-realized-2026-07-22-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/boston-realized-2026-07-22-phone",
+          "created_at": "2026-07-23T02:25:57Z",
+          "recording_dirs": 1,
+          "observations_matched": 521157,
+          "segments_corrected": 241209,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-07-22-phone/boston_realized_2026-07-22_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-07-22-phone/boston_realized_2026-07-22_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-07-22-phone/boston_static_gtfs_2026-07-22.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-07-22-phone/boston_diff_2026-07-22_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-07-22-phone/boston_diff_2026-07-22_p50_summary.csv"
+          },
+          "delay_stats": {
+            "n_rows": 2154908,
+            "n_changed": 261196,
+            "pct_changed": 12.12,
+            "mean_delay_sec": 40.04,
+            "mean_abs_delay_sec": 45.65,
+            "stdev_delay_sec": 186.09,
+            "min_delay_sec": -1218,
+            "max_delay_sec": 3922
           }
         }
       ]
