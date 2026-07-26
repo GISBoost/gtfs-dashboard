@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-26T20:19:17Z",
+  "generated_at": "2026-07-26T20:19:37Z",
   "source_repo": "GISBoost/easy-GTFS-RT",
   "cities": {
     "boston": {
@@ -1780,10 +1780,19 @@
             "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-26-phone/lodz_realized_2026-07-26_p50.zip",
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-26-phone/lodz_realized_2026-07-26_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-26-phone/lodz_static_gtfs_2026-07-26.zip",
-            "diff_chart": null,
-            "diff_summary": null
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-26-phone/lodz_diff_2026-07-26_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-26-phone/lodz_diff_2026-07-26_p50_summary.csv"
           },
-          "delay_stats": null
+          "delay_stats": {
+            "n_rows": 2028576,
+            "n_changed": 256830,
+            "pct_changed": 12.66,
+            "mean_delay_sec": 3.57,
+            "mean_abs_delay_sec": 9.96,
+            "stdev_delay_sec": 51.78,
+            "min_delay_sec": -334,
+            "max_delay_sec": 1748
+          }
         }
       ]
     },
