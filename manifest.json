@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-26T12:28:49Z",
+  "generated_at": "2026-07-26T19:19:08Z",
   "source_repo": "GISBoost/easy-GTFS-RT",
   "cities": {
     "boston": {
@@ -3957,6 +3957,36 @@
             "stdev_delay_sec": 82.18,
             "min_delay_sec": -629,
             "max_delay_sec": 1186
+          }
+        },
+        {
+          "date": "2026-07-26",
+          "release_tag": "vilnius-realized-2026-07-26-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/vilnius-realized-2026-07-26-phone",
+          "created_at": "2026-07-26T19:18:40Z",
+          "recording_dirs": 1,
+          "observations_matched": 230440,
+          "segments_corrected": 122060,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-07-26-phone/vilnius_realized_2026-07-26_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-07-26-phone/vilnius_realized_2026-07-26_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-07-26-phone/vilnius_static_gtfs_2026-07-26.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-07-26-phone/vilnius_diff_2026-07-26_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-07-26-phone/vilnius_diff_2026-07-26_p50_summary.csv"
+          },
+          "delay_stats": {
+            "n_rows": 390360,
+            "n_changed": 133918,
+            "pct_changed": 34.31,
+            "mean_delay_sec": 11.75,
+            "mean_abs_delay_sec": 27.29,
+            "stdev_delay_sec": 79.9,
+            "min_delay_sec": -591,
+            "max_delay_sec": 1235
           }
         }
       ]
