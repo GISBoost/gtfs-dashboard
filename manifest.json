@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-26T19:19:08Z",
+  "generated_at": "2026-07-26T19:20:59Z",
   "source_repo": "GISBoost/easy-GTFS-RT",
   "cities": {
     "boston": {
@@ -886,6 +886,36 @@
             "stdev_delay_sec": 165.04,
             "min_delay_sec": -3227,
             "max_delay_sec": 2476
+          }
+        },
+        {
+          "date": "2026-07-26",
+          "release_tag": "bucharest-realized-2026-07-26-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/bucharest-realized-2026-07-26-phone",
+          "created_at": "2026-07-26T19:20:14Z",
+          "recording_dirs": 1,
+          "observations_matched": 424325,
+          "segments_corrected": 267169,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/bucharest-realized-2026-07-26-phone/bucharest_realized_2026-07-26_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/bucharest-realized-2026-07-26-phone/bucharest_realized_2026-07-26_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/bucharest-realized-2026-07-26-phone/bucharest_static_gtfs_2026-07-26.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/bucharest-realized-2026-07-26-phone/bucharest_diff_2026-07-26_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/bucharest-realized-2026-07-26-phone/bucharest_diff_2026-07-26_p50_summary.csv"
+          },
+          "delay_stats": {
+            "n_rows": 1294403,
+            "n_changed": 292172,
+            "pct_changed": 22.57,
+            "mean_delay_sec": 3.54,
+            "mean_abs_delay_sec": 41.43,
+            "stdev_delay_sec": 144.71,
+            "min_delay_sec": -3462,
+            "max_delay_sec": 2253
           }
         }
       ]
