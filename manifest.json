@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-26T20:19:37Z",
+  "generated_at": "2026-07-26T20:21:42Z",
   "source_repo": "GISBoost/easy-GTFS-RT",
   "cities": {
     "boston": {
@@ -1101,6 +1101,36 @@
             "stdev_delay_sec": 164.22,
             "min_delay_sec": -309,
             "max_delay_sec": 1923
+          }
+        },
+        {
+          "date": "2026-07-26",
+          "release_tag": "gdansk-realized-2026-07-26-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/gdansk-realized-2026-07-26-phone",
+          "created_at": "2026-07-26T20:20:46Z",
+          "recording_dirs": 1,
+          "observations_matched": 170373,
+          "segments_corrected": 236607,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/gdansk-realized-2026-07-26-phone/gdansk_realized_2026-07-26_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/gdansk-realized-2026-07-26-phone/gdansk_realized_2026-07-26_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/gdansk-realized-2026-07-26-phone/gdansk_static_gtfs_2026-07-26.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/gdansk-realized-2026-07-26-phone/gdansk_diff_2026-07-26_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/gdansk-realized-2026-07-26-phone/gdansk_diff_2026-07-26_p50_summary.csv"
+          },
+          "delay_stats": {
+            "n_rows": 2188819,
+            "n_changed": 254256,
+            "pct_changed": 11.62,
+            "mean_delay_sec": 30.64,
+            "mean_abs_delay_sec": 33.07,
+            "stdev_delay_sec": 165.55,
+            "min_delay_sec": -350,
+            "max_delay_sec": 2803
           }
         }
       ]
