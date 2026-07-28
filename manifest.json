@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-28T20:17:18Z",
+  "generated_at": "2026-07-28T20:18:31Z",
   "source_repo": "GISBoost/easy-GTFS-RT",
   "cities": {
     "boston": {
@@ -4402,6 +4402,36 @@
             "stdev_delay_sec": 15.78,
             "min_delay_sec": -847,
             "max_delay_sec": 594
+          }
+        },
+        {
+          "date": "2026-07-28",
+          "release_tag": "turin-realized-2026-07-28-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/turin-realized-2026-07-28-phone",
+          "created_at": "2026-07-28T20:17:55Z",
+          "recording_dirs": 1,
+          "observations_matched": 1427,
+          "segments_corrected": 182,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/turin-realized-2026-07-28-phone/turin_realized_2026-07-28_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/turin-realized-2026-07-28-phone/turin_realized_2026-07-28_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/turin-realized-2026-07-28-phone/turin_static_gtfs_2026-07-28.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/turin-realized-2026-07-28-phone/turin_diff_2026-07-28_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/turin-realized-2026-07-28-phone/turin_diff_2026-07-28_p50_summary.csv"
+          },
+          "delay_stats": {
+            "n_rows": 1032907,
+            "n_changed": 226,
+            "pct_changed": 0.02,
+            "mean_delay_sec": 0.02,
+            "mean_abs_delay_sec": 0.03,
+            "stdev_delay_sec": 2.32,
+            "min_delay_sec": -92,
+            "max_delay_sec": 360
           }
         }
       ]
