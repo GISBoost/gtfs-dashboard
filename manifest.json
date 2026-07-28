@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-28T20:23:01Z",
+  "generated_at": "2026-07-28T20:40:06Z",
   "source_repo": "GISBoost/easy-GTFS-RT",
   "cities": {
     "boston": {
@@ -3277,6 +3277,36 @@
             "stdev_delay_sec": 305.04,
             "min_delay_sec": -4581,
             "max_delay_sec": 4144
+          }
+        },
+        {
+          "date": "2026-07-28",
+          "release_tag": "rome-realized-2026-07-28-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/rome-realized-2026-07-28-phone",
+          "created_at": "2026-07-28T20:38:24Z",
+          "recording_dirs": 1,
+          "observations_matched": 827488,
+          "segments_corrected": 1138864,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rome-realized-2026-07-28-phone/rome_realized_2026-07-28_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rome-realized-2026-07-28-phone/rome_realized_2026-07-28_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rome-realized-2026-07-28-phone/rome_static_gtfs_2026-07-28.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rome-realized-2026-07-28-phone/rome_diff_2026-07-28_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rome-realized-2026-07-28-phone/rome_diff_2026-07-28_p50_summary.csv"
+          },
+          "delay_stats": {
+            "n_rows": 4617914,
+            "n_changed": 1304886,
+            "pct_changed": 28.26,
+            "mean_delay_sec": 45.77,
+            "mean_abs_delay_sec": 111.17,
+            "stdev_delay_sec": 294.11,
+            "min_delay_sec": -4750,
+            "max_delay_sec": 7179
           }
         }
       ]
