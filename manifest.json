@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-28T20:18:31Z",
+  "generated_at": "2026-07-28T20:20:49Z",
   "source_repo": "GISBoost/easy-GTFS-RT",
   "cities": {
     "boston": {
@@ -2123,6 +2123,36 @@
             "min_delay_sec": -513,
             "max_delay_sec": 2424
           }
+        },
+        {
+          "date": "2026-07-28",
+          "release_tag": "lodz-realized-2026-07-28-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/lodz-realized-2026-07-28-phone",
+          "created_at": "2026-07-28T20:19:49Z",
+          "recording_dirs": 1,
+          "observations_matched": 286778,
+          "segments_corrected": 639406,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-28-phone/lodz_realized_2026-07-28_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-28-phone/lodz_realized_2026-07-28_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-28-phone/lodz_static_gtfs_2026-07-28.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-28-phone/lodz_diff_2026-07-28_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-28-phone/lodz_diff_2026-07-28_p50_summary.csv"
+          },
+          "delay_stats": {
+            "n_rows": 1941547,
+            "n_changed": 678289,
+            "pct_changed": 34.94,
+            "mean_delay_sec": 14.02,
+            "mean_abs_delay_sec": 30.71,
+            "stdev_delay_sec": 99.91,
+            "min_delay_sec": -605,
+            "max_delay_sec": 2319
+          }
         }
       ]
     },
@@ -4038,6 +4068,27 @@
             "min_delay_sec": -1304,
             "max_delay_sec": 2064
           }
+        },
+        {
+          "date": "2026-07-28",
+          "release_tag": "szczecin-realized-2026-07-28-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/szczecin-realized-2026-07-28-phone",
+          "created_at": "2026-07-28T20:20:35Z",
+          "recording_dirs": 1,
+          "observations_matched": 205941,
+          "segments_corrected": 107263,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-07-28-phone/szczecin_realized_2026-07-28_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-07-28-phone/szczecin_realized_2026-07-28_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-07-28-phone/szczecin_static_gtfs_2026-07-28.zip",
+            "diff_chart": null,
+            "diff_summary": null
+          },
+          "delay_stats": null
         }
       ]
     },
