@@ -18,3 +18,14 @@ served directly by GitHub Pages.
 
 See `PRD.md` for the full spec and `HANDOFF.md` for the design rationale (both kept local, not
 pushed — see `.gitignore`).
+
+## Licensing
+
+The site itself — `index.html`, `app.js`, `styles.css`, and the workflow that regenerates the
+manifest — is **MIT**, see [`LICENSE`](LICENSE).
+
+That covers the browser, not the data seen through it. `manifest.json` is a generated index of
+`easy-GTFS-RT`'s Releases, and every file it links to derives from a transit agency's own
+open-data feed, under that agency's terms — not this repo's. Read
+[`easy-GTFS-RT`'s "Data and attribution"](https://github.com/GISBoost/easy-GTFS-RT#data-and-attribution)
+before redistributing or publishing anything you downloaded through this site.
