@@ -11,10 +11,15 @@ daily, the Releases list itself is no longer a practical way to browse the data.
 that: it reads `manifest.json` (generated from the Releases API) and renders a simple
 city → month → day → details drill-down, with each day's stats, download links, and diff chart.
 
-This repo stores **no data of its own** — `manifest.json` is regenerated from scratch on a
-schedule by `.github/workflows/refresh-manifest.yml`, which reads `easy-GTFS-RT`'s public
-Releases API and `config/cities.json`. The frontend is plain HTML/CSS/vanilla JS, no build step,
-served directly by GitHub Pages.
+This repo stores **no data of its own** — `manifest.json` is regenerated from scratch by
+`.github/workflows/refresh-manifest.yml`, which reads `easy-GTFS-RT`'s public Releases API and
+`config/cities.json`. The frontend is plain HTML/CSS/vanilla JS, no build step, served directly by
+GitHub Pages.
+
+**Refresh schedule: once daily at 08:00 UTC**, picking up everything published since the previous
+run. The hour is deliberate, not arbitrary — Boston records until 22:00 local, so its build lands
+the following UTC morning (observed as late as 06:27 UTC), and an earlier run would leave that one
+city permanently a day behind. `workflow_dispatch` is available for an immediate manual refresh.
 
 See `PRD.md` for the full spec and `HANDOFF.md` for the design rationale (both kept local, not
 pushed — see `.gitignore`).
