@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-29T19:23:54Z",
+  "generated_at": "2026-07-29T20:17:32Z",
   "source_repo": "GISBoost/easy-GTFS-RT",
   "cities": {
     "boston": {
@@ -2637,6 +2637,36 @@
             "stdev_delay_sec": 213.28,
             "min_delay_sec": -1464,
             "max_delay_sec": 3581
+          }
+        },
+        {
+          "date": "2026-07-29",
+          "release_tag": "poznan-realized-2026-07-29-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/poznan-realized-2026-07-29-phone",
+          "created_at": "2026-07-29T20:17:01Z",
+          "recording_dirs": 1,
+          "observations_matched": 61207,
+          "segments_corrected": 48564,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-07-29-phone/poznan_realized_2026-07-29_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-07-29-phone/poznan_realized_2026-07-29_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-07-29-phone/poznan_static_gtfs_2026-07-29.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-07-29-phone/poznan_diff_2026-07-29_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-07-29-phone/poznan_diff_2026-07-29_p50_summary.csv"
+          },
+          "delay_stats": {
+            "n_rows": 510806,
+            "n_changed": 59064,
+            "pct_changed": 11.56,
+            "mean_delay_sec": 31.36,
+            "mean_abs_delay_sec": 35.28,
+            "stdev_delay_sec": 191.78,
+            "min_delay_sec": -378,
+            "max_delay_sec": 3465
           }
         }
       ]
