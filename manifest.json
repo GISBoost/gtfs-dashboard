@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-29T12:31:33Z",
+  "generated_at": "2026-07-29T19:19:39Z",
   "source_repo": "GISBoost/easy-GTFS-RT",
   "cities": {
     "boston": {
@@ -1157,6 +1157,27 @@
             "min_delay_sec": -2628,
             "max_delay_sec": 2523
           }
+        },
+        {
+          "date": "2026-07-29",
+          "release_tag": "bucharest-realized-2026-07-29-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/bucharest-realized-2026-07-29-phone",
+          "created_at": "2026-07-29T19:19:28Z",
+          "recording_dirs": 1,
+          "observations_matched": 464198,
+          "segments_corrected": 292484,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/bucharest-realized-2026-07-29-phone/bucharest_realized_2026-07-29_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/bucharest-realized-2026-07-29-phone/bucharest_realized_2026-07-29_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/bucharest-realized-2026-07-29-phone/bucharest_static_gtfs_2026-07-29.zip",
+            "diff_chart": null,
+            "diff_summary": null
+          },
+          "delay_stats": null
         }
       ]
     },
@@ -5097,6 +5118,36 @@
             "stdev_delay_sec": 160.75,
             "min_delay_sec": -971,
             "max_delay_sec": 1738
+          }
+        },
+        {
+          "date": "2026-07-29",
+          "release_tag": "vilnius-realized-2026-07-29-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/vilnius-realized-2026-07-29-phone",
+          "created_at": "2026-07-29T19:18:51Z",
+          "recording_dirs": 1,
+          "observations_matched": 326592,
+          "segments_corrected": 271923,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-07-29-phone/vilnius_realized_2026-07-29_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-07-29-phone/vilnius_realized_2026-07-29_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-07-29-phone/vilnius_static_gtfs_2026-07-29.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-07-29-phone/vilnius_diff_2026-07-29_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-07-29-phone/vilnius_diff_2026-07-29_p50_summary.csv"
+          },
+          "delay_stats": {
+            "n_rows": 403123,
+            "n_changed": 297902,
+            "pct_changed": 73.9,
+            "mean_delay_sec": 63.81,
+            "mean_abs_delay_sec": 86.86,
+            "stdev_delay_sec": 145.74,
+            "min_delay_sec": -731,
+            "max_delay_sec": 1684
           }
         }
       ]
