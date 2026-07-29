@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-29T20:17:32Z",
+  "generated_at": "2026-07-29T20:19:11Z",
   "source_repo": "GISBoost/easy-GTFS-RT",
   "cities": {
     "boston": {
@@ -2302,6 +2302,36 @@
             "stdev_delay_sec": 99.91,
             "min_delay_sec": -605,
             "max_delay_sec": 2319
+          }
+        },
+        {
+          "date": "2026-07-29",
+          "release_tag": "lodz-realized-2026-07-29-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/lodz-realized-2026-07-29-phone",
+          "created_at": "2026-07-29T20:18:30Z",
+          "recording_dirs": 1,
+          "observations_matched": 276981,
+          "segments_corrected": 450432,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-29-phone/lodz_realized_2026-07-29_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-29-phone/lodz_realized_2026-07-29_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-29-phone/lodz_static_gtfs_2026-07-29.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-29-phone/lodz_diff_2026-07-29_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-29-phone/lodz_diff_2026-07-29_p50_summary.csv"
+          },
+          "delay_stats": {
+            "n_rows": 1308198,
+            "n_changed": 491697,
+            "pct_changed": 37.59,
+            "mean_delay_sec": 18.65,
+            "mean_abs_delay_sec": 34.24,
+            "stdev_delay_sec": 104.51,
+            "min_delay_sec": -467,
+            "max_delay_sec": 2044
           }
         }
       ]
