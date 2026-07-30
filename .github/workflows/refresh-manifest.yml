@@ -2,23 +2,37 @@ name: Refresh manifest.json
 
 on:
   schedule:
-    # 08:00 UTC daily, and since 2026-07-29 the ONLY automatic trigger. Each run picks
-    # up everything published since the last one, i.e. the previous day's releases.
+    # 04:00 UTC daily (06:00 Warsaw in summer), and since 2026-07-29 the ONLY automatic
+    # trigger. Each run picks up everything published since the last one, i.e. the
+    # previous day's releases.
     #
-    # The hour is late on purpose and is NOT free to move to midnight. Boston is the
-    # latest-finishing city: it records 06:00-22:00 America/New_York, so its build for
-    # day D lands the following UTC morning - real published_at samples show
-    # completions as late as 06:27 UTC. 08:00 leaves ~1.5h of slack on top of that for
-    # GitHub's own scheduled-workflow delivery jitter. A run "just after midnight"
-    # would fire before Boston's previous day exists and would only ever see it 24h
-    # later, leaving that one city permanently a day stale. See PRD.md section 3.7 for
-    # the original Boston/Brisbane precedent - easy-GTFS-RT already made this mistake
-    # once.
+    # The hour is set by Boston, the latest-finishing city: it records until 22:00
+    # America/New_York, so its window closes at 02:00 UTC and its build for day D lands
+    # in the small hours of D+1. Measured from real published_at values, 13 releases:
+    #
+    #     2026-07-16 -> 06:27 UTC   <- first day this city ever ran; setup outlier
+    #     2026-07-17 .. 2026-07-29  -> 02:21-02:26 UTC, every single day
+    #
+    # i.e. steady state is ~23 minutes after the window closes, with a five-minute
+    # spread over twelve days. This schedule used to be 08:00 UTC because that lone
+    # 06:27 sample was treated as the constraint; it is not, and 04:00 still clears the
+    # real distribution by ~1.5h. That margin also absorbs GitHub's scheduled-workflow
+    # delivery jitter, which only ever runs a cron LATE, never early - so jitter can
+    # only help here.
+    #
+    # SEASONAL CAVEAT: cron is UTC and does not observe DST, but Boston does. Once US
+    # DST ends (first Sunday of November) Boston's window closes at 03:00 UTC and it
+    # publishes ~03:25 UTC, cutting the margin here to roughly 35 minutes. Still
+    # positive, still one-directional (jitter can only delay this run, never advance
+    # it), but do not shave this any earlier without re-measuring in winter.
+    #
+    # Do NOT move this to midnight: 00:00 UTC precedes Boston's publish in every season
+    # and would leave that one city permanently a day stale. See PRD.md section 3.7.
     #
     # manifest.json is rebuilt from scratch every run, so a day where some city
     # publishes even later than this just shows up one run later - self-healing, never
     # a permanent gap.
-    - cron: '0 8 * * *'
+    - cron: '0 4 * * *'
   workflow_dispatch: {}
   # No repository_dispatch. GD-6 had easy-GTFS-RT fire one straight after each release
   # so the dashboard refreshed within seconds; that step was removed 2026-07-29 along

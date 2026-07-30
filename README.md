@@ -16,10 +16,12 @@ This repo stores **no data of its own** — `manifest.json` is regenerated from 
 `config/cities.json`. The frontend is plain HTML/CSS/vanilla JS, no build step, served directly by
 GitHub Pages.
 
-**Refresh schedule: once daily at 08:00 UTC**, picking up everything published since the previous
-run. The hour is deliberate, not arbitrary — Boston records until 22:00 local, so its build lands
-the following UTC morning (observed as late as 06:27 UTC), and an earlier run would leave that one
-city permanently a day behind. `workflow_dispatch` is available for an immediate manual refresh.
+**Refresh schedule: once daily at 04:00 UTC** (06:00 Warsaw in summer), picking up everything
+published since the previous run. The hour is set by Boston, the latest-finishing city: it records
+until 22:00 local, so its window closes at 02:00 UTC and its build publishes at 02:21–02:26 UTC —
+measured across twelve consecutive days. That leaves ~1.5h of margin, narrowing to ~35 min in
+winter once US DST ends and Boston's publish shifts an hour later (cron is UTC and does not
+follow DST). `workflow_dispatch` is available for an immediate manual refresh.
 
 See `PRD.md` for the full spec and `HANDOFF.md` for the design rationale (both kept local, not
 pushed — see `.gitignore`).
