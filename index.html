@@ -42,6 +42,99 @@
     <div class="note" id="scopeNote"></div>
   </main>
 
+  <section class="chart-showcase">
+    <h2 class="showcase-title">Co można zrobić z tych danych</h2>
+    <p class="showcase-intro">
+      Te same nagrania GTFS-RT (Family A) posłużyły też do policzenia piętnastu wykresów
+      punktualności, regularności i prędkości w narzędziu
+      <code>transit_charts</code> z repozytorium <code>easy-OTP</code> — poniżej osiem
+      przykładów z Łodzi. Pełny katalog, z opisem każdego wykresu i gotowymi komendami, jest w
+      <a href="https://github.com/GISBoost/easy-OTP/blob/main/tools/transit_charts/README.md" target="_blank" rel="noopener">tools/transit_charts</a>.
+    </p>
+    <div class="showcase-grid">
+      <figure class="showcase-card">
+        <a href="https://raw.githubusercontent.com/GISBoost/easy-OTP/main/tools/transit_charts/assets/examples/lodz_D15.png" target="_blank" rel="noopener">
+          <img class="showcase-img" loading="lazy" src="https://raw.githubusercontent.com/GISBoost/easy-OTP/main/tools/transit_charts/assets/examples/lodz_D15.png" alt="D15 — strata systematyczna kontra losowa, segmenty trasy linii 11 z trzech dni" />
+        </a>
+        <figcaption>
+          <h3>D15 · strata systematyczna czy losowa</h3>
+          <p>Każdy segment trasy jako jeden punkt z kilku dni: w poziomie — jak bardzo jest systematycznie spóźniony, w pionie — jak bardzo to się zmienia dzień w dzień. Prawy dolny róg to segment do przetestowania rozkładu, lewy górny — problem infrastruktury, nie planu.</p>
+          <a class="showcase-link" href="https://github.com/GISBoost/easy-OTP/blob/main/tools/transit_charts/README.md#d15--strata-systematyczna-kontra-losowa--potrzebuje--3-dni" target="_blank" rel="noopener">Zobacz w easy-OTP →</a>
+        </figcaption>
+      </figure>
+      <figure class="showcase-card">
+        <a href="https://raw.githubusercontent.com/GISBoost/easy-OTP/main/tools/transit_charts/assets/examples/lodz_B7.png" target="_blank" rel="noopener">
+          <img class="showcase-img" loading="lazy" src="https://raw.githubusercontent.com/GISBoost/easy-OTP/main/tools/transit_charts/assets/examples/lodz_B7.png" alt="B7 — rozkład odstępów między pojazdami linii 11, godzina po godzinie" />
+        </a>
+        <figcaption>
+          <h3>B7 · odstępy między pojazdami</h3>
+          <p>Rozkład odstępów między kolejnymi pojazdami tej samej linii, godzina po godzinie. Dwa garby zamiast jednego zdradzają pojazdy „zbijające się” w pary.</p>
+          <a class="showcase-link" href="https://github.com/GISBoost/easy-OTP/blob/main/tools/transit_charts/README.md#b7--rozkład-odstępów-godzina-po-godzinie-ridgeline" target="_blank" rel="noopener">Zobacz w easy-OTP →</a>
+        </figcaption>
+      </figure>
+      <figure class="showcase-card">
+        <a href="https://raw.githubusercontent.com/GISBoost/easy-OTP/main/tools/transit_charts/assets/examples/lodz_C11.png" target="_blank" rel="noopener">
+          <img class="showcase-img" loading="lazy" src="https://raw.githubusercontent.com/GISBoost/easy-OTP/main/tools/transit_charts/assets/examples/lodz_C11.png" alt="C11 — struktura punktualności w ciągu doby dla trzech linii" />
+        </a>
+        <figcaption>
+          <h3>C11 · punktualność w ciągu dnia</h3>
+          <p>Udział kursów punktualnych, spóźnionych i bardzo spóźnionych, godzina po godzinie. Gdy zielony pas się kurczy, coś na trasie zaczyna szwankować.</p>
+          <a class="showcase-link" href="https://github.com/GISBoost/easy-OTP/blob/main/tools/transit_charts/README.md#c11--struktura-punktualności-w-ciągu-doby" target="_blank" rel="noopener">Zobacz w easy-OTP →</a>
+        </figcaption>
+      </figure>
+      <figure class="showcase-card">
+        <a href="https://raw.githubusercontent.com/GISBoost/easy-OTP/main/tools/transit_charts/assets/examples/lodz_D17.png" target="_blank" rel="noopener">
+          <img class="showcase-img" loading="lazy" src="https://raw.githubusercontent.com/GISBoost/easy-OTP/main/tools/transit_charts/assets/examples/lodz_D17.png" alt="D17 — zapas w rozkładzie jazdy, segment na pasmo czasu, linia 11" />
+        </a>
+        <figcaption>
+          <h3>D17 · zapas w rozkładzie</h3>
+          <p>Czerwony odcinek trasy to rozkład zaplanowany za ciasno (opóźnienie wpisane w harmonogram), niebieski — zbyt luźno, więc pojazdy czekają na przystanku.</p>
+          <a class="showcase-link" href="https://github.com/GISBoost/easy-OTP/blob/main/tools/transit_charts/README.md#d17--zapas-w-rozkładzie" target="_blank" rel="noopener">Zobacz w easy-OTP →</a>
+        </figcaption>
+      </figure>
+      <figure class="showcase-card">
+        <a href="https://raw.githubusercontent.com/GISBoost/easy-OTP/main/tools/transit_charts/assets/examples/lodz_B5.png" target="_blank" rel="noopener">
+          <img class="showcase-img" loading="lazy" src="https://raw.githubusercontent.com/GISBoost/easy-OTP/main/tools/transit_charts/assets/examples/lodz_B5.png" alt="B5 — regularność odstępów, siatka przystanek na godzinę, linia 11" />
+        </a>
+        <figcaption>
+          <h3>B5 · regularność, przystanek × godzina</h3>
+          <p>Ta sama linia rozłożona na siatkę: wiersze to przystanki, kolumny to godziny. Pionowy czerwony pas pokazuje przystanek, na którym service zawsze traci rytmiczność.</p>
+          <a class="showcase-link" href="https://github.com/GISBoost/easy-OTP/blob/main/tools/transit_charts/README.md#b5--regularność-odstępów-cv--coefficient-of-variation-współczynnik-zmienności-przystanek--godzina" target="_blank" rel="noopener">Zobacz w easy-OTP →</a>
+        </figcaption>
+      </figure>
+      <figure class="showcase-card">
+        <a href="https://raw.githubusercontent.com/GISBoost/easy-OTP/main/tools/transit_charts/assets/examples/lodz_D14.png" target="_blank" rel="noopener">
+          <img class="showcase-img" loading="lazy" src="https://raw.githubusercontent.com/GISBoost/easy-OTP/main/tools/transit_charts/assets/examples/lodz_D14.png" alt="D14 — mediana prędkości segmentowej, segment na pasmo czasu, linia 11" />
+        </a>
+        <figcaption>
+          <h3>D14 · prędkość, segment × pasmo czasu</h3>
+          <p>Wiersze to kolejne odcinki trasy, kolumny to pory dnia, kolor to mediana prędkości. Ciemny wiersz to odcinek zawsze wolny; ciemna kolumna to pora, kiedy zwalnia cała trasa — przecięcie obu jest najbardziej warte uwagi.</p>
+          <a class="showcase-link" href="https://github.com/GISBoost/easy-OTP/blob/main/tools/transit_charts/README.md#d14--prędkość-segmentowa-segment--pasmo-czasu" target="_blank" rel="noopener">Zobacz w easy-OTP →</a>
+        </figcaption>
+      </figure>
+      <figure class="showcase-card">
+        <a href="https://raw.githubusercontent.com/GISBoost/easy-OTP/main/tools/transit_charts/assets/examples/lodz_H29.png" target="_blank" rel="noopener">
+          <img class="showcase-img" loading="lazy" src="https://raw.githubusercontent.com/GISBoost/easy-OTP/main/tools/transit_charts/assets/examples/lodz_H29.png" alt="H29 — ranking nadmiaru oczekiwania (EWT) wszystkich linii, dwa panele" />
+        </a>
+        <figcaption>
+          <h3>H29 · ranking strat czasu, cała sieć</h3>
+          <p>Ranking wszystkich linii według strat czasu z powodu nieregularności. Lewy panel pokazuje, gdzie tracimy najwięcej minut pasażerskich, prawy — która linia jest proporcjonalnie najgorsza. To dwa różne pytania, nie sprzeczne odpowiedzi.</p>
+          <a class="showcase-link" href="https://github.com/GISBoost/easy-OTP/blob/main/tools/transit_charts/README.md#h29--ranking-nadmiaru-oczekiwania-ewt-wszystkich-linii-dwa-panele" target="_blank" rel="noopener">Zobacz w easy-OTP →</a>
+        </figcaption>
+      </figure>
+      <figure class="showcase-card">
+        <a href="https://raw.githubusercontent.com/GISBoost/easy-OTP/main/tools/transit_charts/assets/examples/E20.png" target="_blank" rel="noopener">
+          <img class="showcase-img" loading="lazy" src="https://raw.githubusercontent.com/GISBoost/easy-OTP/main/tools/transit_charts/assets/examples/E20.png" alt="E20 — profil artefaktu pierwszego przystanku porównany w siedmiu miastach" />
+        </a>
+        <figcaption>
+          <h3>E20 · ten sam artefakt w 7 miastach</h3>
+          <p>Sztucznie wydłużony pierwszy odcinek trasy (odstój na pętli, nie prawdziwe opóźnienie) zmierzony naraz w siedmiu miastach. Rzym i Boston pokazują go wyraźnie, Łódź — praktycznie wcale.</p>
+          <a class="showcase-link" href="https://github.com/GISBoost/easy-OTP/blob/main/tools/transit_charts/README.md#e20--międzymiastowy-profil-artefaktu" target="_blank" rel="noopener">Zobacz w easy-OTP →</a>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
   <footer class="sitefooter">
     <p class="footer-attribution" id="footerAttribution">Dane: <a href="https://mkuran.pl/gtfs/" target="_blank" rel="noopener">mkuran.pl</a>, <a href="https://odt.org.pl/pl/data" target="_blank" rel="noopener">Otwarte Dane Transportowe (ODT)</a>, Miasto Stołeczne Warszawa, <a href="https://otwartedane.erzeszow.pl/dataset/rozklad-jazdy-transxchange" target="_blank" rel="noopener">ZTM Rzeszów</a>, Urząd Miasta Kielce – Zarząd Transportu Miejskiego.</p>
     <div class="footer-bottom">

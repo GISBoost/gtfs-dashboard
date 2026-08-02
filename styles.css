@@ -247,6 +247,24 @@ td.date, td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; 
 .dl-detail .dl-file { font-family: var(--mono); font-size: 0.74rem; color: var(--ink-muted); }
 .dl-detail .dl-go { color: var(--blue); font-family: var(--mono); font-size: 0.8rem; }
 
+/* --- chart showcase: example transit_charts renders from easy-OTP --------------------- */
+.chart-showcase { max-width: 900px; margin: 0.5rem auto 0; padding: 0 1.5rem; }
+.showcase-title { font-size: 1.15rem; font-weight: 800; letter-spacing: -0.01em; margin: 0 0 0.5rem; }
+.showcase-intro { font-size: 0.88rem; color: var(--ink-muted); line-height: 1.6; margin: 0 0 1.1rem; }
+.showcase-intro code { font-family: var(--mono); font-size: 0.85em; }
+.showcase-intro a { color: var(--blue); }
+.showcase-grid { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+.showcase-card {
+  margin: 0; border: 1px solid var(--line); border-radius: 10px; padding: 1rem 1.1rem;
+  background: var(--paper-raised); display: flex; flex-direction: column; gap: 0.6rem;
+}
+.showcase-img { width: 100%; display: block; border-radius: 8px; background: var(--paper); }
+.showcase-card figcaption { display: flex; flex-direction: column; gap: 0.35rem; flex: 1; }
+.showcase-card h3 { font-size: 0.95rem; font-weight: 700; margin: 0; }
+.showcase-card p { font-size: 0.83rem; color: var(--ink-muted); line-height: 1.5; margin: 0; }
+.showcase-link { font-size: 0.8rem; color: var(--blue); text-decoration: none; align-self: flex-start; margin-top: auto; }
+.showcase-link:hover { text-decoration: underline; }
+
 /* --- site footer: data attribution + signature + social links ------------------------- */
 .sitefooter {
   max-width: 900px; margin: 2rem auto 0; padding: 1.1rem 1.5rem 2rem;
