@@ -246,3 +246,22 @@ td.date, td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; 
 .dl-detail .dl-name { font-weight: 600; font-size: 0.9rem; }
 .dl-detail .dl-file { font-family: var(--mono); font-size: 0.74rem; color: var(--ink-muted); }
 .dl-detail .dl-go { color: var(--blue); font-family: var(--mono); font-size: 0.8rem; }
+
+/* --- site footer: data attribution + signature + social links ------------------------- */
+.sitefooter {
+  max-width: 900px; margin: 2rem auto 0; padding: 1.1rem 1.5rem 2rem;
+  border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 0.75rem;
+}
+.footer-attribution { margin: 0; font-size: 0.82rem; color: var(--ink-muted); line-height: 1.6; }
+.footer-attribution:empty { display: none; }
+.footer-attribution a { color: var(--ink-muted); text-decoration: underline; }
+.footer-attribution a:hover { color: var(--blue); }
+.footer-bottom {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap;
+}
+.footer-signature { font-size: 0.82rem; font-weight: 600; color: var(--ink-muted); text-decoration: none; }
+.footer-signature:hover { color: var(--blue); }
+.footer-social { display: flex; align-items: center; gap: 0.9rem; }
+.footer-social a { color: var(--ink-muted); display: flex; }
+.footer-social a:hover { color: var(--blue); }
+.footer-social a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 3px; }
