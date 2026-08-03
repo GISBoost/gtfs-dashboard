@@ -154,7 +154,8 @@ jobs:
                 p85:          find_asset(.assets; "\($tag.city)_realized_\($tag.date)_p85.zip"),
                 static_gtfs:  find_asset(.assets; "\($tag.city)_static_gtfs_\($tag.date).zip"),
                 diff_chart:   find_asset(.assets; "\($tag.city)_diff_\($tag.date)_p50_chart.png"),
-                diff_summary: find_asset(.assets; "\($tag.city)_diff_\($tag.date)_p50_summary.csv")
+                diff_summary: find_asset(.assets; "\($tag.city)_diff_\($tag.date)_p50_summary.csv"),
+                tidy_table:   find_asset(.assets; "\($tag.city)_tidy_\($tag.date).csv.gz")
               },
               _warnings: $warnings
             }

@@ -559,7 +559,14 @@ function renderDetail(c, d) {
       ${dlRow("🗺️ Statyczny GTFS użyty do tego builda", d.assets.static_gtfs)}
       ${dlRow("📈 Wykres static-vs-realized (PNG)", d.assets.diff_chart)}
       ${dlRow("📄 Zestawienie różnic (CSV)", d.assets.diff_summary)}
-    </div>`;
+      ${dlRow("📊 Tabela źródłowa wykresów (tidy table, CSV.GZ)", d.assets.tidy_table)}
+    </div>
+    ${d.assets.tidy_table
+      ? `<p class="chart-caption">Ta tabela to dokładne wejście, które czyta
+          <code>transit_charts chart</code> — zawiera jeden wiersz na zaplanowane minięcie
+          przystanku dla całego dnia. Instrukcja, jak z niej lokalnie odtworzyć wykresy:
+          <a href="https://github.com/GISBoost/easy-OTP/tree/main/tools/transit_charts#readme" target="_blank" rel="noopener">README narzędzia transit_charts ↗</a>.</p>`
+      : ""}`;
 }
 
 // --- main render dispatcher ----------------------------------------------------------------------

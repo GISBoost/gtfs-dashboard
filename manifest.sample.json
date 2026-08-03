@@ -30,7 +30,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-13-phone/lodz_realized_2026-07-13_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-13-phone/lodz_static_gtfs_2026-07-13.zip",
             "diff_chart": null,
-            "diff_summary": null
+            "diff_summary": null,
+            "tidy_table": null
           },
           "delay_stats": null
         },
@@ -51,7 +52,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-14-phone/lodz_realized_2026-07-14_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-14-phone/lodz_static_gtfs_2026-07-14.zip",
             "diff_chart": null,
-            "diff_summary": null
+            "diff_summary": null,
+            "tidy_table": null
           },
           "delay_stats": null
         },
@@ -72,7 +74,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-15-phone/lodz_realized_2026-07-15_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-15-phone/lodz_static_gtfs_2026-07-15.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-15-phone/lodz_diff_2026-07-15_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-15-phone/lodz_diff_2026-07-15_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-15-phone/lodz_diff_2026-07-15_p50_summary.csv",
+            "tidy_table": null
           },
           "delay_stats": {
             "n_rows": 291158, "n_changed": 34521, "pct_changed": 11.86,
@@ -97,7 +100,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-16-phone/lodz_realized_2026-07-16_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-16-phone/lodz_static_gtfs_2026-07-16.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-16-phone/lodz_diff_2026-07-16_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-16-phone/lodz_diff_2026-07-16_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-16-phone/lodz_diff_2026-07-16_p50_summary.csv",
+            "tidy_table": null
           },
           "delay_stats": {
             "n_rows": 372984, "n_changed": 55201, "pct_changed": 14.80,
@@ -122,7 +126,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-17-phone/lodz_realized_2026-07-17_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-17-phone/lodz_static_gtfs_2026-07-17.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-17-phone/lodz_diff_2026-07-17_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-17-phone/lodz_diff_2026-07-17_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-17-phone/lodz_diff_2026-07-17_p50_summary.csv",
+            "tidy_table": null
           },
           "delay_stats": {
             "n_rows": 270305, "n_changed": 61802, "pct_changed": 22.87,
@@ -147,7 +152,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-18-phone/lodz_realized_2026-07-18_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-18-phone/lodz_static_gtfs_2026-07-18.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-18-phone/lodz_diff_2026-07-18_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-18-phone/lodz_diff_2026-07-18_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-18-phone/lodz_diff_2026-07-18_p50_summary.csv",
+            "tidy_table": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-07-18-phone/lodz_tidy_2026-07-18.csv.gz"
           },
           "delay_stats": {
             "n_rows": 230665, "n_changed": 28190, "pct_changed": 12.22,
@@ -177,7 +183,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-07-15-phone/poznan_realized_2026-07-15_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-07-15-phone/poznan_static_gtfs_2026-07-15.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-07-15-phone/poznan_diff_2026-07-15_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-07-15-phone/poznan_diff_2026-07-15_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-07-15-phone/poznan_diff_2026-07-15_p50_summary.csv",
+            "tidy_table": null
           }
         },
         {
@@ -197,7 +204,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-07-16-phone/poznan_realized_2026-07-16_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-07-16-phone/poznan_static_gtfs_2026-07-16.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-07-16-phone/poznan_diff_2026-07-16_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-07-16-phone/poznan_diff_2026-07-16_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-07-16-phone/poznan_diff_2026-07-16_p50_summary.csv",
+            "tidy_table": null
           }
         },
         {
@@ -217,7 +225,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-07-17-phone/poznan_realized_2026-07-17_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-07-17-phone/poznan_static_gtfs_2026-07-17.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-07-17-phone/poznan_diff_2026-07-17_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-07-17-phone/poznan_diff_2026-07-17_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-07-17-phone/poznan_diff_2026-07-17_p50_summary.csv",
+            "tidy_table": null
           }
         },
         {
@@ -237,7 +246,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-07-18-phone/poznan_realized_2026-07-18_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-07-18-phone/poznan_static_gtfs_2026-07-18.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-07-18-phone/poznan_diff_2026-07-18_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-07-18-phone/poznan_diff_2026-07-18_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-07-18-phone/poznan_diff_2026-07-18_p50_summary.csv",
+            "tidy_table": null
           }
         }
       ]
@@ -262,7 +272,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-07-15-phone/szczecin_realized_2026-07-15_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-07-15-phone/szczecin_static_gtfs_2026-07-15.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-07-15-phone/szczecin_diff_2026-07-15_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-07-15-phone/szczecin_diff_2026-07-15_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-07-15-phone/szczecin_diff_2026-07-15_p50_summary.csv",
+            "tidy_table": null
           }
         },
         {
@@ -282,7 +293,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-07-16-phone/szczecin_realized_2026-07-16_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-07-16-phone/szczecin_static_gtfs_2026-07-16.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-07-16-phone/szczecin_diff_2026-07-16_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-07-16-phone/szczecin_diff_2026-07-16_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-07-16-phone/szczecin_diff_2026-07-16_p50_summary.csv",
+            "tidy_table": null
           }
         },
         {
@@ -302,7 +314,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-07-17-phone/szczecin_realized_2026-07-17_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-07-17-phone/szczecin_static_gtfs_2026-07-17.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-07-17-phone/szczecin_diff_2026-07-17_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-07-17-phone/szczecin_diff_2026-07-17_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-07-17-phone/szczecin_diff_2026-07-17_p50_summary.csv",
+            "tidy_table": null
           }
         },
         {
@@ -322,7 +335,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-07-18-phone/szczecin_realized_2026-07-18_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-07-18-phone/szczecin_static_gtfs_2026-07-18.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-07-18-phone/szczecin_diff_2026-07-18_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-07-18-phone/szczecin_diff_2026-07-18_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-07-18-phone/szczecin_diff_2026-07-18_p50_summary.csv",
+            "tidy_table": null
           }
         }
       ]
@@ -347,7 +361,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-07-15-phone/prague_realized_2026-07-15_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-07-15-phone/prague_static_gtfs_2026-07-15.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-07-15-phone/prague_diff_2026-07-15_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-07-15-phone/prague_diff_2026-07-15_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-07-15-phone/prague_diff_2026-07-15_p50_summary.csv",
+            "tidy_table": null
           }
         },
         {
@@ -367,7 +382,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-07-16-phone/prague_realized_2026-07-16_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-07-16-phone/prague_static_gtfs_2026-07-16.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-07-16-phone/prague_diff_2026-07-16_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-07-16-phone/prague_diff_2026-07-16_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-07-16-phone/prague_diff_2026-07-16_p50_summary.csv",
+            "tidy_table": null
           }
         },
         {
@@ -387,7 +403,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-07-17-phone/prague_realized_2026-07-17_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-07-17-phone/prague_static_gtfs_2026-07-17.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-07-17-phone/prague_diff_2026-07-17_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-07-17-phone/prague_diff_2026-07-17_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-07-17-phone/prague_diff_2026-07-17_p50_summary.csv",
+            "tidy_table": null
           }
         },
         {
@@ -407,7 +424,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-07-18-phone/prague_realized_2026-07-18_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-07-18-phone/prague_static_gtfs_2026-07-18.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-07-18-phone/prague_diff_2026-07-18_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-07-18-phone/prague_diff_2026-07-18_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-07-18-phone/prague_diff_2026-07-18_p50_summary.csv",
+            "tidy_table": null
           }
         }
       ]
@@ -432,7 +450,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rome-realized-2026-07-15-phone/rome_realized_2026-07-15_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rome-realized-2026-07-15-phone/rome_static_gtfs_2026-07-15.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rome-realized-2026-07-15-phone/rome_diff_2026-07-15_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rome-realized-2026-07-15-phone/rome_diff_2026-07-15_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rome-realized-2026-07-15-phone/rome_diff_2026-07-15_p50_summary.csv",
+            "tidy_table": null
           }
         },
         {
@@ -452,7 +471,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rome-realized-2026-07-16-phone/rome_realized_2026-07-16_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rome-realized-2026-07-16-phone/rome_static_gtfs_2026-07-16.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rome-realized-2026-07-16-phone/rome_diff_2026-07-16_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rome-realized-2026-07-16-phone/rome_diff_2026-07-16_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rome-realized-2026-07-16-phone/rome_diff_2026-07-16_p50_summary.csv",
+            "tidy_table": null
           }
         },
         {
@@ -472,7 +492,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rome-realized-2026-07-17-phone/rome_realized_2026-07-17_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rome-realized-2026-07-17-phone/rome_static_gtfs_2026-07-17.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rome-realized-2026-07-17-phone/rome_diff_2026-07-17_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rome-realized-2026-07-17-phone/rome_diff_2026-07-17_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rome-realized-2026-07-17-phone/rome_diff_2026-07-17_p50_summary.csv",
+            "tidy_table": null
           }
         }
       ]
@@ -497,7 +518,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/turin-realized-2026-07-15-phone/turin_realized_2026-07-15_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/turin-realized-2026-07-15-phone/turin_static_gtfs_2026-07-15.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/turin-realized-2026-07-15-phone/turin_diff_2026-07-15_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/turin-realized-2026-07-15-phone/turin_diff_2026-07-15_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/turin-realized-2026-07-15-phone/turin_diff_2026-07-15_p50_summary.csv",
+            "tidy_table": null
           }
         },
         {
@@ -517,7 +539,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/turin-realized-2026-07-16-phone/turin_realized_2026-07-16_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/turin-realized-2026-07-16-phone/turin_static_gtfs_2026-07-16.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/turin-realized-2026-07-16-phone/turin_diff_2026-07-16_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/turin-realized-2026-07-16-phone/turin_diff_2026-07-16_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/turin-realized-2026-07-16-phone/turin_diff_2026-07-16_p50_summary.csv",
+            "tidy_table": null
           }
         },
         {
@@ -537,7 +560,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/turin-realized-2026-07-17-phone/turin_realized_2026-07-17_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/turin-realized-2026-07-17-phone/turin_static_gtfs_2026-07-17.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/turin-realized-2026-07-17-phone/turin_diff_2026-07-17_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/turin-realized-2026-07-17-phone/turin_diff_2026-07-17_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/turin-realized-2026-07-17-phone/turin_diff_2026-07-17_p50_summary.csv",
+            "tidy_table": null
           }
         },
         {
@@ -557,7 +581,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/turin-realized-2026-07-18-phone/turin_realized_2026-07-18_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/turin-realized-2026-07-18-phone/turin_static_gtfs_2026-07-18.zip",
             "diff_chart": null,
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/turin-realized-2026-07-18-phone/turin_diff_2026-07-18_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/turin-realized-2026-07-18-phone/turin_diff_2026-07-18_p50_summary.csv",
+            "tidy_table": null
           }
         }
       ]
@@ -582,7 +607,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-07-15-phone/vilnius_realized_2026-07-15_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-07-15-phone/vilnius_static_gtfs_2026-07-15.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-07-15-phone/vilnius_diff_2026-07-15_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-07-15-phone/vilnius_diff_2026-07-15_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-07-15-phone/vilnius_diff_2026-07-15_p50_summary.csv",
+            "tidy_table": null
           }
         },
         {
@@ -602,7 +628,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-07-16-phone/vilnius_realized_2026-07-16_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-07-16-phone/vilnius_static_gtfs_2026-07-16.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-07-16-phone/vilnius_diff_2026-07-16_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-07-16-phone/vilnius_diff_2026-07-16_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-07-16-phone/vilnius_diff_2026-07-16_p50_summary.csv",
+            "tidy_table": null
           }
         },
         {
@@ -622,7 +649,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-07-17-phone/vilnius_realized_2026-07-17_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-07-17-phone/vilnius_static_gtfs_2026-07-17.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-07-17-phone/vilnius_diff_2026-07-17_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-07-17-phone/vilnius_diff_2026-07-17_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-07-17-phone/vilnius_diff_2026-07-17_p50_summary.csv",
+            "tidy_table": null
           }
         },
         {
@@ -642,7 +670,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-07-18-phone/vilnius_realized_2026-07-18_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-07-18-phone/vilnius_static_gtfs_2026-07-18.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-07-18-phone/vilnius_diff_2026-07-18_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-07-18-phone/vilnius_diff_2026-07-18_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-07-18-phone/vilnius_diff_2026-07-18_p50_summary.csv",
+            "tidy_table": null
           }
         }
       ]
@@ -667,7 +696,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-07-15-phone/sofia_realized_2026-07-15_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-07-15-phone/sofia_static_gtfs_2026-07-15.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-07-15-phone/sofia_diff_2026-07-15_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-07-15-phone/sofia_diff_2026-07-15_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-07-15-phone/sofia_diff_2026-07-15_p50_summary.csv",
+            "tidy_table": null
           }
         },
         {
@@ -687,7 +717,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-07-16-phone/sofia_realized_2026-07-16_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-07-16-phone/sofia_static_gtfs_2026-07-16.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-07-16-phone/sofia_diff_2026-07-16_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-07-16-phone/sofia_diff_2026-07-16_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-07-16-phone/sofia_diff_2026-07-16_p50_summary.csv",
+            "tidy_table": null
           }
         },
         {
@@ -707,7 +738,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-07-17-phone/sofia_realized_2026-07-17_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-07-17-phone/sofia_static_gtfs_2026-07-17.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-07-17-phone/sofia_diff_2026-07-17_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-07-17-phone/sofia_diff_2026-07-17_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-07-17-phone/sofia_diff_2026-07-17_p50_summary.csv",
+            "tidy_table": null
           }
         },
         {
@@ -727,7 +759,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-07-18-phone/sofia_realized_2026-07-18_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-07-18-phone/sofia_static_gtfs_2026-07-18.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-07-18-phone/sofia_diff_2026-07-18_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-07-18-phone/sofia_diff_2026-07-18_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-07-18-phone/sofia_diff_2026-07-18_p50_summary.csv",
+            "tidy_table": null
           }
         }
       ]
@@ -752,7 +785,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/bucharest-realized-2026-07-15-phone/bucharest_realized_2026-07-15_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/bucharest-realized-2026-07-15-phone/bucharest_static_gtfs_2026-07-15.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/bucharest-realized-2026-07-15-phone/bucharest_diff_2026-07-15_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/bucharest-realized-2026-07-15-phone/bucharest_diff_2026-07-15_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/bucharest-realized-2026-07-15-phone/bucharest_diff_2026-07-15_p50_summary.csv",
+            "tidy_table": null
           }
         },
         {
@@ -772,7 +806,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/bucharest-realized-2026-07-17-phone/bucharest_realized_2026-07-17_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/bucharest-realized-2026-07-17-phone/bucharest_static_gtfs_2026-07-17.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/bucharest-realized-2026-07-17-phone/bucharest_diff_2026-07-17_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/bucharest-realized-2026-07-17-phone/bucharest_diff_2026-07-17_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/bucharest-realized-2026-07-17-phone/bucharest_diff_2026-07-17_p50_summary.csv",
+            "tidy_table": null
           }
         },
         {
@@ -792,7 +827,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/bucharest-realized-2026-07-18-phone/bucharest_realized_2026-07-18_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/bucharest-realized-2026-07-18-phone/bucharest_static_gtfs_2026-07-18.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/bucharest-realized-2026-07-18-phone/bucharest_diff_2026-07-18_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/bucharest-realized-2026-07-18-phone/bucharest_diff_2026-07-18_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/bucharest-realized-2026-07-18-phone/bucharest_diff_2026-07-18_p50_summary.csv",
+            "tidy_table": null
           }
         }
       ]
@@ -817,7 +853,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-07-15-phone/lisbon_realized_2026-07-15_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-07-15-phone/lisbon_static_gtfs_2026-07-15.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-07-15-phone/lisbon_diff_2026-07-15_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-07-15-phone/lisbon_diff_2026-07-15_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-07-15-phone/lisbon_diff_2026-07-15_p50_summary.csv",
+            "tidy_table": null
           }
         },
         {
@@ -837,7 +874,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-07-16-phone/lisbon_realized_2026-07-16_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-07-16-phone/lisbon_static_gtfs_2026-07-16.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-07-16-phone/lisbon_diff_2026-07-16_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-07-16-phone/lisbon_diff_2026-07-16_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-07-16-phone/lisbon_diff_2026-07-16_p50_summary.csv",
+            "tidy_table": null
           }
         },
         {
@@ -857,7 +895,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-07-17-phone/lisbon_realized_2026-07-17_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-07-17-phone/lisbon_static_gtfs_2026-07-17.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-07-17-phone/lisbon_diff_2026-07-17_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-07-17-phone/lisbon_diff_2026-07-17_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-07-17-phone/lisbon_diff_2026-07-17_p50_summary.csv",
+            "tidy_table": null
           }
         },
         {
@@ -877,7 +916,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-07-18-phone/lisbon_realized_2026-07-18_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-07-18-phone/lisbon_static_gtfs_2026-07-18.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-07-18-phone/lisbon_diff_2026-07-18_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-07-18-phone/lisbon_diff_2026-07-18_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-07-18-phone/lisbon_diff_2026-07-18_p50_summary.csv",
+            "tidy_table": null
           }
         }
       ]
@@ -902,7 +942,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-07-16-phone/boston_realized_2026-07-16_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-07-16-phone/boston_static_gtfs_2026-07-16.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-07-16-phone/boston_diff_2026-07-16_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-07-16-phone/boston_diff_2026-07-16_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-07-16-phone/boston_diff_2026-07-16_p50_summary.csv",
+            "tidy_table": null
           }
         },
         {
@@ -922,7 +963,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-07-17-phone/boston_realized_2026-07-17_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-07-17-phone/boston_static_gtfs_2026-07-17.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-07-17-phone/boston_diff_2026-07-17_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-07-17-phone/boston_diff_2026-07-17_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-07-17-phone/boston_diff_2026-07-17_p50_summary.csv",
+            "tidy_table": null
           }
         },
         {
@@ -942,7 +984,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-07-18-phone/boston_realized_2026-07-18_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-07-18-phone/boston_static_gtfs_2026-07-18.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-07-18-phone/boston_diff_2026-07-18_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-07-18-phone/boston_diff_2026-07-18_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-07-18-phone/boston_diff_2026-07-18_p50_summary.csv",
+            "tidy_table": null
           }
         }
       ]
@@ -969,7 +1012,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-07-17-phone/brisbane_realized_2026-07-17_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-07-17-phone/brisbane_static_gtfs_2026-07-17.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-07-17-phone/brisbane_diff_2026-07-17_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-07-17-phone/brisbane_diff_2026-07-17_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-07-17-phone/brisbane_diff_2026-07-17_p50_summary.csv",
+            "tidy_table": null
           }
         },
         {
@@ -989,7 +1033,8 @@
             "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-07-18-phone/brisbane_realized_2026-07-18_p85.zip",
             "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-07-18-phone/brisbane_static_gtfs_2026-07-18.zip",
             "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-07-18-phone/brisbane_diff_2026-07-18_p50_chart.png",
-            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-07-18-phone/brisbane_diff_2026-07-18_p50_summary.csv"
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-07-18-phone/brisbane_diff_2026-07-18_p50_summary.csv",
+            "tidy_table": null
           }
         }
       ]
