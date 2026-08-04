@@ -653,7 +653,7 @@ function render() {
           const freshness = m.stale <= 1 ? `<span class="pill">✓ aktualne</span>`
             : m.stale <= 3 ? `<span class="pill warn">brak od ${m.stale} dni</span>`
             : `<span class="pill muted">brak od ${m.stale} dni</span>`;
-          return `<button class="card" data-city="${c.id}">
+          return `<button class="card" data-city="${c.id}" data-goatcounter-click="city-${c.id}">
               <div class="title"><span>${escapeHtml(c.display)}</span><span class="arrow">→</span></div>
               <div class="meta">${m.first} … ${m.last}</div>
               <div class="row-stats"><span class="pill muted">${m.count} dni</span>${freshness}</div>
