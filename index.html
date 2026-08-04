@@ -141,7 +141,9 @@
     <p class="footer-attribution" id="footerAttribution">Dane: <a href="https://mkuran.pl/gtfs/" target="_blank" rel="noopener">mkuran.pl</a>, <a href="https://odt.org.pl/pl/data" target="_blank" rel="noopener">Otwarte Dane Transportowe (ODT)</a>, Miasto Stołeczne Warszawa, <a href="https://otwartedane.erzeszow.pl/dataset/rozklad-jazdy-transxchange" target="_blank" rel="noopener">ZTM Rzeszów</a>, Urząd Miasta Kielce – Zarząd Transportu Miejskiego.</p>
     <div class="footer-bottom">
       <a class="footer-signature" href="https://gisboost.github.io/" target="_blank" rel="noopener">Michał Kaczorowski — GISBoost</a>
-      <span id="visitorCounter" class="visitor-counter" aria-label="Liczba odwiedzin w tym miesiącu"></span>
+      <span class="visitor-counter" aria-label="Liczba odwiedzin w tym miesiącu">
+        <span id="visitorCounter"></span> odwiedzin w tym miesiącu
+      </span>
       <div class="footer-social">
         <a href="https://www.youtube.com/@GISBoost/" target="_blank" rel="noopener" aria-label="YouTube" title="YouTube" data-goatcounter-click="social-youtube">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M23.498 6.186a2.999 2.999 0 0 0-2.113-2.117C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.385.524A2.999 2.999 0 0 0 .502 6.186 31.26 31.26 0 0 0 0 12a31.26 31.26 0 0 0 .502 5.814 2.999 2.999 0 0 0 2.113 2.117c1.88.524 9.385.524 9.385.524s7.505 0 9.385-.524a2.999 2.999 0 0 0 2.113-2.117A31.26 31.26 0 0 0 24 12a31.26 31.26 0 0 0-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
@@ -170,16 +172,32 @@
     // Polling wait for count.js (loaded async in <head>) rather than calling visit_count()
     // straight away — GoatCounter's own docs flag the naive "call it right after the async
     // tag" snippet as racy; this is their documented robust alternative.
+    //
+    // The widget renders inside a same-origin-restricted <iframe> (count.js creates one for
+    // type "html", pointed at the goatcounter.com domain) - the page's own CSS custom
+    // properties (var(--ink-muted) etc.) don't cross that boundary, so colors below are
+    // literal hex, picked once from prefers-color-scheme (this site has no runtime theme
+    // toggle, just the media query). The "for this site" / "stats by GoatCounter" labels are
+    // GoatCounter's own English branding text baked into the served HTML - can't be
+    // translated via CSS, so they're hidden here and replaced with the Polish label already
+    // sitting next to #visitorCounter in the markup; only the bare number is shown.
     (function () {
+      var dark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+      var ink = dark ? "#9aa8a1" : "#4d5c53";
       var t = setInterval(function () {
         if (window.goatcounter && window.goatcounter.visit_count) {
           clearInterval(t);
           window.goatcounter.visit_count({
             append: "#visitorCounter",
             start: "month",
+            attr: { width: "34", height: "13", title: "", style: "vertical-align:text-bottom" },
             style:
-              "div { border-color: var(--line); background-color: transparent; " +
-              "color: var(--ink-muted); font-family: var(--sans); }",
+              "body{margin:0;padding:0;background:transparent;}" +
+              "div{width:auto;height:auto;border:0;background:transparent;padding:0;margin:0;" +
+              "text-align:left;line-height:13px;font-family:'Segoe UI',system-ui,Arial,sans-serif;" +
+              "font-weight:600;color:" + ink + ";}" +
+              "#gcvc-for,#gcvc-by{display:none;}" +
+              "#gcvc-views{font-size:11px;}",
           });
         }
       }, 100);

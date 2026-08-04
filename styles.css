@@ -279,8 +279,8 @@ td.date, td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; 
 }
 .footer-signature { font-size: 0.82rem; font-weight: 600; color: var(--ink-muted); text-decoration: none; }
 .footer-signature:hover { color: var(--blue); }
-.visitor-counter { font-size: 0.72rem; }
-.visitor-counter:empty { display: none; }
+.visitor-counter { font-size: 0.72rem; color: var(--ink-muted); }
+.visitor-counter:has(#visitorCounter:empty) { display: none; }
 .footer-social { display: flex; align-items: center; gap: 0.9rem; }
 .footer-social a { color: var(--ink-muted); display: flex; }
 .footer-social a:hover { color: var(--blue); }
