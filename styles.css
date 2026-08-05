@@ -53,9 +53,14 @@ a { color: var(--blue); }
   display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
   padding: 0.9rem 1.25rem; border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 5; background: var(--paper);
 }
-.brand { display: flex; align-items: baseline; gap: 0.6rem; }
+.brand {
+  display: flex; align-items: baseline; gap: 0.6rem;
+  background: none; border: none; padding: 0; font: inherit; cursor: pointer;
+}
 .brand .mark { font-weight: 800; letter-spacing: -0.01em; color: var(--green); font-size: 1.15rem; }
 .brand .sub { color: var(--ink-muted); font-size: 0.85rem; }
+.brand:hover .sub { color: var(--blue); }
+.brand:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 3px; }
 .badge {
   font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.02em; text-transform: uppercase;
   padding: 0.2rem 0.5rem; border-radius: 3px; border: 1px solid var(--line); color: var(--ink-muted);

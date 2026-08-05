@@ -849,6 +849,7 @@ function render() {
 }
 
 document.getElementById("q").addEventListener("input", (e) => { state.q = e.target.value; render(); });
+document.getElementById("homeNavBtn").addEventListener("click", () => navigateTo("cities", null, null, null));
 document.getElementById("compareNavBtn").addEventListener("click", () => navigateTo("compare", null, null, null));
 document.getElementById("backupsNavBtn").addEventListener("click", () => navigateTo("backups", null, null, null));
 
