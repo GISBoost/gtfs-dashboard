@@ -1039,5 +1039,29 @@
         }
       ]
     }
-  }
+  },
+  "raw_snapshot_archives": [
+    {
+      "month": "2026-07",
+      "release_tag": "raw-snapshots-2026-07",
+      "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/raw-snapshots-2026-07",
+      "published_at": "2026-08-04T20:30:35Z",
+      "cities": [
+        {
+          "city": "lodz",
+          "display_name": "Łódź",
+          "asset_name": "lodz_snapshots_2026-07.7z",
+          "asset_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/raw-snapshots-2026-07/lodz_snapshots_2026-07.7z",
+          "size_bytes": 46920769
+        },
+        {
+          "city": "prague",
+          "display_name": "Prague",
+          "asset_name": "prague_snapshots_2026-07.7z",
+          "asset_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/raw-snapshots-2026-07/prague_snapshots_2026-07.7z",
+          "size_bytes": 248784155
+        }
+      ]
+    }
+  ]
 }

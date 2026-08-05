@@ -25,6 +25,12 @@ let state = {
   // Cross-city comparison view (PRD.md §8.3, GD-4) - lives outside the city→month→day
   // hierarchy, so it gets its own sort/range state instead of reusing sort/dir above.
   compareRange: "month", compareSort: "meanAbsDelaySec", compareDir: "desc",
+  // Monthly raw-snapshot backup archives (TX-9) - a second, unrelated top-level section, same
+  // shape as compare above. backupMonth is deliberately its own field, not a reuse of `month`
+  // (which means something different here - a city-drilldown month) - reusing it would leak a
+  // stray breadcrumb from setCrumbs()'s existing `if (state.month)` block, meant only for the
+  // city→month→day hierarchy.
+  rawSnapshotArchives: [], backupMonth: null,
 };
 
 // --- URL hash routing --------------------------------------------------------------------------
@@ -34,6 +40,8 @@ let state = {
 // drill-down level, since nothing else here ever touches session history.
 function hashFromState(level, cityId, month, date) {
   if (level === "compare") return "#/compare";
+  if (level === "backups") return "#/backups";
+  if (level === "backup-month" && month) return `#/backups/${encodeURIComponent(month)}`;
   if (level === "months" && cityId) return `#/${encodeURIComponent(cityId)}`;
   if (level === "days" && cityId && month) return `#/${encodeURIComponent(cityId)}/${month}`;
   if (level === "detail" && cityId && month && date) return `#/${encodeURIComponent(cityId)}/${month}/${date}`;
@@ -42,6 +50,8 @@ function hashFromState(level, cityId, month, date) {
 function parseHash() {
   const raw = location.hash.replace(/^#\/?/, "");
   if (raw === "compare") return { compare: true };
+  if (raw === "backups") return { backups: true };
+  if (raw.startsWith("backups/")) return { backupMonth: decodeURIComponent(raw.slice("backups/".length)) || null };
   const [cityId, month, date] = raw.split("/").filter(Boolean).map((s) => decodeURIComponent(s));
   return { cityId: cityId || null, month: month || null, date: date || null };
 }
@@ -51,11 +61,23 @@ function parseHash() {
 function applyHash() {
   const parsed = parseHash();
   if (parsed.compare) {
-    state.level = "compare"; state.cityId = null; state.month = null; state.date = null;
+    state.level = "compare"; state.cityId = null; state.month = null; state.date = null; state.backupMonth = null;
     state.compareRange = "month"; state.compareSort = "meanAbsDelaySec"; state.compareDir = "desc";
     render(); return;
   }
+  if (parsed.backups) {
+    state.level = "backups"; state.cityId = null; state.month = null; state.date = null; state.backupMonth = null;
+    render(); return;
+  }
+  if (parsed.backupMonth) {
+    state.cityId = null; state.month = null; state.date = null;
+    const exists = state.rawSnapshotArchives.some((a) => a.month === parsed.backupMonth);
+    state.level = exists ? "backup-month" : "backups";
+    state.backupMonth = exists ? parsed.backupMonth : null;
+    render(); return;
+  }
   const { cityId, month, date } = parsed;
+  state.backupMonth = null;
   const city = cityId ? state.manifest.find((c) => c.id === cityId) : null;
   if (!city) {
     state.level = "cities"; state.cityId = null; state.month = null; state.date = null;
@@ -93,6 +115,17 @@ function daysBetween(a, b) { return Math.round((new Date(b) - new Date(a)) / 864
 
 function fmtNum(n) {
   return n === null ? '<span class="dash">–</span>' : n.toLocaleString("pl-PL");
+}
+function fmtBytes(n) {
+  if (n < 1024) return `${n} B`;
+  if (n < 1024 ** 2) return `${(n / 1024).toFixed(0)} KB`;
+  if (n < 1024 ** 3) return `${(n / 1024 ** 2).toFixed(1)} MB`;
+  return `${(n / 1024 ** 3).toFixed(2)} GB`;
+}
+function plCities(n) {
+  if (n === 1) return "miasto";
+  const mod10 = n % 10, mod100 = n % 100;
+  return mod10 >= 2 && mod10 <= 4 && !(mod100 >= 12 && mod100 <= 14) ? "miasta" : "miast";
 }
 function fmtCoverage(ranges) {
   return ranges === null ? '<span class="dash">brak danych o pokryciu</span>' : ranges.join(", ");
@@ -346,7 +379,11 @@ function normalizeManifest(data) {
     display: c.display_name || id,
     days: (c.days || []).slice().sort((a, b) => a.date.localeCompare(b.date)),
   }));
-  return { cities, generatedAt: data.generated_at || null };
+  return {
+    cities,
+    generatedAt: data.generated_at || null,
+    rawSnapshotArchives: Array.isArray(data.raw_snapshot_archives) ? data.raw_snapshot_archives : [],
+  };
 }
 
 async function loadManifest() {
@@ -360,6 +397,7 @@ async function loadManifest() {
     const normalized = normalizeManifest(data);
     state.manifest = normalized.cities;
     state.generatedAt = normalized.generatedAt;
+    state.rawSnapshotArchives = normalized.rawSnapshotArchives;
     state.loadStatus = "loaded";
     applyHash();
   } catch (err) {
@@ -386,6 +424,17 @@ function setCrumbs() {
   if (state.level === "compare") {
     parts.push('<span class="sep">/</span>');
     parts.push(crumbBtn("Porównanie miast", true, () => {}));
+  }
+  if (state.level === "backups" || state.level === "backup-month") {
+    parts.push('<span class="sep">/</span>');
+    parts.push(crumbBtn("Kopie zapasowe", state.level === "backups", () => {
+      navigateTo("backups", null, null, null);
+    }));
+  }
+  if (state.level === "backup-month" && state.backupMonth) {
+    const [y, m] = state.backupMonth.split("-");
+    parts.push('<span class="sep">/</span>');
+    parts.push(crumbBtn(`${MONTHS_PL[+m - 1]} ${y}`, true, () => {}));
   }
   if (state.cityId) {
     const c = state.manifest.find((m) => m.id === state.cityId);
@@ -439,11 +488,11 @@ function renderErrorHtml(err) {
 function dlChip(label, url) {
   return url ? `<a href="${url}" target="_blank" rel="noopener">${label}</a>` : "";
 }
-function dlRow(name, url) {
+function dlRow(name, url, sizeLabel) {
   if (!url) return "";
   const file = url.split("/").pop();
   return `<a class="dl-detail" href="${url}" target="_blank" rel="noopener">
-    <span><span class="dl-name">${name}</span><br/><span class="dl-file">${escapeHtml(file)}</span></span>
+    <span><span class="dl-name">${name}</span><br/><span class="dl-file">${escapeHtml(file)}${sizeLabel ? ` · ${sizeLabel}` : ""}</span></span>
     <span class="dl-go">pobierz ↗</span>
   </a>`;
 }
@@ -598,9 +647,10 @@ function render() {
   setCrumbs();
   updateDataBadge();
   document.getElementById("compareNavBtn").classList.toggle("active", state.level === "compare");
+  document.getElementById("backupsNavBtn").classList.toggle("active", state.level === "backups" || state.level === "backup-month");
   note.style.display = "block";
-  q.style.display = (state.level === "detail" || state.level === "compare") ? "none" : "";
-  controls.style.display = (state.level === "detail" || state.level === "compare") ? "none" : "flex";
+  q.style.display = (state.level === "detail" || state.level === "compare" || state.level === "backup-month") ? "none" : "";
+  controls.style.display = (state.level === "detail" || state.level === "compare" || state.level === "backup-month") ? "none" : "flex";
   pageTitle.style.display = state.level === "detail" ? "none" : "block";
 
   if (state.level === "compare") {
@@ -638,6 +688,44 @@ function render() {
       };
     });
     note.innerHTML = `<b>Porównanie miast:</b> ranking wg opóźnień za ${rangeLabel}, liczony wyłącznie z danych już wczytanych w <code>manifest.json</code> (bez dodatkowych zapytań). „Opóźnione obserwacje" to wiersze <code>stop_times.txt</code> (obserwacje na przystanku), nie unikalne kursy — jeden opóźniony kurs generuje wiele zmienionych wierszy.`;
+
+  } else if (state.level === "backups") {
+    pageTitle.textContent = "Kopie zapasowe";
+    q.placeholder = "Szukaj miesiąca (np. lipiec, 2026-07)…";
+    let archives = state.rawSnapshotArchives.slice().sort((a, b) => b.month.localeCompare(a.month));
+    const query = state.q.trim().toLowerCase();
+    if (query) archives = archives.filter((a) => a.month.includes(query) || MONTHS_PL[+a.month.slice(5, 7) - 1].includes(query));
+
+    content.innerHTML = !archives.length
+      ? `<div class="empty">${state.rawSnapshotArchives.length ? `Brak miesięcy pasujących do „${escapeHtml(state.q)}”.` : "Nie opublikowano jeszcze żadnej kopii zapasowej."}</div>`
+      : `<div class="grid">${archives.map((a) => {
+          const [y, m] = a.month.split("-");
+          const totalBytes = a.cities.reduce((sum, c) => sum + c.size_bytes, 0);
+          const published = new Date(a.published_at);
+          const publishedLabel = isNaN(published.getTime()) ? "" : published.toLocaleDateString("pl-PL", { dateStyle: "medium" });
+          return `<button class="card" data-month="${a.month}">
+              <div class="title"><span>${MONTHS_PL[+m - 1]} ${y}</span><span class="arrow">→</span></div>
+              <div class="meta">${a.cities.length} ${plCities(a.cities.length)} · ${fmtBytes(totalBytes)}</div>
+              <div class="row-stats"><span class="pill muted">opublikowano ${publishedLabel}</span></div>
+            </button>`;
+        }).join("")}</div>`;
+    content.querySelectorAll("[data-month]").forEach((btn) => {
+      btn.onclick = () => navigateTo("backup-month", null, btn.dataset.month, null);
+    });
+    note.innerHTML = `<b>Kopie zapasowe:</b> comiesięczne archiwa surowych snapshotów GPS (GTFS-RT VehiclePositions) użytych do zbudowania „zrealizowanego” rozkładu — publikowane automatycznie po zakończeniu każdego miesiąca, żeby dane nie musiały leżeć w nieskończoność na urządzeniu nagrywającym. Kliknij miesiąc, żeby zobaczyć pliki per miasto.`;
+
+  } else if (state.level === "backup-month") {
+    const archive = state.rawSnapshotArchives.find((a) => a.month === state.backupMonth);
+    const [y, m] = state.backupMonth.split("-");
+    pageTitle.textContent = `Kopie zapasowe — ${MONTHS_PL[+m - 1]} ${y}`;
+    content.innerHTML = `
+      <div class="detail-badges">
+        <a class="pill-link" href="${archive.release_url}" target="_blank" rel="noopener">zobacz release na GitHubie ↗</a>
+      </div>
+      <div class="downloads-detail">${archive.cities.map((c) =>
+        dlRow(`🗄️ ${escapeHtml(c.display_name)}`, c.asset_url, fmtBytes(c.size_bytes))
+      ).join("")}</div>`;
+    note.innerHTML = `<b>${archive.cities.length} ${plCities(archive.cities.length)}</b> w tej kopii zapasowej. Każdy plik to skompresowane surowe snapshoty GTFS-RT (VehiclePositions) z ${MONTHS_PL[+m - 1]} ${y} dla danego miasta — rozpakuj 7-Zipem (pliki <code>.7z</code> od razu, pliki <code>.tar.xz</code> w dwóch krokach: <code>.xz</code>→<code>.tar</code>, potem <code>.tar</code>→pliki) i wskaż jako <code>--positions-dir</code> dla <code>family_a match</code>, żeby odtworzyć dopasowanie lokalnie.`;
 
   } else if (state.level === "cities") {
     pageTitle.textContent = "Wszystkie miasta";
@@ -762,6 +850,7 @@ function render() {
 
 document.getElementById("q").addEventListener("input", (e) => { state.q = e.target.value; render(); });
 document.getElementById("compareNavBtn").addEventListener("click", () => navigateTo("compare", null, null, null));
+document.getElementById("backupsNavBtn").addEventListener("click", () => navigateTo("backups", null, null, null));
 
 // Browser back/forward moves through the hash history built by navigateTo(); re-sync state from
 // whatever hash we land on (only once the manifest is loaded — before that, applyHash has

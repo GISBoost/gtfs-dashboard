@@ -81,6 +81,37 @@ jobs:
           gh api --paginate "repos/${SOURCE_REPO}/releases" > releases.json
           echo "Fetched $(jq 'length' releases.json) total releases from ${SOURCE_REPO}."
 
+      - name: Parse monthly raw-snapshot archive releases (TX-9)
+        run: |
+          set -euo pipefail
+          cat > parse_archives.jq <<'JQ_EOF'
+          .[]
+          | (.tag_name | capture("^raw-snapshots-(?<month>\\d{4}-\\d{2})$")) as $tag
+          # Same "zero output for a non-matching tag_name" idiom as the realized-phone parser
+          # below (capture() on no match yields no output at all, not null) - positions-raw-*
+          # (the daily transient pre-release TX-3 uploads and the build workflow deletes same-day)
+          # and every other tag are silently skipped here, same as they are there.
+          | {
+              month: $tag.month,
+              release_tag: .tag_name,
+              release_url: (.html_url // "https://github.com/\(env.SOURCE_REPO)/releases/tag/\(.tag_name)"),
+              published_at: .published_at,
+              cities: [
+                .assets[]
+                # archive_monthly.sh (TX-9, easy-OTP scripts/termux/) names each city's asset
+                # "<city>_snapshots_<YYYY-MM>.tar.xz"; the one-off manual archival of the July
+                # 2026 backlog used "<city>_snapshots_<YYYY-MM>.7z" instead (7-Zip/PPMd, done on
+                # a PC before TX-9 existed) - both extensions are real, both stay valid forever
+                # for that one month, so both must match here.
+                | select(.name | test("^[a-z0-9_]+_snapshots_\\d{4}-\\d{2}\\.(7z|tar\\.xz)$"))
+                | (.name | capture("^(?<city>[a-z0-9_]+)_snapshots_")) as $c
+                | { city: $c.city, asset_name: .name, asset_url: .browser_download_url, size_bytes: .size }
+              ]
+            }
+          JQ_EOF
+          jq -c -f parse_archives.jq releases.json > archives.jsonl
+          echo "Parsed $(wc -l < archives.jsonl) raw-snapshot archive release(s)."
+
       - name: Parse releases (tag filter + best-effort body/asset extraction)
         run: |
           set -euo pipefail
@@ -274,23 +305,43 @@ jobs:
         run: |
           set -euo pipefail
           cat > build.jq <<'JQ_EOF'
-          map(del(._warnings))
-          | group_by(.city)
-          | map({
-              key: .[0].city,
-              value: {
-                display_name: ($cities[.[0].city].display_name // .[0].city),
-                days: (map(del(.city)) | sort_by(.date))
-              }
-            })
-          | from_entries
-          | { generated_at: $generated_at, source_repo: $source_repo, cities: . }
+          def days_by_city:
+            map(del(._warnings))
+            | group_by(.city)
+            | map({
+                key: .[0].city,
+                value: {
+                  display_name: ($cities[.[0].city].display_name // .[0].city),
+                  days: (map(del(.city)) | sort_by(.date))
+                }
+              })
+            | from_entries;
+
+          # $archives is already the parsed array (--slurpfile), newest month first - a card grid
+          # (like the cities/months views) reads top-to-bottom as "most recent first" same as
+          # everywhere else on this site. A release whose only assets failed the name pattern
+          # above (shouldn't happen from archive_monthly.sh/the manual July archival, but keep
+          # the manifest free of an empty, unclickable card if it ever does) is dropped.
+          def archives_newest_first:
+            $archives
+            | map(select((.cities | length) > 0))
+            | map(.cities |= (map(. + {display_name: ($cities[.city].display_name // .city)}) | sort_by(.display_name)))
+            | sort_by(.month)
+            | reverse;
+
+          {
+            generated_at: $generated_at,
+            source_repo: $source_repo,
+            cities: days_by_city,
+            raw_snapshot_archives: archives_newest_first
+          }
           JQ_EOF
           GENERATED_AT="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
           jq -s \
             --argjson cities "$(cat cities.json)" \
             --arg generated_at "$GENERATED_AT" \
             --arg source_repo "$SOURCE_REPO" \
+            --slurpfile archives archives.jsonl \
             -f build.jq parsed_with_stats.jsonl > manifest.json
           jq -e . manifest.json > /dev/null
 
