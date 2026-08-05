@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-05T06:26:14Z",
+  "generated_at": "2026-08-05T11:26:44Z",
   "source_repo": "GISBoost/easy-GTFS-RT",
   "cities": {
     "boston": {
@@ -9173,5 +9173,113 @@
         }
       ]
     }
-  }
+  },
+  "raw_snapshot_archives": [
+    {
+      "month": "2026-07",
+      "release_tag": "raw-snapshots-2026-07",
+      "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/raw-snapshots-2026-07",
+      "published_at": "2026-08-04T20:30:35Z",
+      "cities": [
+        {
+          "city": "boston",
+          "asset_name": "boston_snapshots_2026-07.7z",
+          "asset_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/raw-snapshots-2026-07/boston_snapshots_2026-07.7z",
+          "size_bytes": 80620571,
+          "display_name": "Boston"
+        },
+        {
+          "city": "brisbane",
+          "asset_name": "brisbane_snapshots_2026-07.7z",
+          "asset_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/raw-snapshots-2026-07/brisbane_snapshots_2026-07.7z",
+          "size_bytes": 131802260,
+          "display_name": "Brisbane"
+        },
+        {
+          "city": "bucharest",
+          "asset_name": "bucharest_snapshots_2026-07.7z",
+          "asset_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/raw-snapshots-2026-07/bucharest_snapshots_2026-07.7z",
+          "size_bytes": 90288704,
+          "display_name": "Bucharest"
+        },
+        {
+          "city": "gdansk",
+          "asset_name": "gdansk_snapshots_2026-07.7z",
+          "asset_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/raw-snapshots-2026-07/gdansk_snapshots_2026-07.7z",
+          "size_bytes": 18587631,
+          "display_name": "Gdańsk"
+        },
+        {
+          "city": "lisbon",
+          "asset_name": "lisbon_snapshots_2026-07.7z",
+          "asset_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/raw-snapshots-2026-07/lisbon_snapshots_2026-07.7z",
+          "size_bytes": 50005538,
+          "display_name": "Lisbon"
+        },
+        {
+          "city": "poznan",
+          "asset_name": "poznan_snapshots_2026-07.7z",
+          "asset_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/raw-snapshots-2026-07/poznan_snapshots_2026-07.7z",
+          "size_bytes": 38319697,
+          "display_name": "Poznań"
+        },
+        {
+          "city": "prague",
+          "asset_name": "prague_snapshots_2026-07.7z",
+          "asset_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/raw-snapshots-2026-07/prague_snapshots_2026-07.7z",
+          "size_bytes": 248784155,
+          "display_name": "Prague"
+        },
+        {
+          "city": "rome",
+          "asset_name": "rome_snapshots_2026-07.7z",
+          "asset_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/raw-snapshots-2026-07/rome_snapshots_2026-07.7z",
+          "size_bytes": 201684992,
+          "display_name": "Rome"
+        },
+        {
+          "city": "sofia",
+          "asset_name": "sofia_snapshots_2026-07.7z",
+          "asset_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/raw-snapshots-2026-07/sofia_snapshots_2026-07.7z",
+          "size_bytes": 94252486,
+          "display_name": "Sofia"
+        },
+        {
+          "city": "szczecin",
+          "asset_name": "szczecin_snapshots_2026-07.7z",
+          "asset_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/raw-snapshots-2026-07/szczecin_snapshots_2026-07.7z",
+          "size_bytes": 26411990,
+          "display_name": "Szczecin"
+        },
+        {
+          "city": "turin",
+          "asset_name": "turin_snapshots_2026-07.7z",
+          "asset_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/raw-snapshots-2026-07/turin_snapshots_2026-07.7z",
+          "size_bytes": 34832720,
+          "display_name": "Turin"
+        },
+        {
+          "city": "vilnius",
+          "asset_name": "vilnius_snapshots_2026-07.7z",
+          "asset_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/raw-snapshots-2026-07/vilnius_snapshots_2026-07.7z",
+          "size_bytes": 47749143,
+          "display_name": "Vilnius"
+        },
+        {
+          "city": "amsterdam",
+          "asset_name": "amsterdam_snapshots_2026-07.tar.xz",
+          "asset_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/raw-snapshots-2026-07/amsterdam_snapshots_2026-07.tar.xz",
+          "size_bytes": 3971676,
+          "display_name": "amsterdam"
+        },
+        {
+          "city": "lodz",
+          "asset_name": "lodz_snapshots_2026-07.7z",
+          "asset_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/raw-snapshots-2026-07/lodz_snapshots_2026-07.7z",
+          "size_bytes": 46920769,
+          "display_name": "Łódź"
+        }
+      ]
+    }
+  ]
 }
