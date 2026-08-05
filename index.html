@@ -169,36 +169,26 @@
 
   <script src="app.js" defer></script>
   <script>
-    // Polling wait for count.js (loaded async in <head>) rather than calling visit_count()
-    // straight away — GoatCounter's own docs flag the naive "call it right after the async
-    // tag" snippet as racy; this is their documented robust alternative.
-    //
-    // The widget renders inside a same-origin-restricted <iframe> (count.js creates one for
-    // type "html", pointed at the goatcounter.com domain) - the page's own CSS custom
-    // properties (var(--ink-muted) etc.) don't cross that boundary, so colors below are
-    // literal hex, picked once from prefers-color-scheme (this site has no runtime theme
-    // toggle, just the media query). The "for this site" / "stats by GoatCounter" labels are
-    // GoatCounter's own English branding text baked into the served HTML - can't be
-    // translated via CSS, so they're hidden here and replaced with the Polish label already
-    // sitting next to #visitorCounter in the markup; only the bare number is shown.
+    // Fetches just the raw count as JSON instead of using goatcounter.visit_count()'s <iframe>
+    // widget. The iframe approach (tried first) turned out broken: GoatCounter's own default
+    // markup is `<span id=gcvc-for>...</span><br><span id=gcvc-views>N</span><br><span
+    // id=gcvc-by>...</span>` - hiding the English for/by labels via `display:none` doesn't
+    // remove the <br> tags next to them, so the visible number still sits on line 2 of a
+    // 3-line layout and gets clipped by a single-line-tall iframe. The JSON endpoint sidesteps
+    // that whole class of bug: it renders in this document, not a cross-origin iframe, so the
+    // page's own CSS (.visitor-counter in styles.css) applies normally - no injected GoatCounter
+    // markup, no stray <br>s, no var(--...) cross-origin problem.
     (function () {
-      var dark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
-      var ink = dark ? "#9aa8a1" : "#4d5c53";
       var t = setInterval(function () {
-        if (window.goatcounter && window.goatcounter.visit_count) {
+        if (window.goatcounter && window.goatcounter.get_data) {
           clearInterval(t);
-          window.goatcounter.visit_count({
-            append: "#visitorCounter",
-            start: "month",
-            attr: { width: "34", height: "13", title: "", style: "vertical-align:text-bottom" },
-            style:
-              "body{margin:0;padding:0;background:transparent;}" +
-              "div{width:auto;height:auto;border:0;background:transparent;padding:0;margin:0;" +
-              "text-align:left;line-height:13px;font-family:'Segoe UI',system-ui,Arial,sans-serif;" +
-              "font-weight:600;color:" + ink + ";}" +
-              "#gcvc-for,#gcvc-by{display:none;}" +
-              "#gcvc-views{font-size:11px;}",
-          });
+          var path = window.goatcounter.get_data()["p"];
+          fetch("https://gtfs-dashboard.goatcounter.com/counter/" + encodeURIComponent(path) + ".json?start=month")
+            .then(function (r) { return r.json(); })
+            .then(function (data) {
+              document.getElementById("visitorCounter").textContent = data.count;
+            })
+            .catch(function () {}); // leave the element empty (whole .visitor-counter stays hidden via :has())
         }
       }, 100);
     })();
