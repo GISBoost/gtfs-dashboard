@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-06T06:27:52Z",
+  "generated_at": "2026-08-07T05:38:44Z",
   "source_repo": "GISBoost/easy-GTFS-RT",
   "cities": {
     "boston": {
@@ -592,6 +592,37 @@
             "stdev_delay_sec": 124.99,
             "min_delay_sec": -1635,
             "max_delay_sec": 1356
+          }
+        },
+        {
+          "date": "2026-08-06",
+          "release_tag": "boston-realized-2026-08-06-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/boston-realized-2026-08-06-phone",
+          "created_at": "2026-08-07T02:20:37Z",
+          "recording_dirs": 1,
+          "observations_matched": 518920,
+          "segments_corrected": 1139744,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-08-06-phone/boston_realized_2026-08-06_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-08-06-phone/boston_realized_2026-08-06_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-08-06-phone/boston_static_gtfs_2026-08-06.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-08-06-phone/boston_diff_2026-08-06_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-08-06-phone/boston_diff_2026-08-06_p50_summary.csv",
+            "tidy_table": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-08-06-phone/boston_tidy_2026-08-06.csv.gz"
+          },
+          "delay_stats": {
+            "n_rows": 2237146,
+            "n_changed": 1210337,
+            "pct_changed": 54.1,
+            "mean_delay_sec": 8.16,
+            "mean_abs_delay_sec": 64.92,
+            "stdev_delay_sec": 129.06,
+            "min_delay_sec": -1527,
+            "max_delay_sec": 1598
           }
         }
       ]
@@ -1220,6 +1251,38 @@
             "stdev_delay_sec": 180.61,
             "min_delay_sec": -1601,
             "max_delay_sec": 3638
+          }
+        },
+        {
+          "date": "2026-08-06",
+          "release_tag": "brisbane-realized-2026-08-06-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/brisbane-realized-2026-08-06-phone",
+          "created_at": "2026-08-06T12:24:31Z",
+          "recording_dirs": 2,
+          "observations_matched": 374274,
+          "segments_corrected": 718885,
+          "coverage_ranges": [
+            "06:00-09:38",
+            "17:40-22:00"
+          ],
+          "status": "partial",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-08-06-phone/brisbane_realized_2026-08-06_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-08-06-phone/brisbane_realized_2026-08-06_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-08-06-phone/brisbane_static_gtfs_2026-08-06.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-08-06-phone/brisbane_diff_2026-08-06_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-08-06-phone/brisbane_diff_2026-08-06_p50_summary.csv",
+            "tidy_table": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-08-06-phone/brisbane_tidy_2026-08-06.csv.gz"
+          },
+          "delay_stats": {
+            "n_rows": 2862900,
+            "n_changed": 870570,
+            "pct_changed": 30.41,
+            "mean_delay_sec": 13.7,
+            "mean_abs_delay_sec": 42.08,
+            "stdev_delay_sec": 134.0,
+            "min_delay_sec": -1957,
+            "max_delay_sec": 3402
           }
         }
       ]
@@ -8472,6 +8535,37 @@
             "stdev_delay_sec": 41.08,
             "min_delay_sec": -365,
             "max_delay_sec": 773
+          }
+        },
+        {
+          "date": "2026-08-06",
+          "release_tag": "szczecin-realized-2026-08-06-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/szczecin-realized-2026-08-06-phone",
+          "created_at": "2026-08-07T05:37:40Z",
+          "recording_dirs": 1,
+          "observations_matched": 159101,
+          "segments_corrected": 83221,
+          "coverage_ranges": [
+            "09:40-22:00"
+          ],
+          "status": "partial",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-08-06-phone/szczecin_realized_2026-08-06_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-08-06-phone/szczecin_realized_2026-08-06_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-08-06-phone/szczecin_static_gtfs_2026-08-06.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-08-06-phone/szczecin_diff_2026-08-06_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-08-06-phone/szczecin_diff_2026-08-06_p50_summary.csv",
+            "tidy_table": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-08-06-phone/szczecin_tidy_2026-08-06.csv.gz"
+          },
+          "delay_stats": {
+            "n_rows": 359144,
+            "n_changed": 90220,
+            "pct_changed": 25.12,
+            "mean_delay_sec": 4.21,
+            "mean_abs_delay_sec": 13.91,
+            "stdev_delay_sec": 38.82,
+            "min_delay_sec": -341,
+            "max_delay_sec": 1093
           }
         }
       ]
