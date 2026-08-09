@@ -7,17 +7,7 @@
 
 const REPO = "GISBoost/easy-GTFS-RT";
 const RELEASES_URL = `https://github.com/${REPO}/releases`;
-const MONTHS_PL = [
-  "styczeń", "luty", "marzec", "kwiecień", "maj", "czerwiec",
-  "lipiec", "sierpień", "wrzesień", "październik", "listopad", "grudzień",
-];
-// Indexed by Date#getUTCDay() (0 = Sunday). Dates are parsed as UTC (bare "YYYY-MM-DD", no time
-// suffix) so the weekday is derived purely from the calendar date string, unaffected by the
-// viewer's local timezone — same convention daysBetween() already relies on.
-const WEEKDAYS_PL = ["niedz", "pon", "wt", "śr", "czw", "pt", "sob"];
-function weekdayPl(dateStr) {
-  return WEEKDAYS_PL[new Date(dateStr).getUTCDay()];
-}
+// Month/weekday name tables and t()/getLang() live in i18n.js (loaded before this file).
 
 let state = {
   level: "cities", cityId: null, month: null, date: null, q: "", sort: "date", dir: "asc",
@@ -114,7 +104,7 @@ function todayIso() { return new Date().toISOString().slice(0, 10); }
 function daysBetween(a, b) { return Math.round((new Date(b) - new Date(a)) / 86400000); }
 
 function fmtNum(n) {
-  return n === null ? '<span class="dash">–</span>' : n.toLocaleString("pl-PL");
+  return n === null ? '<span class="dash">–</span>' : n.toLocaleString(dtLocale());
 }
 function fmtBytes(n) {
   if (n < 1024) return `${n} B`;
@@ -122,18 +112,13 @@ function fmtBytes(n) {
   if (n < 1024 ** 3) return `${(n / 1024 ** 2).toFixed(1)} MB`;
   return `${(n / 1024 ** 3).toFixed(2)} GB`;
 }
-function plCities(n) {
-  if (n === 1) return "miasto";
-  const mod10 = n % 10, mod100 = n % 100;
-  return mod10 >= 2 && mod10 <= 4 && !(mod100 >= 12 && mod100 <= 14) ? "miasta" : "miast";
-}
 function fmtCoverage(ranges) {
-  return ranges === null ? '<span class="dash">brak danych o pokryciu</span>' : ranges.join(", ");
+  return ranges === null ? `<span class="dash">${t("coverageNoData")}</span>` : ranges.join(", ");
 }
 function statusPillHtml(status) {
-  if (status === "ok") return '<span class="pill">✓ zbudowane</span>';
-  if (status === "partial") return '<span class="pill warn">częściowe</span>';
-  return '<span class="pill unknown">stan nieznany</span>';
+  if (status === "ok") return `<span class="pill">${t("statusBuilt")}</span>`;
+  if (status === "partial") return `<span class="pill warn">${t("statusPartial")}</span>`;
+  return `<span class="pill unknown">${t("statusUnknown")}</span>`;
 }
 
 function cityMeta(c) {
@@ -256,12 +241,12 @@ function wireDayTrendTooltip(monthDays) {
 function delaySummaryHtml(days) {
   const summary = monthDelaySummary(days);
   if (!summary) {
-    return `<div class="delay-summary delay-summary-empty">brak danych o opóźnieniach za ten miesiąc</div>`;
+    return `<div class="delay-summary delay-summary-empty">${t("delaySummaryEmpty")}</div>`;
   }
   return `<div class="delay-summary">
-    <span>śr. opóźnienie: ${fmtSignedMin(summary.meanDelaySec)}</span>
-    <span>maks. opóźnienie: ${fmtMin(summary.maxDelaySec)}</span>
-    <span class="worst">najgorszy dzień: ${summary.worstDay.date} (${fmtMin(summary.worstDay.delay_stats.max_delay_sec)})</span>
+    <span>${t("delayMean")}${fmtSignedMin(summary.meanDelaySec)}</span>
+    <span>${t("delayMax")}${fmtMin(summary.maxDelaySec)}</span>
+    <span class="worst">${t("delayWorst")}${summary.worstDay.date} (${fmtMin(summary.worstDay.delay_stats.max_delay_sec)})</span>
   </div>`;
 }
 // Day-by-day delay trend panel for the days level (one specific month) - always built from every
@@ -271,16 +256,16 @@ function dayTrendPanelHtml(monthDays) {
   const withStats = monthDays.filter((d) => d.delay_stats != null);
   if (!withStats.length) {
     return `<div class="delay-panel">
-      <div class="delay-panel-title">Trend opóźnień w tym miesiącu</div>
-      <div class="empty">brak danych o opóźnieniach za ten miesiąc</div>
+      <div class="delay-panel-title">${t("delayTrendTitle")}</div>
+      <div class="empty">${t("delaySummaryEmpty")}</div>
     </div>`;
   }
   const vals = withStats.map((d) => d.delay_stats.mean_delay_sec);
   const lo = Math.min(...vals), hi = Math.max(...vals);
   return `<div class="delay-panel">
-    <div class="delay-panel-title">Trend opóźnień w tym miesiącu</div>
+    <div class="delay-panel-title">${t("delayTrendTitle")}</div>
     ${sparklineSvg(monthDays, { width: 600, height: 60, className: "sparkline-wide", interactive: true })}
-    <p class="delay-panel-caption">Średnie opóźnienie obserwacji na dzień, w minutach (przerwy w linii = brak danych za ten dzień; najedź na linię, żeby zobaczyć wartość dla konkretnego dnia). Zakres w tym miesiącu: ${fmtSignedMinPlain(lo)} – ${fmtSignedMinPlain(hi)}.</p>
+    <p class="delay-panel-caption">${t("delayTrendCaption", { lo: fmtSignedMinPlain(lo), hi: fmtSignedMinPlain(hi) })}</p>
   </div>`;
 }
 
@@ -326,7 +311,7 @@ function compareRowComparator(a, b) {
   if (av === null && bv === null) return 0;
   if (av === null) return 1;
   if (bv === null) return -1;
-  const cmp = typeof av === "string" ? av.localeCompare(bv, "pl") : (av < bv ? -1 : av > bv ? 1 : 0);
+  const cmp = typeof av === "string" ? av.localeCompare(bv, getLang()) : (av < bv ? -1 : av > bv ? 1 : 0);
   return state.compareDir === "asc" ? cmp : -cmp;
 }
 function fmtPct(agg) {
@@ -337,11 +322,11 @@ function compareTableHtml(rows) {
   const sortInd = (key) => (state.compareSort === key ? (state.compareDir === "asc" ? "ascending" : "descending") : "none");
   return `<div class="table-wrap"><table>
       <thead><tr>
-        <th><button data-csort="display" aria-sort="${sortInd("display")}">Miasto</button></th>
-        <th><button data-csort="meanDelaySec" aria-sort="${sortInd("meanDelaySec")}">Śr. opóźnienie</button></th>
-        <th><button data-csort="meanAbsDelaySec" aria-sort="${sortInd("meanAbsDelaySec")}">Śr. bezwzględne opóźnienie</button></th>
-        <th><button data-csort="maxDelaySec" aria-sort="${sortInd("maxDelaySec")}">Maks. opóźnienie</button></th>
-        <th><button data-csort="pctChanged" aria-sort="${sortInd("pctChanged")}">Opóźnione obserwacje</button></th>
+        <th><button data-csort="display" aria-sort="${sortInd("display")}">${t("tableCity")}</button></th>
+        <th><button data-csort="meanDelaySec" aria-sort="${sortInd("meanDelaySec")}">${t("tableMeanDelay")}</button></th>
+        <th><button data-csort="meanAbsDelaySec" aria-sort="${sortInd("meanAbsDelaySec")}">${t("tableMeanAbsDelay")}</button></th>
+        <th><button data-csort="maxDelaySec" aria-sort="${sortInd("maxDelaySec")}">${t("tableMaxDelay")}</button></th>
+        <th><button data-csort="pctChanged" aria-sort="${sortInd("pctChanged")}">${t("tableDelayedObs")}</button></th>
       </tr></thead>
       <tbody>${rows.map((row) => `
         <tr>
@@ -392,7 +377,7 @@ async function loadManifest() {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     if (!data || typeof data.cities !== "object" || data.cities === null) {
-      throw new Error('manifest.json ma nieoczekiwany kształt (brak pola "cities").');
+      throw new Error(t("manifestShapeError"));
     }
     const normalized = normalizeManifest(data);
     state.manifest = normalized.cities;
@@ -401,7 +386,7 @@ async function loadManifest() {
     state.loadStatus = "loaded";
     applyHash();
   } catch (err) {
-    console.error("Nie udało się wczytać manifest.json:", err);
+    console.error(t("consoleLoadError"), err);
     state.loadStatus = "error";
     state.loadError = err;
     render();
@@ -418,23 +403,23 @@ function crumbBtn(label, current, handler) {
 function setCrumbs() {
   crumbHandlers = [];
   const parts = [];
-  parts.push(crumbBtn("Wszystkie miasta", state.level === "cities", () => {
+  parts.push(crumbBtn(t("crumbsAllCities"), state.level === "cities", () => {
     navigateTo("cities", null, null, null);
   }));
   if (state.level === "compare") {
     parts.push('<span class="sep">/</span>');
-    parts.push(crumbBtn("Porównanie miast", true, () => {}));
+    parts.push(crumbBtn(t("crumbsCompare"), true, () => {}));
   }
   if (state.level === "backups" || state.level === "backup-month") {
     parts.push('<span class="sep">/</span>');
-    parts.push(crumbBtn("Kopie zapasowe", state.level === "backups", () => {
+    parts.push(crumbBtn(t("crumbsBackups"), state.level === "backups", () => {
       navigateTo("backups", null, null, null);
     }));
   }
   if (state.level === "backup-month" && state.backupMonth) {
     const [y, m] = state.backupMonth.split("-");
     parts.push('<span class="sep">/</span>');
-    parts.push(crumbBtn(`${MONTHS_PL[+m - 1]} ${y}`, true, () => {}));
+    parts.push(crumbBtn(`${monthName(+m - 1)} ${y}`, true, () => {}));
   }
   if (state.cityId) {
     const c = state.manifest.find((m) => m.id === state.cityId);
@@ -446,7 +431,7 @@ function setCrumbs() {
   if (state.month) {
     const [y, m] = state.month.split("-");
     parts.push('<span class="sep">/</span>');
-    parts.push(crumbBtn(`${MONTHS_PL[+m - 1]} ${y}`, state.level === "days", () => {
+    parts.push(crumbBtn(`${monthName(+m - 1)} ${y}`, state.level === "days", () => {
       navigateTo("days", state.cityId, state.month, null);
     }));
   }
@@ -465,22 +450,22 @@ function updateDataBadge() {
   const d = new Date(state.generatedAt);
   badge.textContent = isNaN(d.getTime())
     ? ""
-    : "zaktualizowano: " + d.toLocaleString("pl-PL", { dateStyle: "medium", timeStyle: "short" });
+    : t("dataBadgeUpdated") + d.toLocaleString(dtLocale(), { dateStyle: "medium", timeStyle: "short" });
 }
 
 // --- loading / error states --------------------------------------------------------------------
 function renderLoadingHtml() {
   return `<div class="state-message">
     <div class="spinner" aria-hidden="true"></div>
-    <div class="state-title">Ładowanie danych…</div>
+    <div class="state-title">${t("loadingTitle")}</div>
   </div>`;
 }
 function renderErrorHtml(err) {
-  const msg = err && err.message ? err.message : "nieznany błąd";
+  const msg = err && err.message ? err.message : t("errorUnknown");
   return `<div class="state-message is-error">
-    <div class="state-title">Nie udało się wczytać danych</div>
-    <p>Wystąpił problem z pobraniem <code>manifest.json</code> (${escapeHtml(msg)}).</p>
-    <a class="state-link" href="${RELEASES_URL}" target="_blank" rel="noopener">Zobacz release'y bezpośrednio na GitHubie ↗</a>
+    <div class="state-title">${t("errorTitle")}</div>
+    <p>${t("errorBodyHtml", { msg: escapeHtml(msg) })}</p>
+    <a class="state-link" href="${RELEASES_URL}" target="_blank" rel="noopener">${t("errorLink")}</a>
   </div>`;
 }
 
@@ -493,7 +478,7 @@ function dlRow(name, url, sizeLabel) {
   const file = url.split("/").pop();
   return `<a class="dl-detail" href="${url}" target="_blank" rel="noopener">
     <span><span class="dl-name">${name}</span><br/><span class="dl-file">${escapeHtml(file)}${sizeLabel ? ` · ${sizeLabel}` : ""}</span></span>
-    <span class="dl-go">pobierz ↗</span>
+    <span class="dl-go">${t("dlGoLabel")}</span>
   </a>`;
 }
 
@@ -508,11 +493,6 @@ function dlRow(name, url, sizeLabel) {
 // enough for a plain click to download rather than navigate, but Chrome's "automatic multiple
 // downloads" guard still throttles same-tick synthetic clicks - verified in-browser that a
 // ~400ms gap keeps every download flowing without a manual "allow multiple downloads" prompt.
-function plFiles(n) {
-  if (n === 1) return "plik";
-  const mod10 = n % 10, mod100 = n % 100;
-  return mod10 >= 2 && mod10 <= 4 && !(mod100 >= 12 && mod100 <= 14) ? "pliki" : "plików";
-}
 function triggerDownload(url) {
   const a = document.createElement("a");
   a.href = url;
@@ -538,7 +518,7 @@ async function bulkExportCsv(days) {
     triggerDownload(withCsv[i].assets.diff_summary);
     bulkExportState.done = i + 1;
     const btn = document.getElementById("bulkExportBtn");
-    if (btn && btn.dataset.key === key) btn.textContent = `Pobieranie… (${bulkExportState.done}/${bulkExportState.total})`;
+    if (btn && btn.dataset.key === key) btn.textContent = t("bulkExportInProgress", { done: bulkExportState.done, total: bulkExportState.total });
     if (i < withCsv.length - 1) await new Promise((resolve) => setTimeout(resolve, 400));
   }
   bulkExportState = null;
@@ -549,12 +529,12 @@ function bulkExportButtonHtml(monthDays) {
   if (!n) return "";
   const key = `${state.cityId}/${state.month}`;
   if (bulkExportState && bulkExportState.key === key) {
-    return `<button class="bulk-export-btn" id="bulkExportBtn" type="button" disabled data-key="${key}">Pobieranie… (${bulkExportState.done}/${bulkExportState.total})</button>`;
+    return `<button class="bulk-export-btn" id="bulkExportBtn" type="button" disabled data-key="${key}">${t("bulkExportInProgress", { done: bulkExportState.done, total: bulkExportState.total })}</button>`;
   }
   if (bulkExportState) {
-    return `<button class="bulk-export-btn" id="bulkExportBtn" type="button" disabled>Poczekaj, trwa pobieranie dla innego miesiąca…</button>`;
+    return `<button class="bulk-export-btn" id="bulkExportBtn" type="button" disabled>${t("bulkExportWaitOther")}</button>`;
   }
-  return `<button class="bulk-export-btn" id="bulkExportBtn" type="button" data-key="${key}">Pobierz wszystkie (${n} ${plFiles(n)}) — CSV</button>`;
+  return `<button class="bulk-export-btn" id="bulkExportBtn" type="button" data-key="${key}">${t("bulkExportButton", { n, files: fileCountLabel(n) })}</button>`;
 }
 
 function renderDetail(c, d) {
@@ -563,58 +543,51 @@ function renderDetail(c, d) {
     ? `<div class="chart-img-wrap">
         <img class="chart-img" loading="lazy"
              src="${chartUrl}"
-             alt="Wykres średniego opóźnienia (zrealizowane minus rozkładowe) w funkcji czasu rozkładowego, ${escapeHtml(c.display)} ${d.date}"
+             alt="${escapeHtml(t("chartImgAlt", { city: c.display, date: d.date }))}"
              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
         <div class="chart-fallback" style="display:none">
-          <span>Obraz nie wczytał się pod tym adresem.</span>
-          <a href="${chartUrl}" target="_blank" rel="noopener">Otwórz link mimo to ↗</a>
+          <span>${t("chartFallbackNotLoaded")}</span>
+          <a href="${chartUrl}" target="_blank" rel="noopener">${t("chartFallbackOpenAnyway")}</a>
         </div>
       </div>`
     : `<div class="chart-img-wrap">
         <div class="chart-fallback">
-          <span>Wykres nie został wygenerowany dla tego dnia (np. same zerowe opóźnienia).</span>
+          <span>${t("chartFallbackNoChart")}</span>
         </div>
       </div>`;
 
   const summaryLine = d.assets.diff_summary
-    ? ` Dostępna alternatywa danych (tabela): <a href="${d.assets.diff_summary}" target="_blank" rel="noopener">plik CSV</a>.`
+    ? t("summaryLineHtml", { url: d.assets.diff_summary })
     : "";
 
   return `
     <div class="detail-head">
-      <div><h1 class="detail-date">${escapeHtml(c.display)} — ${d.date}</h1><span class="cov">Pokrycie: ${fmtCoverage(d.coverage_ranges)}</span></div>
+      <div><h1 class="detail-date">${escapeHtml(c.display)} — ${d.date}</h1><span class="cov">${t("coverageLabel")}${fmtCoverage(d.coverage_ranges)}</span></div>
       <div class="detail-badges">
         ${statusPillHtml(d.status)}
-        ${d.release_url ? `<a class="pill-link" href="${d.release_url}" target="_blank" rel="noopener">zobacz release na GitHubie ↗</a>` : ""}
+        ${d.release_url ? `<a class="pill-link" href="${d.release_url}" target="_blank" rel="noopener">${t("viewReleaseLink")}</a>` : ""}
       </div>
     </div>
     <div class="stat-tiles">
-      <div class="stat-tile"><div class="stat-value${d.observations_matched === null ? " dash" : ""}">${fmtNum(d.observations_matched)}</div><div class="stat-label">dopasowane obserwacje</div></div>
-      <div class="stat-tile"><div class="stat-value${d.segments_corrected === null ? " dash" : ""}">${fmtNum(d.segments_corrected)}</div><div class="stat-label">skorygowane odcinki</div></div>
-      <div class="stat-tile"><div class="stat-value${d.recording_dirs === null ? " dash" : ""}">${fmtNum(d.recording_dirs)}</div><div class="stat-label">katalog(i) nagrania</div></div>
+      <div class="stat-tile"><div class="stat-value${d.observations_matched === null ? " dash" : ""}">${fmtNum(d.observations_matched)}</div><div class="stat-label">${t("statMatchedObs")}</div></div>
+      <div class="stat-tile"><div class="stat-value${d.segments_corrected === null ? " dash" : ""}">${fmtNum(d.segments_corrected)}</div><div class="stat-label">${t("statCorrectedSeg")}</div></div>
+      <div class="stat-tile"><div class="stat-value${d.recording_dirs === null ? " dash" : ""}">${fmtNum(d.recording_dirs)}</div><div class="stat-label">${t("statRecordingDirs")}</div></div>
     </div>
     <div class="chart-card">
-      <div class="chart-title">Static vs realized — średnie opóźnienie wg czasu rozkładowego</div>
+      <div class="chart-title">${t("chartCardTitle")}</div>
       ${chartBlock}
-      <p class="chart-caption">Ten PNG nie jest renderowany przez tę stronę — to gotowy plik z release'u
-        <code>${d.release_tag}</code>, wygenerowany przez
-        <code>tools/analysis/gtfs_static_vs_realized_diff.py</code> (matplotlib) bezpośrednio z różnicy
-        statycznego i „zrealizowanego” GTFS — nie z CSV; CSV to osobny, równoległy eksport tych samych
-        danych z tego samego przebiegu skryptu, nie źródło wykresu.${summaryLine}</p>
+      <p class="chart-caption">${t("chartCaptionHtml", { tag: d.release_tag })}${summaryLine}</p>
     </div>
     <div class="downloads-detail">
-      ${dlRow("📦 GTFS skorygowany — mediana (P50)", d.assets.p50)}
-      ${dlRow("📦 GTFS skorygowany — 85. percentyl (P85)", d.assets.p85)}
-      ${dlRow("🗺️ Statyczny GTFS użyty do tego builda", d.assets.static_gtfs)}
-      ${dlRow("📈 Wykres static-vs-realized (PNG)", d.assets.diff_chart)}
-      ${dlRow("📄 Zestawienie różnic (CSV)", d.assets.diff_summary)}
-      ${dlRow("📊 Tabela źródłowa wykresów (tidy table, CSV.GZ)", d.assets.tidy_table)}
+      ${dlRow(t("dlP50"), d.assets.p50)}
+      ${dlRow(t("dlP85"), d.assets.p85)}
+      ${dlRow(t("dlStaticGtfs"), d.assets.static_gtfs)}
+      ${dlRow(t("dlChart"), d.assets.diff_chart)}
+      ${dlRow(t("dlSummaryCsv"), d.assets.diff_summary)}
+      ${dlRow(t("dlTidyTable"), d.assets.tidy_table)}
     </div>
     ${d.assets.tidy_table
-      ? `<p class="chart-caption">Ta tabela to dokładne wejście, które czyta
-          <code>transit_charts chart</code> — zawiera jeden wiersz na zaplanowane minięcie
-          przystanku dla całego dnia. Instrukcja, jak z niej lokalnie odtworzyć wykresy:
-          <a href="https://github.com/GISBoost/easy-OTP/tree/main/tools/transit_charts#readme" target="_blank" rel="noopener">README narzędzia transit_charts ↗</a>.</p>`
+      ? `<p class="chart-caption">${t("tidyTableCaptionHtml")}</p>`
       : ""}`;
 }
 
@@ -654,26 +627,26 @@ function render() {
   pageTitle.style.display = state.level === "detail" ? "none" : "block";
 
   if (state.level === "compare") {
-    pageTitle.textContent = "Porównanie miast";
+    pageTitle.textContent = t("compareTitle");
     const range = state.compareRange;
     if (!state.manifest.length) {
-      content.innerHTML = `<div class="empty">Brak miast w danych.</div>`;
-      note.innerHTML = `<b>Porównanie miast:</b> brak miast w załadowanym manifeście.`;
+      content.innerHTML = `<div class="empty">${t("compareEmpty")}</div>`;
+      note.innerHTML = t("compareEmptyNoteHtml");
       return;
     }
     const rows = state.manifest
       .slice()
-      .sort((a, b) => a.display.localeCompare(b.display, "pl"))
+      .sort((a, b) => a.display.localeCompare(b.display, getLang()))
       .map((city) => ({ city, agg: cityDelayAggregate(city, range) }))
       .sort(compareRowComparator);
     const now = new Date(todayIso());
     const rangeLabel = range === "month"
-      ? `bieżący miesiąc (${MONTHS_PL[now.getUTCMonth()]} ${now.getUTCFullYear()})`
-      : "cały dostępny okres";
+      ? t("compareRangeLabelMonth", { month: monthName(now.getUTCMonth()), year: now.getUTCFullYear() })
+      : t("compareRangeLabelAll");
     content.innerHTML = `
-      <div class="range-toggle" role="group" aria-label="Zakres czasu">
-        <button class="range-btn${range === "month" ? " active" : ""}" data-range="month" aria-pressed="${range === "month"}">Bieżący miesiąc</button>
-        <button class="range-btn${range === "all" ? " active" : ""}" data-range="all" aria-pressed="${range === "all"}">Cały dostępny okres</button>
+      <div class="range-toggle" role="group" aria-label="${t("compareRangeAriaLabel")}">
+        <button class="range-btn${range === "month" ? " active" : ""}" data-range="month" aria-pressed="${range === "month"}">${t("compareRangeMonth")}</button>
+        <button class="range-btn${range === "all" ? " active" : ""}" data-range="all" aria-pressed="${range === "all"}">${t("compareRangeAll")}</button>
       </div>
       ${compareTableHtml(rows)}`;
     content.querySelectorAll("[data-range]").forEach((btn) => {
@@ -687,92 +660,95 @@ function render() {
         render();
       };
     });
-    note.innerHTML = `<b>Porównanie miast:</b> ranking wg opóźnień za ${rangeLabel}, liczony wyłącznie z danych już wczytanych w <code>manifest.json</code> (bez dodatkowych zapytań). „Opóźnione obserwacje" to wiersze <code>stop_times.txt</code> (obserwacje na przystanku), nie unikalne kursy — jeden opóźniony kurs generuje wiele zmienionych wierszy.`;
+    note.innerHTML = t("compareNoteHtml", { range: rangeLabel });
 
   } else if (state.level === "backups") {
-    pageTitle.textContent = "Kopie zapasowe";
-    q.placeholder = "Szukaj miesiąca (np. lipiec, 2026-07)…";
+    pageTitle.textContent = t("backupsTitle");
+    q.placeholder = t("backupsSearchPlaceholder");
     let archives = state.rawSnapshotArchives.slice().sort((a, b) => b.month.localeCompare(a.month));
     const query = state.q.trim().toLowerCase();
-    if (query) archives = archives.filter((a) => a.month.includes(query) || MONTHS_PL[+a.month.slice(5, 7) - 1].includes(query));
+    if (query) archives = archives.filter((a) => a.month.includes(query) || monthName(+a.month.slice(5, 7) - 1).toLowerCase().includes(query));
 
     content.innerHTML = !archives.length
-      ? `<div class="empty">${state.rawSnapshotArchives.length ? `Brak miesięcy pasujących do „${escapeHtml(state.q)}”.` : "Nie opublikowano jeszcze żadnej kopii zapasowej."}</div>`
+      ? `<div class="empty">${state.rawSnapshotArchives.length ? t("backupsEmptyFiltered", { q: escapeHtml(state.q) }) : t("backupsEmptyNone")}</div>`
       : `<div class="grid">${archives.map((a) => {
           const [y, m] = a.month.split("-");
           const totalBytes = a.cities.reduce((sum, c) => sum + c.size_bytes, 0);
           const published = new Date(a.published_at);
-          const publishedLabel = isNaN(published.getTime()) ? "" : published.toLocaleDateString("pl-PL", { dateStyle: "medium" });
+          const publishedLabel = isNaN(published.getTime()) ? "" : published.toLocaleDateString(dtLocale(), { dateStyle: "medium" });
           return `<button class="card" data-month="${a.month}">
-              <div class="title"><span>${MONTHS_PL[+m - 1]} ${y}</span><span class="arrow">→</span></div>
-              <div class="meta">${a.cities.length} ${plCities(a.cities.length)} · ${fmtBytes(totalBytes)}</div>
-              <div class="row-stats"><span class="pill muted">opublikowano ${publishedLabel}</span></div>
+              <div class="title"><span>${monthName(+m - 1)} ${y}</span><span class="arrow">→</span></div>
+              <div class="meta">${a.cities.length} ${cityCountLabel(a.cities.length)} · ${fmtBytes(totalBytes)}</div>
+              <div class="row-stats"><span class="pill muted">${t("backupsPublished", { date: publishedLabel })}</span></div>
             </button>`;
         }).join("")}</div>`;
     content.querySelectorAll("[data-month]").forEach((btn) => {
       btn.onclick = () => navigateTo("backup-month", null, btn.dataset.month, null);
     });
-    note.innerHTML = `<b>Kopie zapasowe:</b> comiesięczne archiwa surowych snapshotów GPS (GTFS-RT VehiclePositions) użytych do zbudowania „zrealizowanego” rozkładu — publikowane automatycznie po zakończeniu każdego miesiąca, żeby dane nie musiały leżeć w nieskończoność na urządzeniu nagrywającym. Kliknij miesiąc, żeby zobaczyć pliki per miasto.`;
+    note.innerHTML = t("backupsNoteHtml");
 
   } else if (state.level === "backup-month") {
     const archive = state.rawSnapshotArchives.find((a) => a.month === state.backupMonth);
     const [y, m] = state.backupMonth.split("-");
-    pageTitle.textContent = `Kopie zapasowe — ${MONTHS_PL[+m - 1]} ${y}`;
+    pageTitle.textContent = t("backupMonthTitle", { month: monthName(+m - 1), year: y });
     content.innerHTML = `
       <div class="detail-badges">
-        <a class="pill-link" href="${archive.release_url}" target="_blank" rel="noopener">zobacz release na GitHubie ↗</a>
+        <a class="pill-link" href="${archive.release_url}" target="_blank" rel="noopener">${t("viewReleaseLink")}</a>
       </div>
       <div class="downloads-detail">${archive.cities.map((c) =>
         dlRow(`🗄️ ${escapeHtml(c.display_name)}`, c.asset_url, fmtBytes(c.size_bytes))
       ).join("")}</div>`;
-    note.innerHTML = `<b>${archive.cities.length} ${plCities(archive.cities.length)}</b> w tej kopii zapasowej. Każdy plik to skompresowane surowe snapshoty GTFS-RT (VehiclePositions) z ${MONTHS_PL[+m - 1]} ${y} dla danego miasta — rozpakuj 7-Zipem (pliki <code>.7z</code> od razu, pliki <code>.tar.xz</code> w dwóch krokach: <code>.xz</code>→<code>.tar</code>, potem <code>.tar</code>→pliki) i wskaż jako <code>--positions-dir</code> dla <code>family_a match</code>, żeby odtworzyć dopasowanie lokalnie.`;
+    note.innerHTML = t("backupMonthNoteHtml", {
+      n: archive.cities.length, cities: cityCountLabel(archive.cities.length),
+      month: monthName(+m - 1), year: y,
+    });
 
   } else if (state.level === "cities") {
-    pageTitle.textContent = "Wszystkie miasta";
-    q.placeholder = "Szukaj miasta…";
-    let cities = state.manifest.slice().sort((a, b) => a.display.localeCompare(b.display, "pl"));
+    pageTitle.textContent = t("citiesTitle");
+    q.placeholder = t("citiesSearchPlaceholder");
+    let cities = state.manifest.slice().sort((a, b) => a.display.localeCompare(b.display, getLang()));
     const query = state.q.trim().toLowerCase();
     if (query) cities = cities.filter((c) => c.display.toLowerCase().includes(query) || c.id.includes(query));
 
     content.innerHTML = !cities.length
-      ? `<div class="empty">Brak miast pasujących do „${escapeHtml(state.q)}”.</div>`
+      ? `<div class="empty">${t("citiesEmpty", { q: escapeHtml(state.q) })}</div>`
       : `<div class="grid">${cities.map((c) => {
           const m = cityMeta(c);
-          const freshness = m.stale <= 1 ? `<span class="pill">✓ aktualne</span>`
-            : m.stale <= 3 ? `<span class="pill warn">brak od ${m.stale} dni</span>`
-            : `<span class="pill muted">brak od ${m.stale} dni</span>`;
+          const freshness = m.stale <= 1 ? `<span class="pill">${t("citiesFreshOk")}</span>`
+            : m.stale <= 3 ? `<span class="pill warn">${t("citiesFreshStale", { n: m.stale })}</span>`
+            : `<span class="pill muted">${t("citiesFreshStale", { n: m.stale })}</span>`;
           return `<button class="card" data-city="${c.id}" data-goatcounter-click="city-${c.id}">
               <div class="title"><span>${escapeHtml(c.display)}</span><span class="arrow">→</span></div>
               <div class="meta">${m.first} … ${m.last}</div>
-              <div class="row-stats"><span class="pill muted">${m.count} dni</span>${freshness}</div>
+              <div class="row-stats"><span class="pill muted">${t("daysCount", { n: m.count })}</span>${freshness}</div>
             </button>`;
         }).join("")}</div>`;
     content.querySelectorAll("[data-city]").forEach((btn) => {
       btn.onclick = () => navigateTo("months", btn.dataset.city, null, null);
     });
-    note.innerHTML = `<b>Poziom 1 z 4:</b> miasta posortowane alfabetycznie. Kliknij, żeby zobaczyć miesiące.`;
+    note.innerHTML = t("citiesNote");
 
   } else if (state.level === "months") {
     const c = state.manifest.find((m) => m.id === state.cityId);
     pageTitle.textContent = c.display;
-    q.placeholder = "Szukaj miesiąca (np. lipiec, 2026-06)…";
+    q.placeholder = t("monthsSearchPlaceholder");
     let months = monthsFor(c);
     const query = state.q.trim().toLowerCase();
-    if (query) months = months.filter(([ym]) => ym.includes(query) || MONTHS_PL[+ym.slice(5, 7) - 1].includes(query));
+    if (query) months = months.filter(([ym]) => ym.includes(query) || monthName(+ym.slice(5, 7) - 1).toLowerCase().includes(query));
 
     content.innerHTML = !months.length
-      ? `<div class="empty">Brak miesięcy pasujących do „${escapeHtml(state.q)}”.</div>`
+      ? `<div class="empty">${t("monthsEmpty", { q: escapeHtml(state.q) })}</div>`
       : `<div class="grid">${months.map(([ym, days]) => {
           const [y, m] = ym.split("-");
           const hasPartial = days.some((d) => d.status === "partial");
           const hasUnknown = days.some((d) => d.status === "unknown");
           return `<button class="card" data-ym="${ym}">
-              <div class="title"><span>${MONTHS_PL[+m - 1]} ${y}</span><span class="arrow">→</span></div>
+              <div class="title"><span>${monthName(+m - 1)} ${y}</span><span class="arrow">→</span></div>
               <div class="meta">${days[0].date} … ${days[days.length - 1].date}</div>
               <div class="row-stats">
-                <span class="pill muted">${days.length} dni</span>
-                ${hasPartial ? '<span class="pill warn">częściowe pokrycie</span>' : ""}
-                ${hasUnknown ? '<span class="pill unknown">dni bez danych</span>' : ""}
+                <span class="pill muted">${t("daysCount", { n: days.length })}</span>
+                ${hasPartial ? `<span class="pill warn">${t("monthsPartial")}</span>` : ""}
+                ${hasUnknown ? `<span class="pill unknown">${t("monthsUnknown")}</span>` : ""}
               </div>
               ${delaySummaryHtml(days)}
             </button>`;
@@ -780,13 +756,13 @@ function render() {
     content.querySelectorAll("[data-ym]").forEach((btn) => {
       btn.onclick = () => navigateTo("days", state.cityId, btn.dataset.ym, null);
     });
-    note.innerHTML = `<b>Poziom 2 z 4:</b> miesiące dla <b>${escapeHtml(c.display)}</b>, najnowszy na górze.`;
+    note.innerHTML = t("monthsNoteHtml", { city: escapeHtml(c.display) });
 
   } else if (state.level === "days") {
     const c = state.manifest.find((m) => m.id === state.cityId);
     const [titleY, titleM] = state.month.split("-");
-    pageTitle.textContent = `${c.display} — ${MONTHS_PL[+titleM - 1]} ${titleY}`;
-    q.placeholder = "Szukaj dnia (np. 07-16)…";
+    pageTitle.textContent = `${c.display} — ${monthName(+titleM - 1)} ${titleY}`;
+    q.placeholder = t("daysSearchPlaceholder");
     const monthDays = c.days.filter((d) => d.date.slice(0, 7) === state.month);
     let days = monthDays;
     const query = state.q.trim().toLowerCase();
@@ -795,20 +771,20 @@ function render() {
 
     const sortInd = (key) => (state.sort === key ? (state.dir === "asc" ? "ascending" : "descending") : "none");
     content.innerHTML = bulkExportButtonHtml(monthDays) + (!days.length
-      ? `<div class="empty">Brak dni pasujących do „${escapeHtml(state.q)}”.</div>`
+      ? `<div class="empty">${t("daysEmpty", { q: escapeHtml(state.q) })}</div>`
       : `<div class="table-wrap"><table>
           <thead><tr>
-            <th><button data-sort="date" aria-sort="${sortInd("date")}">Data</button></th>
-            <th>Dzień tyg.</th>
-            <th>Pokrycie</th>
-            <th><button data-sort="observations_matched" aria-sort="${sortInd("observations_matched")}">Dopasowane obs.</button></th>
-            <th><button data-sort="segments_corrected" aria-sort="${sortInd("segments_corrected")}">Skorygowane odc.</button></th>
-            <th>Pliki</th>
+            <th><button data-sort="date" aria-sort="${sortInd("date")}">${t("tableDate")}</button></th>
+            <th>${t("tableWeekday")}</th>
+            <th>${t("tableCoverage")}</th>
+            <th><button data-sort="observations_matched" aria-sort="${sortInd("observations_matched")}">${t("tableMatchedObs")}</button></th>
+            <th><button data-sort="segments_corrected" aria-sort="${sortInd("segments_corrected")}">${t("tableCorrectedSeg")}</button></th>
+            <th>${t("tableFiles")}</th>
           </tr></thead>
           <tbody>${days.map((d) => `
-            <tr class="day-row" data-date="${d.date}" tabindex="0" role="button" aria-label="Pokaż szczegóły i wykres dla ${d.date}">
+            <tr class="day-row" data-date="${d.date}" tabindex="0" role="button" aria-label="${t("dayRowAriaLabel", { date: d.date })}">
               <td class="date">${d.date}</td>
-              <td>${weekdayPl(d.date)}</td>
+              <td>${weekdayName(d.date)}</td>
               <td><span class="cov">${fmtCoverage(d.coverage_ranges)}</span> ${statusPillHtml(d.status)}</td>
               <td class="num">${fmtNum(d.observations_matched)}</td>
               <td class="num">${fmtNum(d.segments_corrected)}</td>
@@ -817,7 +793,7 @@ function render() {
                 ${dlChip("P85", d.assets.p85)}
                 ${dlChip("static", d.assets.static_gtfs)}
                 ${dlChip("diff", d.assets.diff_chart)}
-                ${d.release_url ? `<a class="ext" href="${d.release_url}" target="_blank" rel="noopener">release ↗</a>` : ""}
+                ${d.release_url ? `<a class="ext" href="${d.release_url}" target="_blank" rel="noopener">${t("extReleaseLink")}</a>` : ""}
               </div></td>
             </tr>`).join("")}</tbody>
         </table></div>`) + dayTrendPanelHtml(monthDays);
@@ -838,15 +814,17 @@ function render() {
     const bulkBtn = document.getElementById("bulkExportBtn");
     if (bulkBtn) bulkBtn.onclick = () => bulkExportCsv(monthDays);
     const [y, m] = state.month.split("-");
-    note.innerHTML = `<b>Poziom 3 z 4:</b> dni w ${MONTHS_PL[+m - 1]} ${y} dla <b>${escapeHtml(c.display)}</b>, chronologicznie. Kliknij wiersz, żeby zobaczyć wykres tego dnia.`;
+    note.innerHTML = t("daysNoteHtml", { month: monthName(+m - 1), year: y, city: escapeHtml(c.display) });
 
   } else if (state.level === "detail") {
     const c = state.manifest.find((m) => m.id === state.cityId);
     const d = c.days.find((x) => x.date === state.date);
     content.innerHTML = renderDetail(c, d);
-    note.innerHTML = `<b>Poziom 4 z 4:</b> szczegóły jednego dnia — dokładnie te pliki, które dziś trafiają do release'u <code>${d.release_tag}</code>, wykres PNG osadzony wprost z tego release'u.`;
+    note.innerHTML = t("detailNoteHtml", { tag: d.release_tag });
   }
 }
+
+setLangChangeHandler(render);
 
 document.getElementById("q").addEventListener("input", (e) => { state.q = e.target.value; render(); });
 document.getElementById("homeNavBtn").addEventListener("click", () => navigateTo("cities", null, null, null));
