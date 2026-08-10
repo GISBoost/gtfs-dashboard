@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>How much GTFS-RT recording is enough? — Family A diagnostics</title>
+  <meta name="description" content="Two rounds of experiments (9 cities, 1-to-20-day recording windows) measuring how much a Family A segment's P50/P85 estimate moves as more recording days are added.">
+  <link rel="canonical" href="https://gisboost.github.io/gtfs-dashboard/diagnostics/recording-duration.html">
+  <link rel="icon" href="/assets/favicon.ico">
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="diagnostics.css" />
+</head>
+<body>
+  <div class="topbar">
+    <a class="brand" href="../index.html" style="text-decoration:none;">
+      <span class="mark">GISBoost</span>
+      <span class="sub" data-i18n="brandSub">/ katalog nagrań GTFS-RT</span>
+    </a>
+    <nav class="topnav">
+      <a class="topnav-link" href="index.html" data-i18n="navDiagnostics">Diagnostyka</a>
+      <a class="topnav-link" href="../index.html" data-i18n="diagBackToDashboard">← Wróć do dashboardu</a>
+      <button class="topnav-link" id="langToggleBtn" type="button" data-i18n-aria-label="langToggleAriaLabel">EN</button>
+    </nav>
+  </div>
+
+  <main>
+    <div class="crumbs">
+      <a href="../index.html" style="color:var(--blue); text-decoration:none;">Dashboard</a>
+      <span class="sep">/</span>
+      <a href="index.html" style="color:var(--blue); text-decoration:none;" data-i18n="navDiagnostics">Diagnostyka</a>
+      <span class="sep">/</span>
+      <button disabled data-i18n="diagRdCrumb">Czas nagrywania</button>
+    </div>
+    <h1 class="page-title" data-i18n="diagRdTitle">Ile nagrywania GTFS-RT wystarczy?</h1>
+  </main>
+
+  <div class="diag-hero">
+    <div class="diag-kicker" data-i18n="diagRdKicker">family_a_reconstruction — raport diagnostyczny</div>
+    <p class="diag-lede" data-i18n-html="diagRdLede1Html"></p>
+    <p class="diag-lede" data-i18n-html="diagRdLede2Html"></p>
+    <div class="note" style="margin-top:1rem;" data-i18n-html="diagRdGlossaryHtml"></div>
+  </div>
+
+  <section class="diag-section" style="margin-top:1.5rem;">
+    <div class="stat-tiles">
+      <div class="stat-tile"><div class="stat-value">9</div><div class="stat-label" data-i18n="diagRdStat1Label"></div></div>
+      <div class="stat-tile"><div class="stat-value" style="color:var(--red);">4 / 9</div><div class="stat-label" data-i18n="diagRdStat2Label"></div></div>
+      <div class="stat-tile"><div class="stat-value">0.0 s</div><div class="stat-label" data-i18n="diagRdStat3Label"></div></div>
+      <div class="stat-tile"><div class="stat-value">3 → 14 d.</div><div class="stat-label" data-i18n="diagRdStat4Label"></div></div>
+    </div>
+  </section>
+
+  <section class="diag-section">
+    <h2 data-i18n="diagRdS1Heading"></h2>
+    <p class="diag-sub" data-i18n-html="diagRdS1SubHtml"></p>
+    <div class="chart-card">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+        <div><div class="diag-legend" id="leg-matched-r1"></div><svg id="chart-matched-r1" viewBox="0 0 520 300" width="100%"></svg></div>
+        <div><div class="diag-legend" id="leg-matched-r2"></div><svg id="chart-matched-r2" viewBox="0 0 520 300" width="100%"></svg></div>
+      </div>
+      <p class="chart-caption" data-i18n="diagRdS1Caption"></p>
+    </div>
+  </section>
+
+  <section class="diag-section">
+    <h2 data-i18n="diagRdS2Heading"></h2>
+    <p class="diag-sub" data-i18n-html="diagRdS2SubHtml"></p>
+    <div class="chart-card">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+        <div><div class="diag-sub" style="margin-bottom:6px; font-weight:600;" id="lbl-round1-r2"></div><svg id="hm-reject-r1" viewBox="0 0 520 220" width="100%"></svg></div>
+        <div><div class="diag-sub" style="margin-bottom:6px; font-weight:600;" id="lbl-round2-r2"></div><svg id="hm-reject-r2" viewBox="0 0 520 260" width="100%"></svg></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="diag-section">
+    <h2 data-i18n="diagRdS3Heading"></h2>
+    <p class="diag-sub" data-i18n-html="diagRdS3SubHtml"></p>
+    <div class="chart-card">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+        <div><div class="diag-sub" style="margin-bottom:6px; font-weight:600;" id="lbl-round1-r3"></div><svg id="hm-thin-r1" viewBox="0 0 520 220" width="100%"></svg></div>
+        <div><div class="diag-sub" style="margin-bottom:6px; font-weight:600;" id="lbl-round2-r3"></div><svg id="hm-thin-r2" viewBox="0 0 520 260" width="100%"></svg></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="diag-section">
+    <h2 data-i18n="diagRdS4Heading"></h2>
+    <p class="diag-sub" data-i18n-html="diagRdS4SubHtml"></p>
+    <div class="chart-card">
+      <div class="diag-legend" id="leg-conv"></div>
+      <svg id="chart-convergence" viewBox="0 0 1040 340" width="100%"></svg>
+      <p class="chart-caption" data-i18n="diagRdS4Caption"></p>
+    </div>
+  </section>
+
+  <section class="diag-section">
+    <h2 data-i18n="diagRdS5Heading"></h2>
+    <p class="diag-sub" data-i18n-html="diagRdS5SubHtml"></p>
+    <div class="chart-card">
+      <div class="diag-legend" id="leg-daytype"></div>
+      <svg id="chart-daytype" viewBox="0 0 1040 310" width="100%"></svg>
+    </div>
+  </section>
+
+  <section class="diag-section">
+    <details class="datatable" style="background:var(--paper-raised); border:1px solid var(--line); border-radius:12px; padding:0.2rem 1.2rem 1rem;">
+      <summary style="cursor:pointer; padding:0.9rem 0 0.3rem; font-weight:700;" data-i18n="diagFullSourceData"></summary>
+      <div id="data-tables"></div>
+    </details>
+  </section>
+
+  <section class="diag-section">
+    <p class="diag-source-note" data-i18n-html="diagRdSourceNoteHtml"></p>
+  </section>
+
+  <footer class="sitefooter">
+    <div class="footer-bottom">
+      <a class="footer-signature" href="https://gisboost.github.io/" target="_blank" rel="noopener">Michał Kaczorowski — GISBoost</a>
+      <a class="footer-signature" href="https://github.com/GISBoost/easy-OTP" target="_blank" rel="noopener" data-i18n="diagSourceEasyOtp"></a>
+    </div>
+  </footer>
+
+  <div class="diag-tooltip" id="tooltip"></div>
+
+  <script src="../i18n.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var cs = getComputedStyle(document.documentElement);
+  function tok(name) { return cs.getPropertyValue(name).trim(); }
+
+  var tip = document.getElementById("tooltip");
+  function showTip(html, evt) { tip.innerHTML = html; tip.classList.add("show"); moveTip(evt); }
+  function moveTip(evt) {
+    var x = evt.clientX + 14, y = evt.clientY + 14, w = 280, h = 90;
+    if (x + w > window.innerWidth) x = evt.clientX - w - 14;
+    if (y + h > window.innerHeight) y = evt.clientY - h - 14;
+    tip.style.left = x + "px"; tip.style.top = y + "px";
+  }
+  function hideTip() { tip.classList.remove("show"); }
+  document.addEventListener("mousemove", function (e) { if (tip.classList.contains("show")) moveTip(e); });
+
+  var NS = "http://www.w3.org/2000/svg";
+  function el(tag, attrs, parent) {
+    var e = document.createElementNS(NS, tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function fmt(n, d) { if (n === null || n === undefined) return "—"; return n.toLocaleString(getLang() === "en" ? "en-US" : "pl-PL", { minimumFractionDigits: d || 0, maximumFractionDigits: d || 0 }); }
+
+  var SLOTS = ["--green", "--blue", "--amber", "--slate", "--red"];
+  function slotColor(i) { return tok(SLOTS[i % SLOTS.length]); }
+  function hex2rgb(h) { h = h.replace("#", ""); return [parseInt(h.slice(0,2),16), parseInt(h.slice(2,4),16), parseInt(h.slice(4,6),16)]; }
+  function rgb2hex(r) { return "#" + r.map(function (v) { return Math.round(Math.max(0,Math.min(255,v))).toString(16).padStart(2, "0"); }).join(""); }
+  function seqColor(t) {
+    t = Math.max(0, Math.min(1, t));
+    var a = hex2rgb(tok("--blue-soft")), b = hex2rgb(tok("--blue"));
+    return rgb2hex([a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t]);
+  }
+  // Contrast-computed ink, not a fixed threshold on the parametric t — picks whichever of
+  // black/white actually has the higher WCAG contrast ratio against the resolved fill, so it's
+  // correct for both themes' hues instead of guessing a brightness cutoff.
+  function relLuminance(hex) {
+    var c = hex2rgb(hex).map(function (v) { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+    return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+  }
+  function inkForBg(hexBg) {
+    var L = relLuminance(hexBg);
+    var contrastBlack = (L + 0.05) / 0.05;
+    var contrastWhite = 1.05 / (L + 0.05);
+    return contrastBlack >= contrastWhite ? "#0b0b0b" : "#ffffff";
+  }
+
+  // ================= localized strings for chart-generated content =================
+  var CITY_NAMES = {
+    lodz: { pl: "Łódź", en: "Łódź" }, bucharest: { pl: "Bukareszt", en: "Bucharest" },
+    vilnius: { pl: "Wilno", en: "Vilnius" }, gdansk: { pl: "Gdańsk", en: "Gdańsk" },
+    szczecin: { pl: "Szczecin", en: "Szczecin" }, poznan: { pl: "Poznań", en: "Poznań" },
+    lisbon: { pl: "Lizbona", en: "Lisbon" }, boston: { pl: "Boston", en: "Boston" }, prague: { pl: "Praga", en: "Prague" }
+  };
+  function cn(slug) { return CITY_NAMES[slug][getLang()]; }
+
+  var FLAGGED_NOTES = {
+    lodz: { pl: "trip_id renumerowany co 1–3 dni", en: "trip_id renumbered every 1–3 days" },
+    gdansk: { pl: "trip_id renumerowany, ten sam mechanizm co Łódź", en: "trip_id renumbered — same mechanism as Łódź" },
+    poznan: { pl: "calendar.txt pokrywa tylko ~tydzień, podmieniony statyk", en: "calendar.txt covers only ~1 week, static had to be substituted" },
+    boston: { pl: "calendar.txt zaczyna się w trakcie okna (35–80% pokrycia)", en: "calendar.txt starts mid-window (35–80% coverage)" }
+  };
+  function flagNote(slug) { return FLAGGED_NOTES[slug] ? FLAGGED_NOTES[slug][getLang()] : null; }
+
+  var WINDOW_LABELS = {
+    r1: { pl: ["1 dzień", "3 dni", "5 dni"], en: ["1 day", "3 days", "5 days"] },
+    r2: { pl: ["5 dni", "14 dni", "20 dni"], en: ["5 days", "14 days", "20 days"] }
+  };
+
+  var L = {
+    pl: {
+      matchedObs: "dopasowane obserwacje", value: "wartość", noData: "brak danych",
+      legendMedianP50: "mediana |ΔP50|", legendMedianP85: "mediana |ΔP85|", legendP90: "cienka linia = p90 (ogon)",
+      medianDelta: "mediana |Δ", p90Delta: "p90 |Δ",
+      weekday: "dzień roboczy", saturday: "sobota", sunday: "niedziela", segmentKeysWord: "kluczy segmentów",
+      round1Label: "Runda 1 — okna 1 / 3 / 5 dni", round2Label: "Runda 2 — okna 5 / 14 / 20 dni",
+      groups: ["1→3 dni", "5→14 dni", "5→20 dni", "14→20 dni"], groupSubs: ["runda 1", "runda 2", "runda 2", "runda 2 — punkt nasycenia"],
+      tblCity: "Miasto", tblRound1Matched: "Runda 1 — dopasowane obserwacje", tblRound1Reject: "Runda 1 — odrzucenia match (FA-15)",
+      tblRound1Thin: "Runda 1 — % kluczy z <5 obs.", tblRound2Matched: "Runda 2 — dopasowane obserwacje",
+      tblRound2Reject: "Runda 2 — odrzucenia match (FA-15)", tblRound2Thin: "Runda 2 — % kluczy z <5 obs.",
+      tblConvCaption: "Krzywa malejących przyrostów — mediana/p90 |Δ|", tblTransition: "Przejście", tblMedianP50: "mediana |ΔP50|",
+      tblP90P50: "p90 |ΔP50|", tblMedianP85: "mediana |ΔP85|", tblP90P85: "p90 |ΔP85|"
+    },
+    en: {
+      matchedObs: "matched observations", value: "value", noData: "no data",
+      legendMedianP50: "median |ΔP50|", legendMedianP85: "median |ΔP85|", legendP90: "thin line = p90 (tail)",
+      medianDelta: "median |Δ", p90Delta: "p90 |Δ",
+      weekday: "weekday", saturday: "Saturday", sunday: "Sunday", segmentKeysWord: "segment keys",
+      round1Label: "Round 1 — 1 / 3 / 5-day windows", round2Label: "Round 2 — 5 / 14 / 20-day windows",
+      groups: ["1→3 days", "5→14 days", "5→20 days", "14→20 days"], groupSubs: ["round 1", "round 2", "round 2", "round 2 — saturation point"],
+      tblCity: "City", tblRound1Matched: "Round 1 — matched observations", tblRound1Reject: "Round 1 — match rejections (FA-15)",
+      tblRound1Thin: "Round 1 — % of keys with <5 obs.", tblRound2Matched: "Round 2 — matched observations",
+      tblRound2Reject: "Round 2 — match rejections (FA-15)", tblRound2Thin: "Round 2 — % of keys with <5 obs.",
+      tblConvCaption: "Diminishing-returns curve — median/p90 |Δ|", tblTransition: "Transition", tblMedianP50: "median |ΔP50|",
+      tblP90P50: "p90 |ΔP50|", tblMedianP85: "median |ΔP85|", tblP90P85: "p90 |ΔP85|"
+    }
+  };
+  function loc() { return L[getLang()]; }
+
+  // ================= DATA (canonical slugs; from family-a_recording-duration-experiment.md / -v2.md) =================
+  var r1 = {
+    cities: ["lodz", "bucharest", "vilnius", "gdansk"],
+    matched: { lodz: [283139, 283139, 283139], bucharest: [681365, 1792609, 2625790], vilnius: [319088, 853792, 1295740], gdansk: [234573, 234573, null] },
+    reject: { lodz: [9.53, 69.40, 80.52], bucharest: [3.22, 3.32, 3.50], vilnius: [1.68, 1.23, 2.08], gdansk: [10.78, 48.81, null] },
+    thinPct: { lodz: [57.8, 57.8, 57.8], bucharest: [46.7, 23.2, 43.1], vilnius: [67.6, 12.9, 53.8], gdansk: [63.5, 63.5, null] },
+    daytypeLargest: {
+      lodz: { label: "w5", WEEKDAY: 37471, SATURDAY: 0, SUNDAY: 0 },
+      bucharest: { label: "w5", WEEKDAY: 51070, SATURDAY: 43541, SUNDAY: 43216 },
+      vilnius: { label: "w5", WEEKDAY: 31545, SATURDAY: 29997, SUNDAY: 27537 },
+      gdansk: { label: "w3", WEEKDAY: 24328, SATURDAY: 0, SUNDAY: 0 }
+    }
+  };
+  var r2 = {
+    cities: ["szczecin", "poznan", "lisbon", "boston", "prague"],
+    matched: { szczecin: [444340, 1105127, 1284586], poznan: [853579, 938261, 949529], lisbon: [964517, 2353167, 2780530], boston: [1540377, 3842932, 4301635], prague: [2965946, null, null] },
+    reject: { szczecin: [1.62, 2.34, 2.30], poznan: [56.99, 81.10, 83.82], lisbon: [6.69, 6.79, 6.78], boston: [15.42, 17.14, 16.88], prague: [8.09, null, null] },
+    thinPct: { szczecin: [8.4, 21.4, 21.2], poznan: [22.4, 18.6, 18.0], lisbon: [4.2, 10.9, 12.2], boston: [3.4, 30.7, 30.6], prague: [8.0, null, null] },
+    daytypeLargest: {
+      szczecin: { label: "w20", WEEKDAY: 20849, SATURDAY: 17434, SUNDAY: 16220 },
+      poznan: { label: "w20", WEEKDAY: 46587, SATURDAY: 0, SUNDAY: 0 },
+      lisbon: { label: "w20", WEEKDAY: 38098, SATURDAY: 29771, SUNDAY: 28403 },
+      boston: { label: "w20", WEEKDAY: 73573, SATURDAY: 61672, SUNDAY: 51837 },
+      prague: { label: "w5", WEEKDAY: 182047, SATURDAY: 0, SUNDAY: 0 }
+    }
+  };
+  var convergence = [
+    { idx: 0, items: [
+      { city: "bucharest", dP50: 4.8, p90P50: 23.2, dP85: 6.7, p90P85: 32.7 },
+      { city: "vilnius", dP50: 4.4, p90P50: 19.0, dP85: 5.9, p90P85: 24.5 }
+    ]},
+    { idx: 1, items: [
+      { city: "szczecin", dP50: 1.90, p90P50: 9.15, dP85: 2.62, p90P85: 13.33 },
+      { city: "lisbon", dP50: 1.80, p90P50: 7.48, dP85: 2.73, p90P85: 11.58 },
+      { city: "boston", dP50: 1.39, p90P50: 7.58, dP85: 2.54, p90P85: 13.35 }
+    ]},
+    { idx: 2, items: [
+      { city: "szczecin", dP50: 2.14, p90P50: 9.73, dP85: 2.89, p90P85: 14.32 },
+      { city: "lisbon", dP50: 2.09, p90P50: 8.40, dP85: 3.24, p90P85: 13.01 },
+      { city: "boston", dP50: 1.55, p90P50: 8.18, dP85: 2.78, p90P85: 14.42 }
+    ]},
+    { idx: 3, items: [
+      { city: "szczecin", dP50: 0.0, p90P50: 1.66, dP85: 0.0, p90P85: 2.31 },
+      { city: "poznan", dP50: 0.0, p90P50: 0.0, dP85: 0.0, p90P85: 0.0 },
+      { city: "lisbon", dP50: 0.0, p90P50: 1.76, dP85: 0.0, p90P85: 2.70 },
+      { city: "boston", dP50: 0.0, p90P50: 1.19, dP85: 0.0, p90P85: 2.16 }
+    ]}
+  ];
+
+  // ================= CHART: matched-vs-window line, log scale =================
+  function lineChart(svgId, legendId, data, windows) {
+    var svg = document.getElementById(svgId);
+    svg.innerHTML = "";
+    var W = 520, H = 300, ML = 54, MR = 14, MT = 14, MB = 34;
+    var pw = W - ML - MR, ph = H - MT - MB;
+    var cities = data.cities;
+    var allVals = [];
+    cities.forEach(function (c) { data.matched[c].forEach(function (v) { if (v != null) allVals.push(v); }); });
+    var lo = Math.log10(Math.min.apply(null, allVals) * 0.8);
+    var hi = Math.log10(Math.max.apply(null, allVals) * 1.15);
+    function xPos(i) { return ML + (i / (windows.length - 1)) * pw; }
+    function yPos(v) { return MT + ph - ((Math.log10(v) - lo) / (hi - lo)) * ph; }
+
+    var ticks = [];
+    var loP = Math.floor(lo), hiP = Math.ceil(hi);
+    for (var p = loP; p <= hiP; p++) [1,2,5].forEach(function (m) {
+      var v = m * Math.pow(10, p);
+      if (v >= Math.pow(10, lo) && v <= Math.pow(10, hi)) ticks.push(v);
+    });
+    ticks.forEach(function (v) {
+      var y = yPos(v);
+      el("line", { class: "grid-line", x1: ML, x2: W - MR, y1: y, y2: y }, svg);
+      el("text", { x: ML - 8, y: y + 3, "text-anchor": "end", class: "muted" }, svg).textContent =
+        v >= 1000000 ? (v/1000000) + "M" : v >= 1000 ? (v/1000) + "k" : v;
+    });
+    windows.forEach(function (w, i) {
+      el("text", { x: xPos(i), y: H - 10, "text-anchor": "middle", class: "muted" }, svg).textContent = w;
+    });
+    el("line", { class: "axis-line", x1: ML, x2: ML, y1: MT, y2: H - MB }, svg);
+
+    var legend = document.getElementById(legendId);
+    legend.innerHTML = "";
+    cities.forEach(function (city, ci) {
+      var color = slotColor(ci);
+      var vals = data.matched[city];
+      var pts = [];
+      vals.forEach(function (v, i) { if (v != null) pts.push([xPos(i), yPos(v), v, i]); });
+      var path = pts.map(function (p, i) { return (i === 0 ? "M" : "L") + p[0].toFixed(1) + "," + p[1].toFixed(1); }).join(" ");
+      el("path", { d: path, fill: "none", stroke: color, "stroke-width": 2 }, svg);
+      pts.forEach(function (p) {
+        var dot = el("circle", { cx: p[0], cy: p[1], r: 4, fill: color, stroke: tok("--paper"), "stroke-width": 1.5, style: "cursor:pointer" }, svg);
+        dot.addEventListener("mousemove", function (e) {
+          showTip("<b>" + cn(city) + "</b> · " + windows[p[3]] + "<br>" + loc().matchedObs + ": <b>" + fmt(p[2]) + "</b>", e);
+        });
+        dot.addEventListener("mouseleave", hideTip);
+      });
+      var note = flagNote(city);
+      var item = document.createElement("div");
+      item.className = "item";
+      item.innerHTML = '<span class="swatch" style="background:' + color + '"></span>' +
+        '<span' + (note ? ' style="color:var(--red)" title="' + note + '"' : "") + '>' + cn(city) + (note ? " ⚠" : "") + "</span>";
+      legend.appendChild(item);
+    });
+  }
+
+  // ================= CHART: heatmap matrix =================
+  function heatmap(svgId, data, cities, windows, valSuffix, decimals) {
+    var svg = document.getElementById(svgId);
+    svg.innerHTML = "";
+    var rowH = 32, colW = 92, ML = 96, MT = 10;
+    var W = ML + colW * windows.length + 16;
+    var H = MT + rowH * cities.length + 26;
+    svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+
+    var allVals = [];
+    cities.forEach(function (c) { data[c].forEach(function (v) { if (v != null) allVals.push(v); }); });
+    var vmin = Math.min.apply(null, allVals), vmax = Math.max.apply(null, allVals);
+    var lineColor = tok("--line");
+
+    windows.forEach(function (w, ci) {
+      el("text", { class: "muted", "text-anchor": "middle", x: ML + ci * colW + colW / 2, y: MT + 10 }, svg).textContent = w;
+    });
+
+    cities.forEach(function (city, ri) {
+      var y = MT + 20 + ri * rowH;
+      var note = flagNote(city);
+      var label = el("text", { class: "city-label", x: ML - 10, y: y + rowH / 2 + 4, "text-anchor": "end" }, svg);
+      if (note) { label.innerHTML = '<tspan>' + cn(city) + '</tspan> <tspan fill="' + tok("--red") + '">⚠</tspan>'; }
+      else { label.textContent = cn(city); }
+      windows.forEach(function (w, ci) {
+        var v = data[city][ci];
+        var x = ML + ci * colW;
+        var g = el("g", {}, svg);
+        var t = v == null ? 0 : (vmax === vmin ? 0.5 : (v - vmin) / (vmax - vmin));
+        var fill = v == null ? lineColor : seqColor(t);
+        el("rect", { x: x, y: y, width: colW - 4, height: rowH - 4, rx: 5, fill: fill }, g);
+        // fill is set via inline style, not the fill attribute: the .chart-card svg text CSS
+        // rule (var(--ink-muted)) beats a presentation attribute in the cascade regardless of
+        // selector specificity, so a plain fill="..." here would be silently overridden.
+        var txt = el("text", { x: x + (colW - 4) / 2, y: y + (rowH - 4) / 2 + 4, "text-anchor": "middle", "font-size": "11.5px", "font-weight": "700", style: "fill:" + inkForBg(fill) }, g);
+        txt.textContent = v == null ? "—" : fmt(v, decimals) + valSuffix;
+        g.style.cursor = "pointer";
+        g.addEventListener("mousemove", function (e) {
+          var noteHtml = note ? "<br><span style='opacity:.75'>⚠ " + note + "</span>" : "";
+          showTip("<b>" + cn(city) + "</b> · " + w + "<br>" + loc().value + ": <b>" + (v == null ? loc().noData : fmt(v, decimals) + valSuffix) + "</b>" + noteHtml, e);
+        });
+        g.addEventListener("mouseleave", hideTip);
+      });
+    });
+  }
+
+  // ================= CHART: convergence lollipop =================
+  function convergenceChart(svgId, legendId, groups) {
+    var svg = document.getElementById(svgId);
+    svg.innerHTML = "";
+    var W = 1040, H = 340, ML = 54, MR = 14, MT = 20, MB = 68;
+    var pw = W - ML - MR, ph = H - MT - MB;
+
+    var allVals = [];
+    groups.forEach(function (g) { g.items.forEach(function (it) { allVals.push(it.p90P50, it.p90P85); }); });
+    var vmax = Math.max.apply(null, allVals) * 1.12;
+
+    function yPos(v) { return MT + ph - (v / vmax) * ph; }
+    [0, 5, 10, 15, 20, 25, 30].filter(function (v) { return v <= vmax; }).forEach(function (v) {
+      var y = yPos(v);
+      el("line", { class: "grid-line", x1: ML, x2: W - MR, y1: y, y2: y }, svg);
+      el("text", { x: ML - 8, y: y + 3, "text-anchor": "end", class: "muted" }, svg).textContent = v + "s";
+    });
+    el("line", { class: "axis-line", x1: ML, x2: ML, y1: MT, y2: H - MB }, svg);
+
+    var legend = document.getElementById(legendId);
+    legend.innerHTML =
+      '<div class="item"><span class="swatch" style="background:' + tok("--green") + '"></span>' + loc().legendMedianP50 + '</div>' +
+      '<div class="item"><span class="swatch" style="background:' + tok("--blue") + '"></span>' + loc().legendMedianP85 + '</div>' +
+      '<div class="item">' + loc().legendP90 + '</div>';
+
+    var totalSlots = 0;
+    groups.forEach(function (g) { totalSlots += g.items.length; });
+    var gap = pw / (totalSlots + groups.length + 1);
+    var slotW = gap * 1.6;
+    var x = ML + gap * 0.6;
+
+    groups.forEach(function (g) {
+      var groupStartX = x;
+      g.items.forEach(function (it) {
+        var cx = x + slotW / 2;
+        [{ key: "P50", v: it.dP50, p90: it.p90P50, color: tok("--green"), dx: -8 },
+         { key: "P85", v: it.dP85, p90: it.p90P85, color: tok("--blue"), dx: 8 }].forEach(function (m) {
+          var bx = cx + m.dx;
+          var y0 = yPos(0), y1 = yPos(m.v), yp = yPos(m.p90);
+          el("line", { x1: bx, x2: bx, y1: y1, y2: yp, stroke: m.color, "stroke-width": 1.5, opacity: 0.5 }, svg);
+          var r = el("rect", { x: bx - 6, y: Math.min(y0, y1), width: 12, height: Math.max(y0 - y1, 2), rx: 3, fill: m.color, style: "cursor:pointer" }, svg);
+          r.addEventListener("mousemove", function (e) {
+            showTip("<b>" + cn(it.city) + "</b> · " + loc().groups[g.idx] + "<br>" + loc().medianDelta + m.key + "|: <b>" + fmt(m.v, 1) + " s</b><br>" + loc().p90Delta + m.key + "|: " + fmt(m.p90, 1) + " s", e);
+          });
+          r.addEventListener("mouseleave", hideTip);
+          el("circle", { cx: bx, cy: yp, r: 2.5, fill: m.color }, svg);
+        });
+        el("text", { x: cx, y: H - MB + 18, "text-anchor": "middle", class: "muted" }, svg).textContent = cn(it.city);
+        x += slotW;
+      });
+      var groupCenter = (groupStartX + x - slotW) / 2 + slotW / 2 - gap * 0.1;
+      el("text", { x: groupCenter, y: H - MB + 38, "text-anchor": "middle", "font-weight": "600", style: "fill:" + tok("--ink") }, svg).textContent = loc().groups[g.idx];
+      el("text", { x: groupCenter, y: H - MB + 52, "text-anchor": "middle", class: "muted" }, svg).textContent = loc().groupSubs[g.idx];
+      x += gap;
+    });
+  }
+
+  // ================= CHART: stacked day-type bars =================
+  function daytypeChart(svgId, legendId, rounds) {
+    var svg = document.getElementById(svgId);
+    svg.innerHTML = "";
+    var W = 1040, H = 310, ML = 54, MR = 14, MT = 16, MB = 56;
+    var pw = W - ML - MR, ph = H - MT - MB;
+
+    var allCities = [];
+    rounds.forEach(function (r) { r.cities.forEach(function (c) { allCities.push({ city: c, d: r.daytypeLargest[c] }); }); });
+    var totals = allCities.map(function (o) { return o.d.WEEKDAY + o.d.SATURDAY + o.d.SUNDAY; });
+    var vmax = Math.max.apply(null, totals) * 1.08;
+
+    function yPos(v) { return MT + ph - (v / vmax) * ph; }
+    [0, 50000, 100000, 150000, 200000].filter(function (v) { return v <= vmax; }).forEach(function (v) {
+      var y = yPos(v);
+      el("line", { class: "grid-line", x1: ML, x2: W - MR, y1: y, y2: y }, svg);
+      el("text", { x: ML - 8, y: y + 3, "text-anchor": "end", class: "muted" }, svg).textContent = v === 0 ? "0" : (v / 1000) + "k";
+    });
+    el("line", { class: "axis-line", x1: ML, x2: ML, y1: MT, y2: H - MB }, svg);
+
+    var legend = document.getElementById(legendId);
+    legend.innerHTML =
+      '<div class="item"><span class="swatch" style="background:' + tok("--green") + '"></span>' + loc().weekday + '</div>' +
+      '<div class="item"><span class="swatch" style="background:' + tok("--blue") + '"></span>' + loc().saturday + '</div>' +
+      '<div class="item"><span class="swatch" style="background:' + tok("--amber") + '"></span>' + loc().sunday + '</div>';
+
+    var n = allCities.length;
+    var gap = pw / n;
+    var barW = gap * 0.56;
+    allCities.forEach(function (o, i) {
+      var cx = ML + gap * i + gap / 2;
+      var segs = [["WEEKDAY", tok("--green"), loc().weekday], ["SATURDAY", tok("--blue"), loc().saturday], ["SUNDAY", tok("--amber"), loc().sunday]];
+      var yCursor = yPos(0);
+      segs.forEach(function (s) {
+        var v = o.d[s[0]];
+        if (v <= 0) return;
+        var yTop = yCursor - (v / vmax) * ph;
+        var r = el("rect", { x: cx - barW / 2, y: yTop, width: barW, height: yCursor - yTop - 1.5, fill: s[1], style: "cursor:pointer" }, svg);
+        r.addEventListener("mousemove", function (e) {
+          showTip("<b>" + cn(o.city) + "</b> (" + o.d.label + ")<br>" + s[2] + ": <b>" + fmt(v) + "</b> " + loc().segmentKeysWord, e);
+        });
+        r.addEventListener("mouseleave", hideTip);
+        yCursor = yTop - 1.5;
+      });
+      el("text", { x: cx, y: H - MB + 18, "text-anchor": "middle", class: "muted" }, svg).textContent = cn(o.city);
+      el("text", { x: cx, y: H - MB + 32, "text-anchor": "middle", class: "muted" }, svg).textContent = "(" + o.d.label + ")";
+    });
+  }
+
+  // ================= data tables =================
+  function buildTables() {
+    var host = document.getElementById("data-tables");
+    function table(title, cols, cities, rowsData, suffix, dec) {
+      var html = '<div class="table-wrap" style="margin:0.6rem 0 1.1rem;"><table><caption style="text-align:left; font-weight:700; padding:0.4rem 0.7rem; font-size:0.85rem;">' + title + '</caption><thead><tr><th>' + loc().tblCity + '</th>';
+      cols.forEach(function (c) { html += "<th>" + c + "</th>"; });
+      html += "</tr></thead><tbody>";
+      cities.forEach(function (city) {
+        html += "<tr><td>" + cn(city) + "</td>";
+        rowsData[city].forEach(function (v) { html += '<td class="num">' + (v == null ? "—" : fmt(v, dec) + (suffix || "")) + "</td>"; });
+        html += "</tr>";
+      });
+      html += "</tbody></table></div>";
+      return html;
+    }
+    var W1 = WINDOW_LABELS.r1[getLang()], W2 = WINDOW_LABELS.r2[getLang()];
+    var out = "";
+    out += table(loc().tblRound1Matched, W1, r1.cities, r1.matched, "", 0);
+    out += table(loc().tblRound1Reject, W1, r1.cities, r1.reject, "%", 2);
+    out += table(loc().tblRound1Thin, W1, r1.cities, r1.thinPct, "%", 1);
+    out += table(loc().tblRound2Matched, W2, r2.cities, r2.matched, "", 0);
+    out += table(loc().tblRound2Reject, W2, r2.cities, r2.reject, "%", 2);
+    out += table(loc().tblRound2Thin, W2, r2.cities, r2.thinPct, "%", 1);
+
+    var convHtml = '<div class="table-wrap" style="margin:0.6rem 0;"><table><caption style="text-align:left; font-weight:700; padding:0.4rem 0.7rem; font-size:0.85rem;">' + loc().tblConvCaption + '</caption>' +
+      "<thead><tr><th>" + loc().tblTransition + "</th><th>" + loc().tblCity + "</th><th>" + loc().tblMedianP50 + "</th><th>" + loc().tblP90P50 + "</th><th>" + loc().tblMedianP85 + "</th><th>" + loc().tblP90P85 + "</th></tr></thead><tbody>";
+    convergence.forEach(function (g) {
+      g.items.forEach(function (it) {
+        convHtml += '<tr><td>' + loc().groups[g.idx] + '</td><td>' + cn(it.city) + '</td><td class="num">' + fmt(it.dP50, 1) + ' s</td><td class="num">' + fmt(it.p90P50, 1) + ' s</td><td class="num">' + fmt(it.dP85, 1) + ' s</td><td class="num">' + fmt(it.p90P85, 1) + " s</td></tr>";
+      });
+    });
+    convHtml += "</tbody></table></div>";
+    out += convHtml;
+
+    host.innerHTML = out;
+  }
+
+  // ================= render everything, re-run on language toggle =================
+  function renderAll() {
+    var W1 = WINDOW_LABELS.r1[getLang()], W2 = WINDOW_LABELS.r2[getLang()];
+    document.getElementById("lbl-round1-r2").textContent = loc().round1Label;
+    document.getElementById("lbl-round2-r2").textContent = loc().round2Label;
+    document.getElementById("lbl-round1-r3").textContent = loc().round1Label;
+    document.getElementById("lbl-round2-r3").textContent = loc().round2Label;
+
+    lineChart("chart-matched-r1", "leg-matched-r1", r1, W1);
+    lineChart("chart-matched-r2", "leg-matched-r2", r2, W2);
+    heatmap("hm-reject-r1", r1.reject, r1.cities, W1, "%", 1);
+    heatmap("hm-reject-r2", r2.reject, r2.cities, W2, "%", 1);
+    heatmap("hm-thin-r1", r1.thinPct, r1.cities, W1, "%", 1);
+    heatmap("hm-thin-r2", r2.thinPct, r2.cities, W2, "%", 1);
+    convergenceChart("chart-convergence", "leg-conv", convergence);
+    daytypeChart("chart-daytype", "leg-daytype", [r1, r2]);
+    buildTables();
+  }
+
+  renderAll();
+  setLangChangeHandler(renderAll);
+})();
+</script>
+</body>
+</html>

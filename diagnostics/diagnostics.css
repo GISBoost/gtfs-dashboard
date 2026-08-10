@@ -1,0 +1,85 @@
+/* Chart-layer styles for the Family A diagnostics reports.
+   Builds on the site's own custom properties from ../styles.css (--paper, --ink, --green,
+   --blue, --amber, --slate, --red, ...) rather than a separate palette, so these pages follow
+   the same light/dark switching as the rest of the dashboard automatically. */
+
+.diag-hero {
+  max-width: 900px; margin: 0 auto; padding: 0.25rem 1.5rem 0;
+}
+.diag-kicker {
+  font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--ink-muted); margin-bottom: 0.35rem;
+}
+/* Prose fills the same column width as everything else on the page (no artificial ch-cap,
+   which used to leave a ragged strip of empty space on wide viewports) and is justified with
+   a ragged last line, matching the report's more formal, document-like tone. Hyphens soften
+   the wider word gaps justify can produce. */
+.diag-lede {
+  font-size: 0.95rem; color: var(--ink-muted); line-height: 1.65; margin: 0.6rem 0 0;
+  text-align: justify; text-align-last: left; hyphens: auto;
+}
+.diag-lede + .diag-lede { margin-top: 0.85rem; }
+.diag-source-note {
+  font-size: 0.8rem; color: var(--ink-muted); margin-top: 0.9rem; padding-top: 0.7rem;
+  border-top: 1px dashed var(--line);
+}
+.diag-source-note code { font-family: var(--mono); font-size: 0.85em; }
+
+/* section headings inside a report */
+.diag-section { max-width: 900px; margin: 1.75rem auto 0; padding: 0 1.5rem; }
+.diag-section h2 { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.01em; margin: 0 0 0.35rem; }
+.diag-section .diag-sub {
+  font-size: 0.85rem; color: var(--ink-muted); line-height: 1.6; margin: 0 0 1rem;
+  text-align: justify; text-align-last: left; hyphens: auto;
+}
+.diag-section .diag-sub code { font-family: var(--mono); font-size: 0.85em; }
+
+/* legend row above a chart */
+.diag-legend { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; font-size: 0.8rem; color: var(--ink-muted); margin-bottom: 0.7rem; }
+.diag-legend .item { display: flex; align-items: center; gap: 0.4rem; }
+.diag-legend .swatch { width: 10px; height: 10px; border-radius: 2px; flex: none; }
+
+/* SVG chart chrome — 11px is the floor for any in-chart label; smaller reads as illegible on
+   a report meant to be read closely, not glanced at like a sparkline. */
+.chart-card svg text { fill: var(--ink-muted); font-size: 11px; }
+.chart-card svg .axis-line { stroke: var(--line); stroke-width: 1; }
+.chart-card svg .grid-line { stroke: var(--line); stroke-width: 1; opacity: 0.7; }
+.chart-card svg .muted { fill: var(--ink-muted); }
+.chart-card svg .city-label { fill: var(--ink); font-size: 11px; }
+.chart-card svg .axis-unit { fill: var(--ink-muted); font-size: 10.5px; }
+
+/* stacked chart sections (report 2, panels 3+4): one full-width card per row instead of a
+   side-by-side grid, so a short chart never leaves a tall empty gap next to a tall neighbor */
+.diag-stack { display: flex; flex-direction: column; gap: 1rem; max-width: 900px; margin: 1.75rem auto 0; padding: 0 1.5rem; }
+.diag-stack .chart-card { margin: 0; }
+
+/* landing-page report cards: the whole panel is the link (not just a trailing "read more"),
+   built on the site's own .card component (already a full-width clickable block) rather than
+   the image-first .showcase-card, which was designed around a PNG thumbnail these pages don't
+   have. */
+a.diag-report-card {
+  text-decoration: none; display: flex; flex-direction: column; gap: 0.6rem;
+  border: 1px solid var(--line); border-radius: 10px; padding: 1.1rem 1.25rem;
+  background: var(--paper-raised); color: var(--ink);
+}
+a.diag-report-card:hover { border-color: var(--blue); background: var(--paper-raised-2); }
+a.diag-report-card:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+a.diag-report-card h3 { margin: 0; font-size: 1.05rem; font-weight: 700; display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; }
+a.diag-report-card h3 .arrow { color: var(--ink-muted); font-weight: 400; }
+a.diag-report-card p {
+  margin: 0; font-size: 0.86rem; color: var(--ink-muted); line-height: 1.55;
+  text-align: justify; text-align-last: left; hyphens: auto;
+}
+.report-card-stats { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.1rem; }
+
+.diag-tooltip {
+  position: fixed; pointer-events: none; z-index: 50;
+  background: var(--ink); color: var(--paper);
+  font-size: 12px; padding: 6px 9px; border-radius: 6px;
+  max-width: 280px; line-height: 1.4; opacity: 0; transition: opacity 0.08s;
+  font-variant-numeric: tabular-nums; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+.diag-tooltip.show { opacity: 1; }
+.diag-tooltip b { font-weight: 650; }
+
+.diag-footnote { font-size: 0.78rem; color: var(--ink-muted); margin-top: 0.6rem; }

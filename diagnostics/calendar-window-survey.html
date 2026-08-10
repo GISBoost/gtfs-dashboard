@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fleet-wide calendar &amp; trip_id stability survey — Family A diagnostics</title>
+  <meta name="description" content="Static-GTFS-only survey of all 25 cities/operators in the fleet: calendar.txt validity windows and trip_id/route_id/stop_id stability across three sampled dates each.">
+  <link rel="canonical" href="https://gisboost.github.io/gtfs-dashboard/diagnostics/calendar-window-survey.html">
+  <link rel="icon" href="/assets/favicon.ico">
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="diagnostics.css" />
+</head>
+<body>
+  <div class="topbar">
+    <a class="brand" href="../index.html" style="text-decoration:none;">
+      <span class="mark">GISBoost</span>
+      <span class="sub" data-i18n="brandSub">/ katalog nagrań GTFS-RT</span>
+    </a>
+    <nav class="topnav">
+      <a class="topnav-link" href="index.html" data-i18n="navDiagnostics">Diagnostyka</a>
+      <a class="topnav-link" href="../index.html" data-i18n="diagBackToDashboard">← Wróć do dashboardu</a>
+      <button class="topnav-link" id="langToggleBtn" type="button" data-i18n-aria-label="langToggleAriaLabel">EN</button>
+    </nav>
+  </div>
+
+  <main>
+    <div class="crumbs">
+      <a href="../index.html" style="color:var(--blue); text-decoration:none;">Dashboard</a>
+      <span class="sep">/</span>
+      <a href="index.html" style="color:var(--blue); text-decoration:none;" data-i18n="navDiagnostics">Diagnostyka</a>
+      <span class="sep">/</span>
+      <button disabled data-i18n="diagCalCrumb">Kalendarz i trip_id</button>
+    </div>
+    <h1 class="page-title" data-i18n="diagCalTitle">Flotowy przegląd stabilności kalendarza i trip_id</h1>
+  </main>
+
+  <div class="diag-hero">
+    <div class="diag-kicker" data-i18n="diagCalKicker">family_a_reconstruction — raport diagnostyczny, 25 miast</div>
+    <p class="diag-lede" data-i18n-html="diagCalLede1Html"></p>
+    <p class="diag-lede" data-i18n-html="diagCalLede2Html"></p>
+    <div class="note" style="margin-top:1rem;" data-i18n-html="diagCalGlossaryHtml"></div>
+  </div>
+
+  <section class="diag-section" style="margin-top:1.5rem;">
+    <div class="stat-tiles">
+      <div class="stat-tile"><div class="stat-value">25 / 25</div><div class="stat-label" data-i18n="diagCalStat1Label"></div></div>
+      <div class="stat-tile"><div class="stat-value" style="color:var(--red);">11 / 25</div><div class="stat-label" data-i18n-html="diagCalStat2Label"></div></div>
+      <div class="stat-tile"><div class="stat-value" style="color:var(--red);">9 / 25</div><div class="stat-label" data-i18n-html="diagCalStat3Label"></div></div>
+      <div class="stat-tile"><div class="stat-value">1</div><div class="stat-label" data-i18n-html="diagCalStat4Label"></div></div>
+    </div>
+  </section>
+
+  <section class="diag-section">
+    <h2 data-i18n="diagCalS1Heading"></h2>
+    <p class="diag-sub" data-i18n-html="diagCalS1SubHtml"></p>
+    <div class="chart-card">
+      <div class="diag-legend" id="leg-bar"></div>
+      <svg id="chart-window" viewBox="0 0 1040 720" width="100%"></svg>
+    </div>
+  </section>
+
+  <section class="diag-section">
+    <h2 data-i18n="diagCalS2Heading"></h2>
+    <p class="diag-sub" data-i18n-html="diagCalS2SubHtml"></p>
+    <div class="chart-card">
+      <svg id="chart-jaccard" viewBox="0 0 720 720" width="100%"></svg>
+    </div>
+  </section>
+
+  <div class="diag-stack">
+    <div class="chart-card">
+      <div class="chart-title" id="s3-title"></div>
+      <p class="chart-caption" id="s3-caption" style="margin-bottom:0.6rem;"></p>
+      <div class="diag-legend" id="leg-regime"></div>
+      <svg id="chart-regime" viewBox="0 0 900 90" width="100%"></svg>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title" id="s4-title"></div>
+      <p class="chart-caption" id="s4-caption" style="margin-bottom:0.6rem;"></p>
+      <svg id="chart-scatter" viewBox="0 0 900 420" width="100%"></svg>
+    </div>
+  </div>
+
+  <section class="diag-section">
+    <details class="datatable" style="background:var(--paper-raised); border:1px solid var(--line); border-radius:12px; padding:0.2rem 1.2rem 1rem;">
+      <summary style="cursor:pointer; padding:0.9rem 0 0.3rem; font-weight:700;" data-i18n="diagFullSourceData"></summary>
+      <div id="data-tables"></div>
+    </details>
+  </section>
+
+  <section class="diag-section">
+    <h2 data-i18n="diagCalAboutHeading"></h2>
+    <p class="diag-sub" data-i18n-html="diagCalAboutTextHtml"></p>
+  </section>
+
+  <section class="diag-section">
+    <p class="diag-source-note" data-i18n-html="diagCalSourceNoteHtml"></p>
+  </section>
+
+  <footer class="sitefooter">
+    <div class="footer-bottom">
+      <a class="footer-signature" href="https://gisboost.github.io/" target="_blank" rel="noopener">Michał Kaczorowski — GISBoost</a>
+      <a class="footer-signature" href="https://github.com/GISBoost/easy-OTP" target="_blank" rel="noopener" data-i18n="diagSourceEasyOtp"></a>
+    </div>
+  </footer>
+
+  <div class="diag-tooltip" id="tooltip"></div>
+
+  <script src="../i18n.js"></script>
+<script>
+(function () {
+  "use strict";
+  var cs = getComputedStyle(document.documentElement);
+  function tok(name) { return cs.getPropertyValue(name).trim(); }
+
+  var tip = document.getElementById("tooltip");
+  function showTip(html, evt) { tip.innerHTML = html; tip.classList.add("show"); moveTip(evt); }
+  function moveTip(evt) {
+    var x = evt.clientX + 14, y = evt.clientY + 14, w = 280, h = 90;
+    if (x + w > window.innerWidth) x = evt.clientX - w - 14;
+    if (y + h > window.innerHeight) y = evt.clientY - h - 14;
+    tip.style.left = x + "px"; tip.style.top = y + "px";
+  }
+  function hideTip() { tip.classList.remove("show"); }
+  document.addEventListener("mousemove", function (e) { if (tip.classList.contains("show")) moveTip(e); });
+
+  var NS = "http://www.w3.org/2000/svg";
+  function el(tag, attrs, parent) {
+    var e = document.createElementNS(NS, tag);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+  function fmt(n, d) { if (n == null) return "—"; return n.toLocaleString(getLang() === "en" ? "en-US" : "pl-PL", { minimumFractionDigits: d || 0, maximumFractionDigits: d || 0 }); }
+
+  function hex2rgb(h) { h = h.replace("#", ""); return [parseInt(h.slice(0,2),16), parseInt(h.slice(2,4),16), parseInt(h.slice(4,6),16)]; }
+  function rgb2hex(r) { return "#" + r.map(function (v) { return Math.round(Math.max(0,Math.min(255,v))).toString(16).padStart(2, "0"); }).join(""); }
+  function seqColor(t) {
+    t = Math.max(0, Math.min(1, t));
+    var a = hex2rgb(tok("--blue-soft")), b = hex2rgb(tok("--blue"));
+    return rgb2hex([a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t]);
+  }
+  function relLuminance(hex) {
+    var c = hex2rgb(hex).map(function (v) { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+    return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+  }
+  function inkForBg(hexBg) {
+    var L = relLuminance(hexBg);
+    var contrastBlack = (L + 0.05) / 0.05;
+    var contrastWhite = 1.05 / (L + 0.05);
+    return contrastBlack >= contrastWhite ? "#0b0b0b" : "#ffffff";
+  }
+
+  var REGIME_COLOR = { "Stable": "--green", "Calendar-narrow": "--amber", "trip_id-unstable": "--red", "Mixed": "--slate" };
+  var REGIME_LABEL = {
+    pl: { "Stable": "Stable (szeroki zakres + stabilny trip_id)", "Calendar-narrow": "Calendar-narrow, trip-stable (profil Bostonu)", "trip_id-unstable": "trip_id-unstable (profil Łódź/Gdańsk/Poznań)", "Mixed": "Mixed/inne — chroniczna umiarkowana churna" },
+    en: { "Stable": "Stable (wide window + stable trip_id)", "Calendar-narrow": "Calendar-narrow, trip-stable (Boston's profile)", "trip_id-unstable": "trip_id-unstable (Łódź/Gdańsk/Poznań's profile)", "Mixed": "Mixed/other — chronic moderate churn" }
+  };
+  function regimeLabel(r) { return REGIME_LABEL[getLang()][r]; }
+
+  var CONF_LABEL = { pl: ["niska", "średnia", "wysoka"], en: ["low", "medium", "high"] };
+
+  var CITY_NAMES = {
+    sofia: { pl: "Sofia", en: "Sofia" }, szczecin: { pl: "Szczecin", en: "Szczecin" }, lka: { pl: "ŁKA", en: "LKA" },
+    lisbon: { pl: "Lizbona", en: "Lisbon" }, bucharest: { pl: "Bukareszt", en: "Bucharest" }, elblag: { pl: "Elbląg", en: "Elbląg" },
+    lublin: { pl: "Lublin", en: "Lublin" }, przemysl: { pl: "Przemyśl", en: "Przemyśl" }, radom: { pl: "Radom", en: "Radom" },
+    rybnik: { pl: "Rybnik", en: "Rybnik" }, rzeszow: { pl: "Rzeszów", en: "Rzeszów" }, boston: { pl: "Boston", en: "Boston" },
+    lodz: { pl: "Łódź", en: "Łódź" }, poznan: { pl: "Poznań", en: "Poznań" }, gdansk: { pl: "Gdańsk", en: "Gdańsk" },
+    krakow: { pl: "Kraków", en: "Kraków" }, turin: { pl: "Turyn", en: "Turin" }, gzm: { pl: "GZM", en: "GZM" },
+    warsaw: { pl: "Warszawa", en: "Warsaw" }, suwalki: { pl: "Suwałki", en: "Suwałki" }, rome: { pl: "Rzym", en: "Rome" },
+    brisbane: { pl: "Brisbane", en: "Brisbane" }, kielce: { pl: "Kielce", en: "Kielce" }, prague: { pl: "Praga", en: "Prague" },
+    vilnius: { pl: "Wilno", en: "Vilnius" }
+  };
+  function cn(slug) { return CITY_NAMES[slug][getLang()]; }
+
+  var L = {
+    pl: {
+      lowConfLegend: "niska pewność (mały rozstaw próbek)", estWindow: "szac. bezpieczne okno", tripJaccard: "trip_id Jaccard",
+      routeShort: "route_id", stopShort: "stop_id", confidence: "pewność", days: "dni", noDataOnlyNetwork: "jedyna sieć w tej próbie z niestabilnym route_id",
+      totalFleet: "25 miast łącznie", ofFleet: "/ 25 miast", estWindowShort: "est. okno",
+      tblCity: "Miasto", tblRegime: "Reżim", tblTripJ: "trip_id J.", tblRouteJ: "route_id J.", tblStopJ: "stop_id J.",
+      tblWindow: "Okno (dni)", tblConfidence: "Pewność", tblNote: "Uwaga", tblCaption: "Wszystkie 25 miast — pełne dane",
+      footnote: "† = brak calendar.txt (tylko calendar_dates.txt) · ✱ = wzorzec Jaccarda niemonotoniczny w czasie (niepotwierdzona hipoteza cyklicznej renumeracji)",
+      s3Title: "3 · Skład floty wg reżimu", s3Caption: "Jeden pasek = 100% floty (25 miast).",
+      s4Title: "4 · Okno kalendarza ≠ stabilność trip_id",
+      s4Caption: "Oś X: zadeklarowane okno kalendarza (dni, skala log). Oś Y: średni Jaccard trip_id."
+    },
+    en: {
+      lowConfLegend: "low confidence (small sample spread)", estWindow: "est. safe window", tripJaccard: "trip_id Jaccard",
+      routeShort: "route_id", stopShort: "stop_id", confidence: "confidence", days: "days", noDataOnlyNetwork: "the only route_id-unstable network in the sample",
+      totalFleet: "25 cities total", ofFleet: "/ 25 cities", estWindowShort: "est. window",
+      tblCity: "City", tblRegime: "Regime", tblTripJ: "trip_id J.", tblRouteJ: "route_id J.", tblStopJ: "stop_id J.",
+      tblWindow: "Window (days)", tblConfidence: "Confidence", tblNote: "Note", tblCaption: "All 25 cities — full data",
+      footnote: "† = no calendar.txt (calendar_dates.txt only) · ✱ = Jaccard pattern non-monotonic over time (unconfirmed cyclical-renumbering hypothesis)",
+      s3Title: "3 · Fleet composition by regime", s3Caption: "One bar = 100% of the fleet (25 cities).",
+      s4Title: "4 · Calendar window ≠ trip_id stability",
+      s4Caption: "X: stated calendar window (days, log). Y: mean trip_id Jaccard."
+    }
+  };
+  function loc() { return L[getLang()]; }
+
+  // slug, regime, tripJ, routeJ, stopJ, winLo, winHi, confidence(0/1/2), anomalous, noCalendar, note{pl,en}
+  var DATA = [
+    ["sofia", "Stable", 0.814, 1.000, 0.999, 90, 180, 1, false, true, { pl: "calendar_dates-only, 450–465k wierszy/snapshot — okno formalne nierealistyczne (>3 lata), tu ograniczone do praktycznego sufitu", en: "calendar_dates-only, 450–465k rows/snapshot — the file's formal window is unrealistic (>3 years), capped here to a practical ceiling" }],
+    ["szczecin", "Stable", 0.863, 0.993, 0.992, 90, 120, 2, false, false, { pl: "", en: "" }],
+    ["lka", "Stable", 0.888, 1.000, 1.000, 120, 170, 0, false, true, { pl: "mały rozstaw próbek (3–4 dni)", en: "small sample spread (3–4 days)" }],
+    ["lisbon", "Stable", 0.997, 1.000, 1.000, 200, 200, 2, false, false, { pl: "", en: "" }],
+    ["bucharest", "Stable", 1.000, 1.000, 1.000, 90, 90, 2, false, false, { pl: "", en: "" }],
+    ["elblag", "Stable", 1.000, 1.000, 1.000, 365, 365, 0, false, false, { pl: "mały rozstaw próbek (7 dni)", en: "small sample spread (7 days)" }],
+    ["lublin", "Stable", 1.000, 1.000, 1.000, 90, 90, 0, false, true, { pl: "mały rozstaw próbek, calendar_dates-only", en: "small sample spread, calendar_dates-only" }],
+    ["przemysl", "Stable", 1.000, 1.000, 1.000, 145, 152, 0, false, true, { pl: "mały rozstaw próbek, calendar_dates-only", en: "small sample spread, calendar_dates-only" }],
+    ["radom", "Stable", 1.000, 1.000, 1.000, 60, 60, 0, false, true, { pl: "mały rozstaw próbek, calendar_dates-only", en: "small sample spread, calendar_dates-only" }],
+    ["rybnik", "Stable", 1.000, 1.000, 1.000, 145, 152, 0, false, true, { pl: "mały rozstaw próbek, calendar_dates-only", en: "small sample spread, calendar_dates-only" }],
+    ["rzeszow", "Stable", 1.000, 1.000, 1.000, 70, 70, 0, false, true, { pl: "mały rozstaw próbek, calendar_dates-only", en: "small sample spread, calendar_dates-only" }],
+    ["boston", "Calendar-narrow", 0.770, 0.929, 0.999, 30, 35, 2, false, false, { pl: "okno kalendarza maleje z każdą kolejną publikacją (37→60→… obserwowane kurczenie)", en: "calendar window shrinks with each new publication (37→60→… observed narrowing)" }],
+    ["lodz", "trip_id-unstable", 0.000, 0.976, 0.987, 1, 3, 2, false, false, { pl: "potwierdza wcześniejszy handoff — Jaccard=0 przy każdej 13-dniowej parze", en: "confirms an earlier handoff finding — Jaccard=0 on every 13-day pair" }],
+    ["poznan", "trip_id-unstable", 0.043, 0.938, 0.977, 1, 11, 2, false, false, { pl: "potwierdza profil z rund 1/2", en: "confirms the profile from rounds 1/2" }],
+    ["gdansk", "trip_id-unstable", 0.117, 0.961, 0.981, 1, 9, 2, false, true, { pl: "calendar_dates-only", en: "calendar_dates-only" }],
+    ["krakow", "trip_id-unstable", 0.137, 0.979, 0.988, 3, 7, 1, false, false, { pl: "mały rozstaw próbek", en: "small sample spread" }],
+    ["turin", "trip_id-unstable", 0.219, 0.938, 0.978, 12, 12, 2, false, false, { pl: "spada do 0,05 przy 13–25 dniach", en: "drops to 0.05 at 13–25 days" }],
+    ["gzm", "trip_id-unstable", 0.226, 0.853, 0.938, 1, 3, 0, true, false, { pl: "calendar.txt ważny dosłownie 1 dzień (codzienna republikacja); Jaccard niemonotoniczny", en: "calendar.txt is valid for literally 1 day (republished daily); Jaccard is non-monotonic" }],
+    ["warsaw", "trip_id-unstable", 0.331, 0.992, 0.994, 3, 4, 1, false, true, { pl: "calendar_dates-only, mały rozstaw próbek", en: "calendar_dates-only, small sample spread" }],
+    ["suwalki", "trip_id-unstable", 0.333, 1.000, 0.989, 1, 3, 0, true, true, { pl: "Jaccard 1,0→0,0→0,0 — niemonotoniczny, calendar_dates-only", en: "Jaccard 1.0→0.0→0.0 — non-monotonic, calendar_dates-only" }],
+    ["rome", "trip_id-unstable", 0.413, 0.972, 0.993, 12, 13, 2, false, true, { pl: "chroniczna umiarkowana churna, brak wyraźnego trendu, calendar_dates-only", en: "chronic moderate churn, no clear trend, calendar_dates-only" }],
+    ["brisbane", "Mixed", 0.530, 0.574, 0.996, 11, 12, 2, false, false, { pl: "route_id Jaccard 0,574 — jedyne miasto z niestabilnym route_id (1302→926 tras)", en: "route_id Jaccard 0.574 — the only city with an unstable route_id (1302→926 routes)" }],
+    ["kielce", "Mixed", 0.556, 0.967, 1.000, 1, 3, 0, true, false, { pl: "Jaccard niemonotoniczny, mały rozstaw próbek", en: "Jaccard is non-monotonic, small sample spread" }],
+    ["prague", "Mixed", 0.673, 0.966, 0.968, 25, 25, 2, false, false, { pl: "powolny, niemonotoniczny spadek 0,75→0,57→0,70", en: "slow, non-monotonic decline 0.75→0.57→0.70" }],
+    ["vilnius", "Mixed", 0.673, 1.000, 0.986, 25, 25, 2, false, false, { pl: "powolny spadek, podobny profil do Pragi", en: "slow decline, similar profile to Prague" }]
+  ];
+
+  // ================= Panel 1: sorted window bar chart =================
+  function windowBarChart() {
+    var svg = document.getElementById("chart-window");
+    svg.innerHTML = "";
+    var W = 1040, H = 720, ML = 150, MR = 20, MT = 10, MB = 34;
+    var pw = W - ML - MR, ph = H - MT - MB;
+    var n = DATA.length;
+    var rowH = ph / n;
+
+    var lo = Math.log10(0.8), hi = Math.log10(400);
+    function xPos(v) { return ML + ((Math.log10(Math.max(v, 0.9)) - lo) / (hi - lo)) * pw; }
+    [1, 3, 10, 30, 100, 365].forEach(function (v) {
+      var x = xPos(v);
+      el("line", { class: "grid-line", x1: x, x2: x, y1: MT, y2: H - MB }, svg);
+      el("text", { x: x, y: H - MB + 16, "text-anchor": "middle", class: "muted" }, svg).textContent = v + "d";
+    });
+    el("line", { class: "axis-line", x1: ML, x2: ML, y1: MT, y2: H - MB }, svg);
+
+    var legend = document.getElementById("leg-bar");
+    legend.innerHTML = "";
+    ["Stable", "Calendar-narrow", "trip_id-unstable", "Mixed"].forEach(function (r) {
+      var d = document.createElement("div"); d.className = "item";
+      d.innerHTML = '<span class="swatch" style="background:' + tok(REGIME_COLOR[r]) + '"></span>' + regimeLabel(r);
+      legend.appendChild(d);
+    });
+    var lowConf = document.createElement("div"); lowConf.className = "item";
+    lowConf.innerHTML = '<span class="swatch" style="background:' + tok("--ink-muted") + '; opacity:0.4"></span>' + loc().lowConfLegend;
+    legend.appendChild(lowConf);
+
+    DATA.forEach(function (d, i) {
+      var y = MT + i * rowH + rowH * 0.18;
+      var barH = rowH * 0.64;
+      var x0 = xPos(d[5]), x1 = xPos(d[6]);
+      var color = tok(REGIME_COLOR[d[1]]);
+      var opacity = d[7] === 0 ? 0.45 : (d[7] === 1 ? 0.72 : 1);
+      var rect = el("rect", {
+        x: Math.min(x0, x1), y: y, width: Math.max(x1 - x0, 3), height: barH, rx: 4,
+        fill: color, opacity: opacity, style: "cursor:pointer"
+      }, svg);
+      rect.addEventListener("mousemove", function (e) {
+        var range = d[5] === d[6] ? fmt(d[5]) + " " + loc().days : fmt(d[5]) + "–" + fmt(d[6]) + " " + loc().days;
+        var note = d[10][getLang()];
+        var html = "<b>" + cn(d[0]) + "</b> · " + regimeLabel(d[1]) + "<br>" + loc().estWindow + ": <b>" + range + "</b>" +
+          "<br>" + loc().tripJaccard + ": " + fmt(d[2], 3) + " · " + loc().routeShort + ": " + fmt(d[3], 3) + " · " + loc().stopShort + ": " + fmt(d[4], 3) +
+          "<br>" + loc().confidence + ": " + CONF_LABEL[getLang()][d[7]] + (note ? "<br><i>" + note + "</i>" : "");
+        showTip(html, e);
+      });
+      rect.addEventListener("mouseleave", hideTip);
+
+      var labelText = cn(d[0]) + (d[9] ? "†" : "");
+      var lbl = el("text", { class: "city-label", x: ML - 8, y: y + barH / 2 + 4, "text-anchor": "end" }, svg);
+      lbl.textContent = labelText;
+      if (d[8]) {
+        el("text", { x: Math.max(x1, x0) + 8, y: y + barH / 2 + 4, style: "fill:" + tok("--red"), "font-weight": "700" }, svg).textContent = "✱";
+      }
+    });
+  }
+
+  // ================= Panel 2: Jaccard heatmap =================
+  function jaccardHeatmap() {
+    var svg = document.getElementById("chart-jaccard");
+    svg.innerHTML = "";
+    var cols = ["trip_id", "route_id", "stop_id"];
+    var rowH = 24, colW = 130, ML = 90, MT = 26;
+    var W = ML + colW * cols.length + 20;
+    var H = MT + rowH * DATA.length + 10;
+    svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+
+    cols.forEach(function (c, ci) {
+      el("text", { x: ML + ci * colW + colW / 2, y: MT - 10, "text-anchor": "middle", "font-weight": "600", style: "fill:" + tok("--ink") }, svg).textContent = c;
+    });
+
+    DATA.forEach(function (d, ri) {
+      var y = MT + ri * rowH;
+      el("text", { class: "city-label", x: ML - 8, y: y + rowH / 2 + 3.5, "text-anchor": "end", "font-size": "10.5px" }, svg).textContent = cn(d[0]) + (d[9] ? "†" : "");
+      [d[2], d[3], d[4]].forEach(function (v, ci) {
+        var x = ML + ci * colW;
+        var fill = seqColor(v);
+        var g = el("g", {}, svg);
+        el("rect", { x: x, y: y + 2, width: colW - 4, height: rowH - 4, rx: 4, fill: fill, style: "cursor:pointer" }, g);
+        // fill via inline style, not the fill attribute: the .chart-card svg text CSS rule
+        // (var(--ink-muted)) beats a presentation attribute in the cascade regardless of
+        // selector specificity, so a plain fill="..." here would be silently overridden.
+        var t = el("text", { x: x + (colW - 4) / 2, y: y + rowH / 2 + 3.5, "text-anchor": "middle", "font-size": "11px", "font-weight": "700", style: "fill:" + inkForBg(fill) }, g);
+        t.textContent = fmt(v, 3);
+        g.addEventListener("mousemove", function (e) {
+          showTip("<b>" + cn(d[0]) + "</b><br>" + cols[ci] + " Jaccard: <b>" + fmt(v, 3) + "</b>" + (ci === 1 && d[0] === "brisbane" ? "<br><i>" + loc().noDataOnlyNetwork + "</i>" : ""), e);
+        });
+        g.addEventListener("mouseleave", hideTip);
+      });
+    });
+  }
+
+  // ================= Panel 3: regime composition bar =================
+  function regimeBar() {
+    var svg = document.getElementById("chart-regime");
+    svg.innerHTML = "";
+    var counts = { "Stable": 11, "Calendar-narrow": 1, "trip_id-unstable": 9, "Mixed": 4 };
+    var order = ["Stable", "Calendar-narrow", "trip_id-unstable", "Mixed"];
+    var W = 900, H = 90, x = 10, barY = 15, barH = 34, barW = W - 20;
+    var total = 25;
+    var legend = document.getElementById("leg-regime");
+    legend.innerHTML = "";
+    order.forEach(function (r) {
+      var w = (counts[r] / total) * barW;
+      var g = el("g", {}, svg);
+      el("rect", { x: x, y: barY, width: Math.max(w - 2, 0), height: barH, rx: 4, fill: tok(REGIME_COLOR[r]), style: "cursor:pointer" }, g);
+      if (w > 34) el("text", { x: x + w / 2, y: barY + barH / 2 + 4, "text-anchor": "middle", style: "fill:" + inkForBg(tok(REGIME_COLOR[r])), "font-weight": "700" }, g).textContent = counts[r];
+      g.addEventListener("mousemove", function (e) { showTip("<b>" + regimeLabel(r) + "</b><br>" + counts[r] + " " + loc().ofFleet + " (" + fmt(counts[r]/total*100, 0) + "%)", e); });
+      g.addEventListener("mouseleave", hideTip);
+      x += w;
+      var item = document.createElement("div"); item.className = "item";
+      item.innerHTML = '<span class="swatch" style="background:' + tok(REGIME_COLOR[r]) + '"></span>' + r + " (" + counts[r] + ")";
+      legend.appendChild(item);
+    });
+    el("text", { x: 10, y: barY + barH + 18, class: "muted" }, svg).textContent = loc().totalFleet;
+  }
+
+  // ================= Panel 4: calendar window vs trip_id Jaccard scatter =================
+  function windowScatter() {
+    var svg = document.getElementById("chart-scatter");
+    svg.innerHTML = "";
+    var W = 900, H = 420, ML = 46, MR = 16, MT = 16, MB = 40;
+    var pw = W - ML - MR, ph = H - MT - MB;
+    var lo = Math.log10(0.8), hi = Math.log10(1200);
+    function xPos(v) { return ML + ((Math.log10(Math.max(v, 0.9)) - lo) / (hi - lo)) * pw; }
+    function yPos(v) { return MT + ph - v * ph; }
+
+    [1, 10, 100, 1000].forEach(function (v) {
+      var x = xPos(v);
+      el("line", { class: "grid-line", x1: x, x2: x, y1: MT, y2: H - MB }, svg);
+      el("text", { x: x, y: H - MB + 16, "text-anchor": "middle", class: "muted" }, svg).textContent = v + "d";
+    });
+    [0, 0.25, 0.5, 0.75, 1.0].forEach(function (v) {
+      var y = yPos(v);
+      el("line", { class: "grid-line", x1: ML, x2: W - MR, y1: y, y2: y }, svg);
+      el("text", { x: ML - 8, y: y + 3, "text-anchor": "end", class: "muted" }, svg).textContent = v;
+    });
+    el("line", { class: "axis-line", x1: ML, x2: ML, y1: MT, y2: H - MB }, svg);
+
+    DATA.forEach(function (d) {
+      var calWindow = d[5];
+      var cx = xPos(calWindow < 1 ? 1 : calWindow), cy = yPos(d[2]);
+      var dot = el("circle", { cx: cx, cy: cy, r: 5.5, fill: tok(REGIME_COLOR[d[1]]), stroke: tok("--paper"), "stroke-width": 1.2, style: "cursor:pointer" }, svg);
+      dot.addEventListener("mousemove", function (e) {
+        showTip("<b>" + cn(d[0]) + "</b><br>" + loc().estWindowShort + ": " + fmt(d[5]) + (d[5]!==d[6] ? "–"+fmt(d[6]) : "") + " " + loc().days + "<br>" + loc().tripJaccard + ": <b>" + fmt(d[2], 3) + "</b>", e);
+      });
+      dot.addEventListener("mouseleave", hideTip);
+    });
+    el("text", { x: (ML + W - MR) / 2, y: H - 6, "text-anchor": "middle", class: "muted" }, svg).textContent = loc().estWindowShort + " (" + loc().days + ", log)";
+  }
+
+  // ================= data table =================
+  function buildTable() {
+    var host = document.getElementById("data-tables");
+    var html = '<div class="table-wrap" style="margin:0.6rem 0;"><table><caption style="text-align:left; font-weight:700; padding:0.4rem 0.7rem; font-size:0.85rem;">' + loc().tblCaption + '</caption>' +
+      "<thead><tr><th>" + loc().tblCity + "</th><th>" + loc().tblRegime + "</th><th>" + loc().tblTripJ + "</th><th>" + loc().tblRouteJ + "</th><th>" + loc().tblStopJ + "</th>" +
+      "<th>" + loc().tblWindow + "</th><th>" + loc().tblConfidence + "</th><th>" + loc().tblNote + "</th></tr></thead><tbody>";
+    DATA.forEach(function (d) {
+      var note = d[10][getLang()];
+      html += "<tr><td>" + cn(d[0]) + (d[9] ? " †" : "") + (d[8] ? " ✱" : "") + "</td><td>" + d[1] + '</td><td class="num">' +
+        fmt(d[2],3) + '</td><td class="num">' + fmt(d[3],3) + '</td><td class="num">' + fmt(d[4],3) + '</td><td class="num">' +
+        (d[5]===d[6] ? fmt(d[5]) : fmt(d[5]) + "–" + fmt(d[6])) + "</td><td>" + CONF_LABEL[getLang()][d[7]] + "</td><td style='text-align:left; white-space:normal; max-width:280px;'>" + (note || "—") + "</td></tr>";
+    });
+    html += "</tbody></table></div><p class='diag-footnote'>" + loc().footnote + "</p>";
+    host.innerHTML = html;
+  }
+
+  function renderAll() {
+    document.getElementById("s3-title").textContent = loc().s3Title;
+    document.getElementById("s3-caption").textContent = loc().s3Caption;
+    document.getElementById("s4-title").textContent = loc().s4Title;
+    document.getElementById("s4-caption").textContent = loc().s4Caption;
+    windowBarChart();
+    jaccardHeatmap();
+    regimeBar();
+    windowScatter();
+    buildTable();
+  }
+
+  renderAll();
+  setLangChangeHandler(renderAll);
+})();
+</script>
+</body>
+</html>
