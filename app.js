@@ -49,6 +49,7 @@ function parseHash() {
 // Falls back one level at a time when a segment doesn't resolve (stale/hand-edited/bookmarked
 // URL) rather than crashing.
 function applyHash() {
+  window.scrollTo(0, 0);
   const parsed = parseHash();
   if (parsed.compare) {
     state.level = "compare"; state.cityId = null; state.month = null; state.date = null; state.backupMonth = null;
