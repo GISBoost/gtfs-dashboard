@@ -116,7 +116,7 @@ const STRINGS = {
     daysCount: "{n} dni",
     citiesFreshOk: "✓ aktualne",
     citiesFreshStale: "brak od {n} dni",
-    citiesNote: "<b>Poziom 1 z 4:</b> miasta posortowane alfabetycznie. Kliknij, żeby zobaczyć miesiące.",
+    citiesNote: "<b>Poziom 1 z 4:</b> miasta posortowane alfabetycznie. Kliknij, żeby zobaczyć miesiące. <i>Łódzka Kolej Aglomeracyjna (ŁKA) chwilowo niedostępna — wcześniejsze nagrania dotyczyły złej sieci; zrealizowany rozkład jest odbudowywany z krajowego feedu TripUpdates.</i>",
 
     // months view
     monthsSearchPlaceholder: "Szukaj miesiąca (np. lipiec, 2026-06)…",
@@ -322,7 +322,7 @@ const STRINGS = {
     daysCount: "{n} days",
     citiesFreshOk: "✓ up to date",
     citiesFreshStale: "missing for {n} days",
-    citiesNote: "<b>Level 1 of 4:</b> cities sorted alphabetically. Click one to see its months.",
+    citiesNote: "<b>Level 1 of 4:</b> cities sorted alphabetically. Click one to see its months. <i>Łódzka Kolej Aglomeracyjna (ŁKA) is temporarily unavailable — the earlier recordings were of the wrong network; its realized schedule is being rebuilt from the national TripUpdates feed.</i>",
 
     monthsSearchPlaceholder: "Search month (e.g. July, 2026-06)…",
     monthsEmpty: "No months match “{q}”.",

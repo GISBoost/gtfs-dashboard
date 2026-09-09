@@ -105,6 +105,9 @@ jobs:
                 # for that one month, so both must match here.
                 | select(.name | test("^[a-z0-9_]+_snapshots_\\d{4}-\\d{2}\\.(7z|tar\\.xz)$"))
                 | (.name | capture("^(?<city>[a-z0-9_]+)_snapshots_")) as $c
+                # See the `lka` note in parse.jq: those VehiclePositions snapshots are of the
+                # wrong (replacement-bus) network, not ŁKA rail - drop them here too.
+                | select($c.city != "lka")
                 | { city: $c.city, asset_name: .name, asset_url: .browser_download_url, size_bytes: .size }
               ]
             }
@@ -154,6 +157,15 @@ jobs:
           # Zero output above silently drops non-matching tags (positions-raw-*,
           # legacy tags missing the -phone suffix, unrelated tags, etc) - never an
           # error, per PRD.md section 3.2.
+          #
+          # Drop `lka` (Łódzka Kolej Aglomeracyjna): the 2026-08..09 lka-realized-* releases
+          # were built from GTFS-RT VehiclePositions of the WRONG network - a zbiorkom.live
+          # replacement-bus feed, not the rail network. ŁKA rail has no VehiclePositions feed;
+          # its realized GTFS is rebuilt from the mkuran.pl national TripUpdates aggregate by
+          # GISBoost/easy-OTP tools/family_b_realized/ and is not yet published as a release.
+          # Until it is, showing the wrong-network data is misleading. See
+          # easy-R5/docs/notes/realized-gtfs-lka-tripupdates.md and lka-gtfs-audit.md.
+          | select($tag.city != "lka")
           | .body as $body
           | ($body | num_or_null("(?<n>\\d+) recording director")) as $recording_dirs
           | ($body | num_or_null("(?<n>\\d+) observations matched")) as $observations_matched
