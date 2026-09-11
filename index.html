@@ -19,17 +19,19 @@
   <meta name="twitter:title" content="GTFS-RT — katalog nagrań | GISBoost">
   <meta name="twitter:description" content="Przeglądarka zrealizowanych rozkładów jazdy z danych GTFS-RT: miasto, miesiąc, dzień, wykresy odchyleń od rozkładu i pliki do pobrania.">
   <meta name="twitter:image" content="https://gisboost.github.io/assets/icon_gisboost.png">
+  <link rel="stylesheet" href="https://gisboost.github.io/assets/gisboost-1.css" />
   <link rel="stylesheet" href="styles.css" />
-  <script data-goatcounter="https://gtfs-dashboard.goatcounter.com/count"
+  <script data-goatcounter="https://gisboostgithub.goatcounter.com/count"
           async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
   <div class="topbar">
-    <button class="brand" id="homeNavBtn" type="button" data-i18n-aria-label="homeAriaLabel">
+    <a class="brand" href="https://gisboost.github.io/">
       <span class="mark">GISBoost</span>
       <span class="sub" data-i18n="brandSub">/ katalog nagrań GTFS-RT</span>
-    </button>
+    </a>
     <nav class="topnav">
+      <button id="homeNavBtn" class="topnav-link" type="button" data-i18n="navCities" data-i18n-aria-label="homeAriaLabel">Miasta</button>
       <button id="compareNavBtn" class="topnav-link" type="button" data-i18n="navCompare">Porównanie miast</button>
       <button id="backupsNavBtn" class="topnav-link" type="button" data-i18n="navBackups">Kopie zapasowe</button>
       <!-- easy-GTFS-RT's HOW-IT-WORKS: how a realized GTFS is reconstructed and how to read it.

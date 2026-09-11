@@ -23,8 +23,9 @@ const WEEKDAYS = {
 const STRINGS = {
   pl: {
     // topbar / static shell
-    homeAriaLabel: "Strona główna — wszystkie miasta",
+    homeAriaLabel: "Wszystkie miasta",
     brandSub: "/ katalog nagrań GTFS-RT",
+    navCities: "Miasta",
     navCompare: "Porównanie miast",
     navBackups: "Kopie zapasowe",
     navHowItWorks: "Jak to działa",
@@ -237,8 +238,9 @@ const STRINGS = {
     diagCalSourceNoteHtml: "Źródło: <code>docs/reviews/family-a_calendar-window-fleet-survey.md</code> w <a href=\"https://github.com/GISBoost/easy-OTP\" target=\"_blank\" rel=\"noopener\">easy-OTP</a>. Powiązany raport: <a href=\"recording-duration.html\">ile nagrywania GTFS-RT wystarczy?</a>",
   },
   en: {
-    homeAriaLabel: "Home — all cities",
+    homeAriaLabel: "All cities",
     brandSub: "/ GTFS-RT recording catalog",
+    navCities: "Cities",
     navCompare: "City comparison",
     navBackups: "Backups",
     navHowItWorks: "How it works",
