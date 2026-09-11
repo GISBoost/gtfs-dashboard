@@ -23,25 +23,25 @@
   --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 :root[data-theme="dark"] {
-  --paper: #10141a; --paper-raised: #171c24; --paper-raised-2: #1e2530;
-  --ink: #e7ecf2; --ink-muted: #8ca0b3; --line: #2a3240;
+  --paper: #161b22; --paper-raised: #21262d; --paper-raised-2: #2d333b;
+  --ink: #e6edf3; --ink-muted: #8b949e; --line: #30363d;
   --green: #66bb6a; --green-ink: #9ccc9f; --green-soft: #253328;
-  --blue: #5588c8; --blue-soft: #1c2b3d;
+  --blue: #58a6ff; --blue-soft: #132e4d;
   --amber: #e0ab52; --amber-soft: #362c1a;
   --slate: #a9b8c5; --slate-soft: #2a333c;
   --red: #ef9a9a; --red-soft: #3a2222;
-  --focus: #5588c8;
+  --focus: #58a6ff;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper: #10141a; --paper-raised: #171c24; --paper-raised-2: #1e2530;
-    --ink: #e7ecf2; --ink-muted: #8ca0b3; --line: #2a3240;
+    --paper: #161b22; --paper-raised: #21262d; --paper-raised-2: #2d333b;
+    --ink: #e6edf3; --ink-muted: #8b949e; --line: #30363d;
     --green: #66bb6a; --green-ink: #9ccc9f; --green-soft: #253328;
-    --blue: #5588c8; --blue-soft: #1c2b3d;
+    --blue: #58a6ff; --blue-soft: #132e4d;
     --amber: #e0ab52; --amber-soft: #362c1a;
     --slate: #a9b8c5; --slate-soft: #2a333c;
     --red: #ef9a9a; --red-soft: #3a2222;
-    --focus: #5588c8;
+    --focus: #58a6ff;
   }
 }
 
