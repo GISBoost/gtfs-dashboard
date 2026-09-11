@@ -1,47 +1,47 @@
 @charset "UTF-8";
 
 :root {
-  --paper: #ffffff;
-  --paper-raised: #eef3f0;
-  --paper-raised-2: #e3ece5;
-  --ink: #16241c;
-  --ink-muted: #4d5c53;
-  --line: #d7e2dc;
+  --paper: #eef1f5;
+  --paper-raised: #ffffff;
+  --paper-raised-2: #e3e8ee;
+  --ink: #1b2430;
+  --ink-muted: #5c6b7a;
+  --line: #d2d9e1;
   --green: #2e7d32;
   --green-ink: #1b5e20;
   --green-soft: #e3f1e3;
-  --blue: #0277bd;
-  --blue-soft: #e1f3fb;
+  --blue: #2c5c94;
+  --blue-soft: #e4ecf5;
   --amber: #a6650a;
   --amber-soft: #fbeed9;
   --slate: #45586a;
   --slate-soft: #e3e9ee;
   --red: #b3261e;
   --red-soft: #fbe6e4;
-  --focus: #0277bd;
-  --mono: ui-monospace, "Cascadia Mono", "Roboto Mono", Consolas, Menlo, monospace;
-  --sans: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --focus: #2c5c94;
+  --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, Menlo, monospace;
+  --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 :root[data-theme="dark"] {
-  --paper: #1b1f24; --paper-raised: #242a30; --paper-raised-2: #2c333a;
-  --ink: #e7ebe8; --ink-muted: #9aa8a1; --line: #3a434b;
+  --paper: #10141a; --paper-raised: #171c24; --paper-raised-2: #1e2530;
+  --ink: #e7ecf2; --ink-muted: #8ca0b3; --line: #2a3240;
   --green: #66bb6a; --green-ink: #9ccc9f; --green-soft: #253328;
-  --blue: #4fc3f7; --blue-soft: #1c2e36;
+  --blue: #5588c8; --blue-soft: #1c2b3d;
   --amber: #e0ab52; --amber-soft: #362c1a;
   --slate: #a9b8c5; --slate-soft: #2a333c;
   --red: #ef9a9a; --red-soft: #3a2222;
-  --focus: #4fc3f7;
+  --focus: #5588c8;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper: #1b1f24; --paper-raised: #242a30; --paper-raised-2: #2c333a;
-    --ink: #e7ebe8; --ink-muted: #9aa8a1; --line: #3a434b;
+    --paper: #10141a; --paper-raised: #171c24; --paper-raised-2: #1e2530;
+    --ink: #e7ecf2; --ink-muted: #8ca0b3; --line: #2a3240;
     --green: #66bb6a; --green-ink: #9ccc9f; --green-soft: #253328;
-    --blue: #4fc3f7; --blue-soft: #1c2e36;
+    --blue: #5588c8; --blue-soft: #1c2b3d;
     --amber: #e0ab52; --amber-soft: #362c1a;
     --slate: #a9b8c5; --slate-soft: #2a333c;
     --red: #ef9a9a; --red-soft: #3a2222;
-    --focus: #4fc3f7;
+    --focus: #5588c8;
   }
 }
 
@@ -49,29 +49,13 @@
 body { margin: 0; font-family: var(--sans); background: var(--paper); color: var(--ink); font-size: 15px; line-height: 1.5; }
 a { color: var(--blue); }
 
-.topbar {
-  display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
-  padding: 0.9rem 1.25rem; border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 5; background: var(--paper);
-}
-.brand {
-  display: flex; align-items: baseline; gap: 0.6rem;
-  background: none; border: none; padding: 0; font: inherit; cursor: pointer;
-}
-.brand .mark { font-weight: 800; letter-spacing: -0.01em; color: var(--green); font-size: 1.15rem; }
-.brand .sub { color: var(--ink-muted); font-size: 0.85rem; }
-.brand:hover .sub { color: var(--blue); }
-.brand:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 3px; }
+/* .topbar/.brand/.topnav-link come from the shared gisboost-1.css (dark navy belt) —
+   only the badge needs local tuning since it isn't part of the cross-site contract. */
 .badge {
   font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.02em; text-transform: uppercase;
-  padding: 0.2rem 0.5rem; border-radius: 3px; border: 1px solid var(--line); color: var(--ink-muted);
+  padding: 0.2rem 0.5rem; border-radius: 3px; border: 1px solid rgba(255, 255, 255, 0.25); color: var(--chrome-muted);
 }
 .badge:empty { display: none; }
-.topnav-link {
-  font: inherit; font-size: 0.85rem; cursor: pointer; border: 1px solid var(--line); border-radius: 7px;
-  padding: 0.35rem 0.75rem; background: none; color: var(--ink-muted);
-}
-.topnav-link:hover { border-color: var(--blue); color: var(--blue); }
-.topnav-link.active { background: var(--blue-soft); color: var(--blue); border-color: var(--blue); font-weight: 600; }
 
 main { max-width: 900px; margin: 0 auto; padding: 1.5rem 1.5rem 3.5rem; }
 
