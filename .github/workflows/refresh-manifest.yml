@@ -153,19 +153,21 @@ jobs:
             | if $a == null then null else $a.browser_download_url end;
 
           .[]
-          | (.tag_name | capture("^(?<city>[a-z0-9_]+)-realized-(?<date>\\d{4}-\\d{2}-\\d{2})-phone$")) as $tag
+          | (.tag_name | capture("^(?<city>[a-z0-9_]+)-realized-(?<date>\\d{4}-\\d{2}-\\d{2})-(?<source>phone|tripupdates)$")) as $tag
           # Zero output above silently drops non-matching tags (positions-raw-*,
-          # legacy tags missing the -phone suffix, unrelated tags, etc) - never an
-          # error, per PRD.md section 3.2.
+          # legacy tags missing the -phone/-tripupdates suffix, unrelated tags, etc) -
+          # never an error, per PRD.md section 3.2.
           #
-          # Drop `lka` (Łódzka Kolej Aglomeracyjna): the 2026-08..09 lka-realized-* releases
-          # were built from GTFS-RT VehiclePositions of the WRONG network - a zbiorkom.live
-          # replacement-bus feed, not the rail network. ŁKA rail has no VehiclePositions feed;
-          # its realized GTFS is rebuilt from the mkuran.pl national TripUpdates aggregate by
-          # GISBoost/easy-OTP tools/family_b_realized/ and is not yet published as a release.
-          # Until it is, showing the wrong-network data is misleading. See
-          # easy-R5/docs/notes/realized-gtfs-lka-tripupdates.md and lka-gtfs-audit.md.
-          | select($tag.city != "lka")
+          # `lka` (Łódzka Kolej Aglomeracyjna) is special-cased by source, not dropped
+          # outright: the 2026-09-06..08 lka-realized-*-phone releases were built from
+          # GTFS-RT VehiclePositions of the WRONG network - a zbiorkom.live replacement-bus
+          # feed, not the rail network (see lka-gtfs-audit.md) - those stay excluded
+          # forever. Its correct realized GTFS, rebuilt from the mkuran.pl national
+          # TripUpdates aggregate by GISBoost/easy-OTP tools/family_b_realized/ (via
+          # easy-GTFS-RT's family_b_lka_build.yml), publishes to the "-tripupdates" suffix
+          # instead and IS allowed through. See
+          # easy-R5/docs/notes/realized-gtfs-lka-tripupdates.md for the full story.
+          | select($tag.city != "lka" or $tag.source == "tripupdates")
           | .body as $body
           | ($body | num_or_null("(?<n>\\d+) recording director")) as $recording_dirs
           | ($body | num_or_null("(?<n>\\d+) observations matched")) as $observations_matched
@@ -317,13 +319,21 @@ jobs:
         run: |
           set -euo pipefail
           cat > build.jq <<'JQ_EOF'
+          # Display names for city ids that intentionally have no config/cities.json entry
+          # in easy-GTFS-RT - currently just `lka`, which is deliberately absent from that
+          # file (it's not part of the family_a city matrix; adding it back there would risk
+          # re-including it in a manual "build every city" family_a dispatch). Checked after
+          # cities.json, before falling back to the raw id.
+          def extra_display_names:
+            {"lka": "Łódzka Kolej Aglomeracyjna"};
+
           def days_by_city:
             map(del(._warnings))
             | group_by(.city)
             | map({
                 key: .[0].city,
                 value: {
-                  display_name: ($cities[.[0].city].display_name // .[0].city),
+                  display_name: ($cities[.[0].city].display_name // extra_display_names[.[0].city] // .[0].city),
                   days: (map(del(.city)) | sort_by(.date))
                 }
               })
