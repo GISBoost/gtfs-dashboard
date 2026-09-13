@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-13T08:56:15Z",
+  "generated_at": "2026-09-13T11:26:43Z",
   "source_repo": "GISBoost/easy-GTFS-RT",
   "cities": {
     "boston": {
@@ -14389,6 +14389,33 @@
             "min_delay_sec": -275,
             "max_delay_sec": 510
           }
+        }
+      ]
+    },
+    "lka": {
+      "display_name": "Łódzka Kolej Aglomeracyjna",
+      "days": [
+        {
+          "date": "2026-09-12",
+          "release_tag": "lka-realized-2026-09-12-tripupdates",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/lka-realized-2026-09-12-tripupdates",
+          "created_at": "2026-09-13T11:25:13Z",
+          "recording_dirs": null,
+          "observations_matched": 4719,
+          "segments_corrected": 14855,
+          "coverage_ranges": [
+            "00:00-23:59"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lka-realized-2026-09-12-tripupdates/lka_realized_2026-09-12_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lka-realized-2026-09-12-tripupdates/lka_realized_2026-09-12_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lka-realized-2026-09-12-tripupdates/lka_static_gtfs_2026-09-12.zip",
+            "diff_chart": null,
+            "diff_summary": null,
+            "tidy_table": null
+          },
+          "delay_stats": null
         }
       ]
     },
