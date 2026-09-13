@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-13T11:38:30Z",
+  "generated_at": "2026-09-13T12:10:18Z",
   "source_repo": "GISBoost/easy-GTFS-RT",
   "cities": {
     "boston": {
@@ -14395,6 +14395,99 @@
     "lka": {
       "display_name": "Łódzka Kolej Aglomeracyjna",
       "days": [
+        {
+          "date": "2026-09-08",
+          "release_tag": "lka-realized-2026-09-08-tripupdates",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/lka-realized-2026-09-08-tripupdates",
+          "created_at": "2026-09-13T12:07:27Z",
+          "recording_dirs": null,
+          "observations_matched": 5440,
+          "segments_corrected": 14174,
+          "coverage_ranges": [
+            "00:00-23:59"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lka-realized-2026-09-08-tripupdates/lka_realized_2026-09-08_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lka-realized-2026-09-08-tripupdates/lka_realized_2026-09-08_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lka-realized-2026-09-08-tripupdates/lka_static_gtfs_2026-09-08.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lka-realized-2026-09-08-tripupdates/lka_diff_2026-09-08_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lka-realized-2026-09-08-tripupdates/lka_diff_2026-09-08_p50_summary.csv",
+            "tidy_table": null
+          },
+          "delay_stats": {
+            "n_rows": 16022,
+            "n_changed": 11713,
+            "pct_changed": 73.11,
+            "mean_delay_sec": -26.88,
+            "mean_abs_delay_sec": 45.56,
+            "stdev_delay_sec": 80.18,
+            "min_delay_sec": -840,
+            "max_delay_sec": 270
+          }
+        },
+        {
+          "date": "2026-09-09",
+          "release_tag": "lka-realized-2026-09-09-tripupdates",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/lka-realized-2026-09-09-tripupdates",
+          "created_at": "2026-09-13T12:08:56Z",
+          "recording_dirs": null,
+          "observations_matched": 5318,
+          "segments_corrected": 14165,
+          "coverage_ranges": [
+            "00:00-23:59"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lka-realized-2026-09-09-tripupdates/lka_realized_2026-09-09_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lka-realized-2026-09-09-tripupdates/lka_realized_2026-09-09_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lka-realized-2026-09-09-tripupdates/lka_static_gtfs_2026-09-09.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lka-realized-2026-09-09-tripupdates/lka_diff_2026-09-09_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lka-realized-2026-09-09-tripupdates/lka_diff_2026-09-09_p50_summary.csv",
+            "tidy_table": null
+          },
+          "delay_stats": {
+            "n_rows": 16022,
+            "n_changed": 11295,
+            "pct_changed": 70.5,
+            "mean_delay_sec": -22.93,
+            "mean_abs_delay_sec": 47.53,
+            "stdev_delay_sec": 90.44,
+            "min_delay_sec": -879,
+            "max_delay_sec": 444
+          }
+        },
+        {
+          "date": "2026-09-10",
+          "release_tag": "lka-realized-2026-09-10-tripupdates",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/lka-realized-2026-09-10-tripupdates",
+          "created_at": "2026-09-13T12:08:05Z",
+          "recording_dirs": null,
+          "observations_matched": 4904,
+          "segments_corrected": 13960,
+          "coverage_ranges": [
+            "00:00-23:59"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lka-realized-2026-09-10-tripupdates/lka_realized_2026-09-10_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lka-realized-2026-09-10-tripupdates/lka_realized_2026-09-10_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lka-realized-2026-09-10-tripupdates/lka_static_gtfs_2026-09-10.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lka-realized-2026-09-10-tripupdates/lka_diff_2026-09-10_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lka-realized-2026-09-10-tripupdates/lka_diff_2026-09-10_p50_summary.csv",
+            "tidy_table": null
+          },
+          "delay_stats": {
+            "n_rows": 16022,
+            "n_changed": 11174,
+            "pct_changed": 69.74,
+            "mean_delay_sec": -25.86,
+            "mean_abs_delay_sec": 45.31,
+            "stdev_delay_sec": 82.55,
+            "min_delay_sec": -780,
+            "max_delay_sec": 345
+          }
+        },
         {
           "date": "2026-09-11",
           "release_tag": "lka-realized-2026-09-11-tripupdates",
