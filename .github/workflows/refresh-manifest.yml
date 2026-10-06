@@ -115,6 +115,65 @@ jobs:
           jq -c -f parse_archives.jq releases.json > archives.jsonl
           echo "Parsed $(wc -l < archives.jsonl) raw-snapshot archive release(s)."
 
+      - name: Expand monthly realized releases into per-day entries
+        run: |
+          set -uo pipefail
+          # easy-GTFS-RT's monthly mode (config/cities.json `monthly_release`, 2026-10) publishes
+          # ONE release per city per month (tag `<city>-realized-YYYY-MM`) holding every day's
+          # files plus `<city>_meta_<date>.json` (uploaded last = day is complete). Below, each
+          # such day is turned into a synthetic legacy-shaped release (tag `<city>-realized-<date>-phone`,
+          # body in the legacy wording) so parse.jq stays unchanged for both layouts. Per-day
+          # facts come from the meta JSON, cached by (city,date) against the previous
+          # manifest.json like delay_stats; the day's build time is its p50 asset's created_at.
+          jq -s 'add' releases.json > releases_all.json
+
+          if [ -f manifest.json ]; then
+            jq -c '[ (.cities // {}) | to_entries[] | .key as $city | (.value.days // [])[]
+                     | select(.recording_dirs != null and .observations_matched != null and .segments_corrected != null and .coverage_ranges != null)
+                     | { key: ($city + "|" + .date),
+                         value: { recording_dirs, observations_matched, segments_corrected,
+                                  coverage: (.coverage_ranges | join(", ")) } } ] | from_entries' \
+              manifest.json > meta_cache.json 2>/dev/null || echo '{}' > meta_cache.json
+            jq -e . meta_cache.json >/dev/null 2>&1 || echo '{}' > meta_cache.json
+          else
+            echo '{}' > meta_cache.json
+          fi
+
+          : > meta_entries.jsonl
+          jq -c '.[] | select(.tag_name | test("^[a-z0-9_]+-realized-[0-9]{4}-[0-9]{2}$"))
+                 | .assets[] | select(.name | test("^[a-z0-9_]+_meta_[0-9]{4}-[0-9]{2}-[0-9]{2}[.]json$"))
+                 | {name, url: .browser_download_url}' releases_all.json > meta_assets.jsonl
+          while IFS= read -r line; do
+            [ -n "$line" ] || continue
+            name="$(jq -r '.name' <<< "$line")"
+            key="$(sed -E 's/^(.+)_meta_([0-9-]+)\.json$/\1|\2/' <<< "$name")"
+            cached="$(jq -c --arg k "$key" '.[$k] // empty' meta_cache.json)"
+            if [ -n "$cached" ]; then
+              jq -c -n --arg k "$key" --argjson m "$cached" '{key:$k, value:$m}' >> meta_entries.jsonl
+            elif m="$(curl -fsSL "$(jq -r '.url' <<< "$line")" | jq -c '{recording_dirs, observations_matched, segments_corrected, coverage}')" && [ -n "$m" ]; then
+              jq -c -n --arg k "$key" --argjson m "$m" '{key:$k, value:$m}' >> meta_entries.jsonl
+            else
+              echo "::warning title=meta fetch failed::${name}: could not download or parse it - that day's body fields are null this run, will retry next run."
+            fi
+          done < meta_assets.jsonl
+
+          jq -s 'from_entries' meta_entries.jsonl > metas.json
+          jq --slurpfile metas metas.json '
+            def monthly: .tag_name | test("^[a-z0-9_]+-realized-[0-9]{4}-[0-9]{2}$");
+            [ .[] | select(monthly | not) ]
+            + [ .[] | select(monthly) as $r
+                | ($r.tag_name | capture("^(?<city>[a-z0-9_]+)-realized-").city) as $city
+                | [ $r.assets[].name | (capture("_meta_(?<d>[0-9]{4}-[0-9]{2}-[0-9]{2})[.]json$")? | .d) ] | unique[] as $d
+                | ($metas[0]["\($city)|\($d)"]) as $m
+                | { tag_name: "\($city)-realized-\($d)-phone",
+                    real_tag: $r.tag_name,
+                    html_url: $r.html_url,
+                    published_at: (first($r.assets[] | select(.name == "\($city)_realized_\($d)_p50.zip") | .created_at) // $r.published_at),
+                    assets: [ $r.assets[] | select(.name | contains($d)) ],
+                    body: (if $m == null then "" else "\($m.recording_dirs) recording directories merged, \($m.observations_matched) observations matched, \($m.segments_corrected) segments corrected). Actual recorded coverage: \($m.coverage)." end) } ]
+          ' releases_all.json > releases_expanded.json
+          echo "Expanded to $(jq 'length' releases_expanded.json) release entries (legacy + synthetic per-day)."
+
       - name: Parse releases (tag filter + best-effort body/asset extraction)
         run: |
           set -euo pipefail
@@ -182,7 +241,8 @@ jobs:
           | {
               city: $tag.city,
               date: $tag.date,
-              release_tag: .tag_name,
+              # real_tag: set only on synthetic entries from monthly releases (see the expand step).
+              release_tag: (.real_tag // .tag_name),
               release_url: (.html_url // "https://github.com/\(env.SOURCE_REPO)/releases/tag/\(.tag_name)"),
               # published_at, not created_at: every release built on the same calendar
               # day shares an identical created_at (reflects the underlying tag/commit
@@ -205,7 +265,7 @@ jobs:
               _warnings: $warnings
             }
           JQ_EOF
-          jq -c -f parse.jq releases.json > parsed.jsonl
+          jq -c -f parse.jq releases_expanded.json > parsed.jsonl
           echo "Parsed $(wc -l < parsed.jsonl) matching releases."
 
       - name: Log parse warnings for releases with unparseable body fields
