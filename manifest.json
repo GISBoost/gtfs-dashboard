@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-12T11:40:41Z",
+  "generated_at": "2026-10-13T11:25:41Z",
   "source_repo": "GISBoost/easy-GTFS-RT",
   "cities": {
     "boston": {
@@ -2586,6 +2586,37 @@
             "stdev_delay_sec": 33.11,
             "min_delay_sec": -900,
             "max_delay_sec": 908
+          }
+        },
+        {
+          "date": "2026-10-12",
+          "release_tag": "boston-realized-2026-10-12-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/boston-realized-2026-10-12-phone",
+          "created_at": "2026-10-13T02:19:19Z",
+          "recording_dirs": 1,
+          "observations_matched": 395370,
+          "segments_corrected": 1565251,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-10-12-phone/boston_realized_2026-10-12_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-10-12-phone/boston_realized_2026-10-12_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-10-12-phone/boston_static_gtfs_2026-10-12.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-10-12-phone/boston_diff_2026-10-12_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-10-12-phone/boston_diff_2026-10-12_p50_summary.csv",
+            "tidy_table": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-10-12-phone/boston_tidy_2026-10-12.csv.gz"
+          },
+          "delay_stats": {
+            "n_rows": 3133085,
+            "n_changed": 1684635,
+            "pct_changed": 53.77,
+            "mean_delay_sec": -25.11,
+            "mean_abs_delay_sec": 69.92,
+            "stdev_delay_sec": 144.09,
+            "min_delay_sec": -1712,
+            "max_delay_sec": 1702
           }
         }
       ]
@@ -24267,6 +24298,37 @@
             "stdev_delay_sec": 123.42,
             "min_delay_sec": -930,
             "max_delay_sec": 855
+          }
+        },
+        {
+          "date": "2026-10-11",
+          "release_tag": "lka-realized-2026-10-11-tripupdates",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/lka-realized-2026-10-11-tripupdates",
+          "created_at": "2026-10-12T12:02:52Z",
+          "recording_dirs": null,
+          "observations_matched": 4717,
+          "segments_corrected": 18960,
+          "coverage_ranges": [
+            "00:00-23:59"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lka-realized-2026-10-11-tripupdates/lka_realized_2026-10-11_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lka-realized-2026-10-11-tripupdates/lka_realized_2026-10-11_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lka-realized-2026-10-11-tripupdates/lka_static_gtfs_2026-10-11.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lka-realized-2026-10-11-tripupdates/lka_diff_2026-10-11_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lka-realized-2026-10-11-tripupdates/lka_diff_2026-10-11_p50_summary.csv",
+            "tidy_table": null
+          },
+          "delay_stats": {
+            "n_rows": 20609,
+            "n_changed": 16004,
+            "pct_changed": 77.66,
+            "mean_delay_sec": -51.77,
+            "mean_abs_delay_sec": 69.76,
+            "stdev_delay_sec": 116.06,
+            "min_delay_sec": -1332,
+            "max_delay_sec": 333
           }
         }
       ]
