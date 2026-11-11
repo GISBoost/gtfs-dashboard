@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-10T12:07:40Z",
+  "generated_at": "2026-11-11T11:42:13Z",
   "source_repo": "GISBoost/easy-GTFS-RT",
   "cities": {
     "boston": {
@@ -3486,6 +3486,37 @@
             "min_delay_sec": -1396,
             "max_delay_sec": 1877
           }
+        },
+        {
+          "date": "2026-11-10",
+          "release_tag": "boston-realized-2026-11-10-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/boston-realized-2026-11-10-phone",
+          "created_at": "2026-11-11T03:23:18Z",
+          "recording_dirs": 1,
+          "observations_matched": 506180,
+          "segments_corrected": 1344345,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-11-10-phone/boston_realized_2026-11-10_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-11-10-phone/boston_realized_2026-11-10_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-11-10-phone/boston_static_gtfs_2026-11-10.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-11-10-phone/boston_diff_2026-11-10_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-11-10-phone/boston_diff_2026-11-10_p50_summary.csv",
+            "tidy_table": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/boston-realized-2026-11-10-phone/boston_tidy_2026-11-10.csv.gz"
+          },
+          "delay_stats": {
+            "n_rows": 2766953,
+            "n_changed": 1423960,
+            "pct_changed": 51.46,
+            "mean_delay_sec": 29.43,
+            "mean_abs_delay_sec": 64.43,
+            "stdev_delay_sec": 126.99,
+            "min_delay_sec": -1050,
+            "max_delay_sec": 2002
+          }
         }
       ]
     },
@@ -6910,6 +6941,37 @@
             "min_delay_sec": -2033,
             "max_delay_sec": 3504
           }
+        },
+        {
+          "date": "2026-11-10",
+          "release_tag": "brisbane-realized-2026-11-10-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/brisbane-realized-2026-11-10-phone",
+          "created_at": "2026-11-10T12:25:21Z",
+          "recording_dirs": 1,
+          "observations_matched": 964611,
+          "segments_corrected": 1518971,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-11-10-phone/brisbane_realized_2026-11-10_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-11-10-phone/brisbane_realized_2026-11-10_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-11-10-phone/brisbane_static_gtfs_2026-11-10.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-11-10-phone/brisbane_diff_2026-11-10_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-11-10-phone/brisbane_diff_2026-11-10_p50_summary.csv",
+            "tidy_table": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/brisbane-realized-2026-11-10-phone/brisbane_tidy_2026-11-10.csv.gz"
+          },
+          "delay_stats": {
+            "n_rows": 3408461,
+            "n_changed": 1672315,
+            "pct_changed": 49.06,
+            "mean_delay_sec": 19.4,
+            "mean_abs_delay_sec": 62.43,
+            "stdev_delay_sec": 158.45,
+            "min_delay_sec": -2010,
+            "max_delay_sec": 3405
+          }
         }
       ]
     },
@@ -10305,6 +10367,37 @@
             "stdev_delay_sec": 117.64,
             "min_delay_sec": -2716,
             "max_delay_sec": 1400
+          }
+        },
+        {
+          "date": "2026-11-10",
+          "release_tag": "bucharest-realized-2026-11-10-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/bucharest-realized-2026-11-10-phone",
+          "created_at": "2026-11-10T20:20:28Z",
+          "recording_dirs": 1,
+          "observations_matched": 697110,
+          "segments_corrected": 386066,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/bucharest-realized-2026-11-10-phone/bucharest_realized_2026-11-10_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/bucharest-realized-2026-11-10-phone/bucharest_realized_2026-11-10_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/bucharest-realized-2026-11-10-phone/bucharest_static_gtfs_2026-11-10.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/bucharest-realized-2026-11-10-phone/bucharest_diff_2026-11-10_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/bucharest-realized-2026-11-10-phone/bucharest_diff_2026-11-10_p50_summary.csv",
+            "tidy_table": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/bucharest-realized-2026-11-10-phone/bucharest_tidy_2026-11-10.csv.gz"
+          },
+          "delay_stats": {
+            "n_rows": 1416063,
+            "n_changed": 430616,
+            "pct_changed": 30.41,
+            "mean_delay_sec": 10.63,
+            "mean_abs_delay_sec": 39.98,
+            "stdev_delay_sec": 114.88,
+            "min_delay_sec": -1869,
+            "max_delay_sec": 1901
           }
         }
       ]
@@ -16555,6 +16648,37 @@
             "min_delay_sec": -540,
             "max_delay_sec": 1869
           }
+        },
+        {
+          "date": "2026-11-10",
+          "release_tag": "gdansk-realized-2026-11-10-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/gdansk-realized-2026-11-10-phone",
+          "created_at": "2026-11-10T21:24:49Z",
+          "recording_dirs": 1,
+          "observations_matched": 270028,
+          "segments_corrected": 1304006,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/gdansk-realized-2026-11-10-phone/gdansk_realized_2026-11-10_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/gdansk-realized-2026-11-10-phone/gdansk_realized_2026-11-10_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/gdansk-realized-2026-11-10-phone/gdansk_static_gtfs_2026-11-10.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/gdansk-realized-2026-11-10-phone/gdansk_diff_2026-11-10_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/gdansk-realized-2026-11-10-phone/gdansk_diff_2026-11-10_p50_summary.csv",
+            "tidy_table": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/gdansk-realized-2026-11-10-phone/gdansk_tidy_2026-11-10.csv.gz"
+          },
+          "delay_stats": {
+            "n_rows": 2211964,
+            "n_changed": 1387018,
+            "pct_changed": 62.71,
+            "mean_delay_sec": 54.17,
+            "mean_abs_delay_sec": 72.15,
+            "stdev_delay_sec": 148.62,
+            "min_delay_sec": -540,
+            "max_delay_sec": 2058
+          }
         }
       ]
     },
@@ -19211,6 +19335,37 @@
             "stdev_delay_sec": 129.29,
             "min_delay_sec": -884,
             "max_delay_sec": 2387
+          }
+        },
+        {
+          "date": "2026-11-10",
+          "release_tag": "gzm-realized-2026-11-10-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/gzm-realized-2026-11-10-phone",
+          "created_at": "2026-11-10T21:28:08Z",
+          "recording_dirs": 1,
+          "observations_matched": 1032293,
+          "segments_corrected": 380651,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/gzm-realized-2026-11-10-phone/gzm_realized_2026-11-10_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/gzm-realized-2026-11-10-phone/gzm_realized_2026-11-10_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/gzm-realized-2026-11-10-phone/gzm_static_gtfs_2026-11-10.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/gzm-realized-2026-11-10-phone/gzm_diff_2026-11-10_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/gzm-realized-2026-11-10-phone/gzm_diff_2026-11-10_p50_summary.csv",
+            "tidy_table": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/gzm-realized-2026-11-10-phone/gzm_tidy_2026-11-10.csv.gz"
+          },
+          "delay_stats": {
+            "n_rows": 592644,
+            "n_changed": 417476,
+            "pct_changed": 70.44,
+            "mean_delay_sec": 78.55,
+            "mean_abs_delay_sec": 96.19,
+            "stdev_delay_sec": 179.63,
+            "min_delay_sec": -850,
+            "max_delay_sec": 2836
           }
         }
       ]
@@ -22305,6 +22460,37 @@
             "min_delay_sec": -613,
             "max_delay_sec": 4876
           }
+        },
+        {
+          "date": "2026-11-10",
+          "release_tag": "kielce-realized-2026-11-10-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/kielce-realized-2026-11-10-phone",
+          "created_at": "2026-11-10T21:17:49Z",
+          "recording_dirs": 1,
+          "observations_matched": 92609,
+          "segments_corrected": 119841,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/kielce-realized-2026-11-10-phone/kielce_realized_2026-11-10_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/kielce-realized-2026-11-10-phone/kielce_realized_2026-11-10_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/kielce-realized-2026-11-10-phone/kielce_static_gtfs_2026-11-10.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/kielce-realized-2026-11-10-phone/kielce_diff_2026-11-10_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/kielce-realized-2026-11-10-phone/kielce_diff_2026-11-10_p50_summary.csv",
+            "tidy_table": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/kielce-realized-2026-11-10-phone/kielce_tidy_2026-11-10.csv.gz"
+          },
+          "delay_stats": {
+            "n_rows": 476918,
+            "n_changed": 139773,
+            "pct_changed": 29.31,
+            "mean_delay_sec": 55.76,
+            "mean_abs_delay_sec": 65.07,
+            "stdev_delay_sec": 297.49,
+            "min_delay_sec": -632,
+            "max_delay_sec": 5068
+          }
         }
       ]
     },
@@ -25335,6 +25521,37 @@
             "stdev_delay_sec": 111.3,
             "min_delay_sec": -314,
             "max_delay_sec": 2515
+          }
+        },
+        {
+          "date": "2026-11-10",
+          "release_tag": "krakow-realized-2026-11-10-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/krakow-realized-2026-11-10-phone",
+          "created_at": "2026-11-10T21:27:47Z",
+          "recording_dirs": 1,
+          "observations_matched": 611874,
+          "segments_corrected": 898368,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/krakow-realized-2026-11-10-phone/krakow_realized_2026-11-10_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/krakow-realized-2026-11-10-phone/krakow_realized_2026-11-10_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/krakow-realized-2026-11-10-phone/krakow_static_gtfs_2026-11-10.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/krakow-realized-2026-11-10-phone/krakow_diff_2026-11-10_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/krakow-realized-2026-11-10-phone/krakow_diff_2026-11-10_p50_summary.csv",
+            "tidy_table": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/krakow-realized-2026-11-10-phone/krakow_tidy_2026-11-10.csv.gz"
+          },
+          "delay_stats": {
+            "n_rows": 1632145,
+            "n_changed": 964128,
+            "pct_changed": 59.07,
+            "mean_delay_sec": 66.57,
+            "mean_abs_delay_sec": 74.52,
+            "stdev_delay_sec": 163.28,
+            "min_delay_sec": -260,
+            "max_delay_sec": 2985
           }
         }
       ]
@@ -28954,6 +29171,37 @@
             "min_delay_sec": -1205,
             "max_delay_sec": 2108
           }
+        },
+        {
+          "date": "2026-11-10",
+          "release_tag": "lisbon-realized-2026-11-10-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/lisbon-realized-2026-11-10-phone",
+          "created_at": "2026-11-10T22:18:44Z",
+          "recording_dirs": 1,
+          "observations_matched": 340859,
+          "segments_corrected": 1102518,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-11-10-phone/lisbon_realized_2026-11-10_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-11-10-phone/lisbon_realized_2026-11-10_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-11-10-phone/lisbon_static_gtfs_2026-11-10.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-11-10-phone/lisbon_diff_2026-11-10_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-11-10-phone/lisbon_diff_2026-11-10_p50_summary.csv",
+            "tidy_table": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lisbon-realized-2026-11-10-phone/lisbon_tidy_2026-11-10.csv.gz"
+          },
+          "delay_stats": {
+            "n_rows": 2419826,
+            "n_changed": 1171573,
+            "pct_changed": 48.42,
+            "mean_delay_sec": 45.37,
+            "mean_abs_delay_sec": 103.8,
+            "stdev_delay_sec": 250.16,
+            "min_delay_sec": -1469,
+            "max_delay_sec": 3829
+          }
         }
       ]
     },
@@ -31579,6 +31827,37 @@
             "min_delay_sec": -385,
             "max_delay_sec": 747
           }
+        },
+        {
+          "date": "2026-11-10",
+          "release_tag": "ljubljana-realized-2026-11-10-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/ljubljana-realized-2026-11-10-phone",
+          "created_at": "2026-11-10T21:19:46Z",
+          "recording_dirs": 1,
+          "observations_matched": 91667,
+          "segments_corrected": 933846,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/ljubljana-realized-2026-11-10-phone/ljubljana_realized_2026-11-10_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/ljubljana-realized-2026-11-10-phone/ljubljana_realized_2026-11-10_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/ljubljana-realized-2026-11-10-phone/ljubljana_static_gtfs_2026-11-10.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/ljubljana-realized-2026-11-10-phone/ljubljana_diff_2026-11-10_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/ljubljana-realized-2026-11-10-phone/ljubljana_diff_2026-11-10_p50_summary.csv",
+            "tidy_table": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/ljubljana-realized-2026-11-10-phone/ljubljana_tidy_2026-11-10.csv.gz"
+          },
+          "delay_stats": {
+            "n_rows": 1640040,
+            "n_changed": 982307,
+            "pct_changed": 59.9,
+            "mean_delay_sec": 45.49,
+            "mean_abs_delay_sec": 62.81,
+            "stdev_delay_sec": 118.06,
+            "min_delay_sec": -489,
+            "max_delay_sec": 1762
+          }
         }
       ]
     },
@@ -33505,6 +33784,37 @@
             "stdev_delay_sec": 116.71,
             "min_delay_sec": -744,
             "max_delay_sec": 990
+          }
+        },
+        {
+          "date": "2026-11-09",
+          "release_tag": "lka-realized-2026-11-09-tripupdates",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/lka-realized-2026-11-09-tripupdates",
+          "created_at": "2026-11-10T12:41:19Z",
+          "recording_dirs": null,
+          "observations_matched": 5695,
+          "segments_corrected": 10622,
+          "coverage_ranges": [
+            "00:00-23:59"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lka-realized-2026-11-09-tripupdates/lka_realized_2026-11-09_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lka-realized-2026-11-09-tripupdates/lka_realized_2026-11-09_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lka-realized-2026-11-09-tripupdates/lka_static_gtfs_2026-11-09.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lka-realized-2026-11-09-tripupdates/lka_diff_2026-11-09_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lka-realized-2026-11-09-tripupdates/lka_diff_2026-11-09_p50_summary.csv",
+            "tidy_table": null
+          },
+          "delay_stats": {
+            "n_rows": 11714,
+            "n_changed": 8887,
+            "pct_changed": 75.87,
+            "mean_delay_sec": 3.89,
+            "mean_abs_delay_sec": 56.33,
+            "stdev_delay_sec": 117.86,
+            "min_delay_sec": -696,
+            "max_delay_sec": 1128
           }
         }
       ]
@@ -37083,6 +37393,37 @@
             "stdev_delay_sec": 121.24,
             "min_delay_sec": -458,
             "max_delay_sec": 2413
+          }
+        },
+        {
+          "date": "2026-11-10",
+          "release_tag": "lodz-realized-2026-11",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/lodz-realized-2026-11",
+          "created_at": "2026-11-10T21:19:13Z",
+          "recording_dirs": 1,
+          "observations_matched": 337239,
+          "segments_corrected": 498392,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-11/lodz_realized_2026-11-10_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-11/lodz_realized_2026-11-10_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-11/lodz_static_gtfs_2026-11-10.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-11/lodz_diff_2026-11-10_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-11/lodz_diff_2026-11-10_p50_summary.csv",
+            "tidy_table": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/lodz-realized-2026-11/lodz_tidy_2026-11-10.csv.gz"
+          },
+          "delay_stats": {
+            "n_rows": 1348495,
+            "n_changed": 535899,
+            "pct_changed": 39.74,
+            "mean_delay_sec": 49.57,
+            "mean_abs_delay_sec": 60.82,
+            "stdev_delay_sec": 160.14,
+            "min_delay_sec": -452,
+            "max_delay_sec": 2548
           }
         }
       ]
@@ -42585,6 +42926,37 @@
             "min_delay_sec": -2197,
             "max_delay_sec": 1542
           }
+        },
+        {
+          "date": "2026-11-10",
+          "release_tag": "nicosia-realized-2026-11-10-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/nicosia-realized-2026-11-10-phone",
+          "created_at": "2026-11-10T20:19:29Z",
+          "recording_dirs": 1,
+          "observations_matched": 89664,
+          "segments_corrected": 177276,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/nicosia-realized-2026-11-10-phone/nicosia_realized_2026-11-10_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/nicosia-realized-2026-11-10-phone/nicosia_realized_2026-11-10_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/nicosia-realized-2026-11-10-phone/nicosia_static_gtfs_2026-11-10.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/nicosia-realized-2026-11-10-phone/nicosia_diff_2026-11-10_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/nicosia-realized-2026-11-10-phone/nicosia_diff_2026-11-10_p50_summary.csv",
+            "tidy_table": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/nicosia-realized-2026-11-10-phone/nicosia_tidy_2026-11-10.csv.gz"
+          },
+          "delay_stats": {
+            "n_rows": 401485,
+            "n_changed": 194236,
+            "pct_changed": 48.38,
+            "mean_delay_sec": 23.95,
+            "mean_abs_delay_sec": 89.25,
+            "stdev_delay_sec": 203.41,
+            "min_delay_sec": -2178,
+            "max_delay_sec": 2276
+          }
         }
       ]
     },
@@ -46014,6 +46386,37 @@
             "stdev_delay_sec": 41.94,
             "min_delay_sec": -727,
             "max_delay_sec": 888
+          }
+        },
+        {
+          "date": "2026-11-10",
+          "release_tag": "poznan-realized-2026-11-10-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/poznan-realized-2026-11-10-phone",
+          "created_at": "2026-11-10T21:19:05Z",
+          "recording_dirs": 1,
+          "observations_matched": 83742,
+          "segments_corrected": 98631,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-11-10-phone/poznan_realized_2026-11-10_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-11-10-phone/poznan_realized_2026-11-10_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-11-10-phone/poznan_static_gtfs_2026-11-10.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-11-10-phone/poznan_diff_2026-11-10_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-11-10-phone/poznan_diff_2026-11-10_p50_summary.csv",
+            "tidy_table": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/poznan-realized-2026-11-10-phone/poznan_tidy_2026-11-10.csv.gz"
+          },
+          "delay_stats": {
+            "n_rows": 1180961,
+            "n_changed": 122578,
+            "pct_changed": 10.38,
+            "mean_delay_sec": 5.08,
+            "mean_abs_delay_sec": 9.23,
+            "stdev_delay_sec": 40.22,
+            "min_delay_sec": -588,
+            "max_delay_sec": 851
           }
         }
       ]
@@ -49603,6 +50006,37 @@
             "stdev_delay_sec": 138.58,
             "min_delay_sec": -4181,
             "max_delay_sec": 2653
+          }
+        },
+        {
+          "date": "2026-11-10",
+          "release_tag": "prague-realized-2026-11-10-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/prague-realized-2026-11-10-phone",
+          "created_at": "2026-11-10T21:32:36Z",
+          "recording_dirs": 1,
+          "observations_matched": 2002563,
+          "segments_corrected": 1025142,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-11-10-phone/prague_realized_2026-11-10_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-11-10-phone/prague_realized_2026-11-10_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-11-10-phone/prague_static_gtfs_2026-11-10.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-11-10-phone/prague_diff_2026-11-10_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-11-10-phone/prague_diff_2026-11-10_p50_summary.csv",
+            "tidy_table": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/prague-realized-2026-11-10-phone/prague_tidy_2026-11-10.csv.gz"
+          },
+          "delay_stats": {
+            "n_rows": 1681814,
+            "n_changed": 1152610,
+            "pct_changed": 68.53,
+            "mean_delay_sec": 64.13,
+            "mean_abs_delay_sec": 81.12,
+            "stdev_delay_sec": 174.68,
+            "min_delay_sec": -3476,
+            "max_delay_sec": 3405
           }
         }
       ]
@@ -58979,6 +59413,37 @@
             "min_delay_sec": -3164,
             "max_delay_sec": 2062
           }
+        },
+        {
+          "date": "2026-11-10",
+          "release_tag": "rome-realized-2026-11-10-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/rome-realized-2026-11-10-phone",
+          "created_at": "2026-11-10T21:23:40Z",
+          "recording_dirs": 1,
+          "observations_matched": 1218376,
+          "segments_corrected": 1720271,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rome-realized-2026-11-10-phone/rome_realized_2026-11-10_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rome-realized-2026-11-10-phone/rome_realized_2026-11-10_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rome-realized-2026-11-10-phone/rome_static_gtfs_2026-11-10.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rome-realized-2026-11-10-phone/rome_diff_2026-11-10_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rome-realized-2026-11-10-phone/rome_diff_2026-11-10_p50_summary.csv",
+            "tidy_table": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rome-realized-2026-11-10-phone/rome_tidy_2026-11-10.csv.gz"
+          },
+          "delay_stats": {
+            "n_rows": 5078448,
+            "n_changed": 1890049,
+            "pct_changed": 37.22,
+            "mean_delay_sec": -40.95,
+            "mean_abs_delay_sec": 82.43,
+            "stdev_delay_sec": 188.27,
+            "min_delay_sec": -3224,
+            "max_delay_sec": 3320
+          }
         }
       ]
     },
@@ -64947,6 +65412,37 @@
             "min_delay_sec": -728,
             "max_delay_sec": 2098
           }
+        },
+        {
+          "date": "2026-11-10",
+          "release_tag": "rzeszow-realized-2026-11-10-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/rzeszow-realized-2026-11-10-phone",
+          "created_at": "2026-11-10T21:21:46Z",
+          "recording_dirs": 1,
+          "observations_matched": 130545,
+          "segments_corrected": 129253,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rzeszow-realized-2026-11-10-phone/rzeszow_realized_2026-11-10_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rzeszow-realized-2026-11-10-phone/rzeszow_realized_2026-11-10_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rzeszow-realized-2026-11-10-phone/rzeszow_static_gtfs_2026-11-10.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rzeszow-realized-2026-11-10-phone/rzeszow_diff_2026-11-10_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rzeszow-realized-2026-11-10-phone/rzeszow_diff_2026-11-10_p50_summary.csv",
+            "tidy_table": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/rzeszow-realized-2026-11-10-phone/rzeszow_tidy_2026-11-10.csv.gz"
+          },
+          "delay_stats": {
+            "n_rows": 221844,
+            "n_changed": 138117,
+            "pct_changed": 62.26,
+            "mean_delay_sec": 149.16,
+            "mean_abs_delay_sec": 156.23,
+            "stdev_delay_sec": 270.44,
+            "min_delay_sec": -351,
+            "max_delay_sec": 2172
+          }
         }
       ]
     },
@@ -68531,6 +69027,37 @@
             "stdev_delay_sec": 167.9,
             "min_delay_sec": -328,
             "max_delay_sec": 2981
+          }
+        },
+        {
+          "date": "2026-11-10",
+          "release_tag": "sofia-realized-2026-11-10-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/sofia-realized-2026-11-10-phone",
+          "created_at": "2026-11-10T20:27:34Z",
+          "recording_dirs": 1,
+          "observations_matched": 560043,
+          "segments_corrected": 471172,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-11-10-phone/sofia_realized_2026-11-10_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-11-10-phone/sofia_realized_2026-11-10_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-11-10-phone/sofia_static_gtfs_2026-11-10.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-11-10-phone/sofia_diff_2026-11-10_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-11-10-phone/sofia_diff_2026-11-10_p50_summary.csv",
+            "tidy_table": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/sofia-realized-2026-11-10-phone/sofia_tidy_2026-11-10.csv.gz"
+          },
+          "delay_stats": {
+            "n_rows": 654823,
+            "n_changed": 500565,
+            "pct_changed": 76.44,
+            "mean_delay_sec": 88.66,
+            "mean_abs_delay_sec": 100.77,
+            "stdev_delay_sec": 172.36,
+            "min_delay_sec": -494,
+            "max_delay_sec": 2836
           }
         }
       ]
@@ -75120,6 +75647,37 @@
             "min_delay_sec": -481,
             "max_delay_sec": 1026
           }
+        },
+        {
+          "date": "2026-11-10",
+          "release_tag": "szczecin-realized-2026-11-10-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/szczecin-realized-2026-11-10-phone",
+          "created_at": "2026-11-10T21:22:14Z",
+          "recording_dirs": 1,
+          "observations_matched": 210508,
+          "segments_corrected": 165942,
+          "coverage_ranges": [
+            "06:01-22:01"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-11-10-phone/szczecin_realized_2026-11-10_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-11-10-phone/szczecin_realized_2026-11-10_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-11-10-phone/szczecin_static_gtfs_2026-11-10.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-11-10-phone/szczecin_diff_2026-11-10_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-11-10-phone/szczecin_diff_2026-11-10_p50_summary.csv",
+            "tidy_table": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/szczecin-realized-2026-11-10-phone/szczecin_tidy_2026-11-10.csv.gz"
+          },
+          "delay_stats": {
+            "n_rows": 357559,
+            "n_changed": 175844,
+            "pct_changed": 49.18,
+            "mean_delay_sec": 55.18,
+            "mean_abs_delay_sec": 64.76,
+            "stdev_delay_sec": 162.33,
+            "min_delay_sec": -480,
+            "max_delay_sec": 2901
+          }
         }
       ]
     },
@@ -81357,6 +81915,37 @@
             "min_delay_sec": -966,
             "max_delay_sec": 1402
           }
+        },
+        {
+          "date": "2026-11-10",
+          "release_tag": "vilnius-realized-2026-11-10-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/vilnius-realized-2026-11-10-phone",
+          "created_at": "2026-11-10T20:19:54Z",
+          "recording_dirs": 1,
+          "observations_matched": 385637,
+          "segments_corrected": 290670,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-11-10-phone/vilnius_realized_2026-11-10_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-11-10-phone/vilnius_realized_2026-11-10_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-11-10-phone/vilnius_static_gtfs_2026-11-10.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-11-10-phone/vilnius_diff_2026-11-10_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-11-10-phone/vilnius_diff_2026-11-10_p50_summary.csv",
+            "tidy_table": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/vilnius-realized-2026-11-10-phone/vilnius_tidy_2026-11-10.csv.gz"
+          },
+          "delay_stats": {
+            "n_rows": 414483,
+            "n_changed": 318085,
+            "pct_changed": 76.74,
+            "mean_delay_sec": 52.64,
+            "mean_abs_delay_sec": 88.28,
+            "stdev_delay_sec": 159.61,
+            "min_delay_sec": -926,
+            "max_delay_sec": 1894
+          }
         }
       ]
     },
@@ -84316,6 +84905,37 @@
             "min_delay_sec": -600,
             "max_delay_sec": 3345
           }
+        },
+        {
+          "date": "2026-11-10",
+          "release_tag": "warszawa-realized-2026-11-10-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/warszawa-realized-2026-11-10-phone",
+          "created_at": "2026-11-10T21:57:16Z",
+          "recording_dirs": 1,
+          "observations_matched": 1482465,
+          "segments_corrected": 4562720,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/warszawa-realized-2026-11-10-phone/warszawa_realized_2026-11-10_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/warszawa-realized-2026-11-10-phone/warszawa_realized_2026-11-10_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/warszawa-realized-2026-11-10-phone/warszawa_static_gtfs_2026-11-10.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/warszawa-realized-2026-11-10-phone/warszawa_diff_2026-11-10_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/warszawa-realized-2026-11-10-phone/warszawa_diff_2026-11-10_p50_summary.csv",
+            "tidy_table": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/warszawa-realized-2026-11-10-phone/warszawa_tidy_2026-11-10.csv.gz"
+          },
+          "delay_stats": {
+            "n_rows": 7762187,
+            "n_changed": 5004643,
+            "pct_changed": 64.47,
+            "mean_delay_sec": 88.56,
+            "mean_abs_delay_sec": 105.28,
+            "stdev_delay_sec": 229.2,
+            "min_delay_sec": -541,
+            "max_delay_sec": 3223
+          }
         }
       ]
     },
@@ -86785,6 +87405,37 @@
             "stdev_delay_sec": 107.73,
             "min_delay_sec": -720,
             "max_delay_sec": 1475
+          }
+        },
+        {
+          "date": "2026-11-10",
+          "release_tag": "zagreb-realized-2026-11-10-phone",
+          "release_url": "https://github.com/GISBoost/easy-GTFS-RT/releases/tag/zagreb-realized-2026-11-10-phone",
+          "created_at": "2026-11-10T21:24:29Z",
+          "recording_dirs": 1,
+          "observations_matched": 290486,
+          "segments_corrected": 459282,
+          "coverage_ranges": [
+            "06:00-22:00"
+          ],
+          "status": "ok",
+          "assets": {
+            "p50": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/zagreb-realized-2026-11-10-phone/zagreb_realized_2026-11-10_p50.zip",
+            "p85": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/zagreb-realized-2026-11-10-phone/zagreb_realized_2026-11-10_p85.zip",
+            "static_gtfs": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/zagreb-realized-2026-11-10-phone/zagreb_static_gtfs_2026-11-10.zip",
+            "diff_chart": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/zagreb-realized-2026-11-10-phone/zagreb_diff_2026-11-10_p50_chart.png",
+            "diff_summary": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/zagreb-realized-2026-11-10-phone/zagreb_diff_2026-11-10_p50_summary.csv",
+            "tidy_table": "https://github.com/GISBoost/easy-GTFS-RT/releases/download/zagreb-realized-2026-11-10-phone/zagreb_tidy_2026-11-10.csv.gz"
+          },
+          "delay_stats": {
+            "n_rows": 1131331,
+            "n_changed": 488481,
+            "pct_changed": 43.18,
+            "mean_delay_sec": 13.3,
+            "mean_abs_delay_sec": 50.61,
+            "stdev_delay_sec": 112.44,
+            "min_delay_sec": -720,
+            "max_delay_sec": 1580
           }
         }
       ]
